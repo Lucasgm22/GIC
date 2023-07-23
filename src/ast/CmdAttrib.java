@@ -9,8 +9,13 @@ public class CmdAttrib extends AbstractCommand {
 	private AbstractExpression expr;
 	
 	@Override
-	public String generateCode() {
-		return id.getText() + "=" + expr.toString() + ";\n";
+	public String generateJSCode() {
+		return id.getText() + " = " + expr.toString() + ";\n";
+	}
+
+	@Override
+	public String generateJavaCode() {
+		return id.getText() + " = " + expr.toString() + ";\n";
 	}
 
 	public CmdAttrib(Identifier id, AbstractExpression expr) {

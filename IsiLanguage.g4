@@ -30,8 +30,8 @@ grammar IsiLanguage;
 		symbolTable.getSymbols().values().stream().forEach((id)->System.out.println(id));
 	}
 	
-	public void generateObjectCode(){
-		program.generateTarget();
+	public void generateObjectCode(TargetLang target){
+		program.generateTarget(target);
 	}
 	
 	public void runInterpreter(){
@@ -44,7 +44,7 @@ grammar IsiLanguage;
         }
     }
 }
-programa  : 'programa' decl+ cmd+ 'fimprog.'
+programa  : 'programa' cmd+ 'fimprog.'
 		  ;
 		  
 decl	  : tipo lista_var PF
@@ -54,14 +54,24 @@ tipo	  : 'INTEGER' { currentType = DataType.INTEGER; }
           | 'REAL'    { currentType = DataType.REAL; }
           | 'TEXT'    { currentType = DataType.TEXT; }
           ;
-         
-lista_var : ID { symbolTable.add(_input.LT(-1).getText(), new Identifier(_input.LT(-1).getText(), currentType)); } 
-           (VIRG 
-           	ID { symbolTable.add(_input.LT(-1).getText(), new Identifier(_input.LT(-1).getText(), currentType)); }
+
+lista_var : ID {
+                 Identifier dcId = new Identifier(_input.LT(-1).getText(), currentType);
+                 symbolTable.add(_input.LT(-1).getText(), dcId);
+                 CmdDecl _decl = new CmdDecl(dcId);
+                 program.getComandos().add(_decl);
+                 }
+           (VIRG
+           	ID {
+           	     Identifier dcId2 = new Identifier(_input.LT(-1).getText(), currentType);
+           	     symbolTable.add(_input.LT(-1).getText(), dcId2);
+           	     CmdDecl _decl2 = new CmdDecl(dcId2);
+           	     program.getComandos().add(_decl2);
+           	     }
            )*
    		  ;
    		  
-cmd		  : cmdAttr | cmdRead | cmdWrite | cmdIf
+cmd		  : cmdAttr | cmdRead | cmdWrite | cmdIf | decl
 		  ;
 		  
 cmdIf     : 'se' AP expr OPREL expr FP 'entao' cmd+ ('senao' cmd+)? 'fimse' PF		 
@@ -125,6 +135,7 @@ cmdAttr   : ID {
 					    _attr = new CmdAttribString(id, textContent);
 					}
 					program.getComandos().add(_attr);
+					textContent = null;
 					expression = null;					
 				}
 		  ;   		  

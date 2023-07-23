@@ -1,13 +1,17 @@
+import ast.TargetLang;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
 
 import parser.IsiLanguageLexer;
 import parser.IsiLanguageParser;
 
+import java.util.Scanner;
+
 public class MainClass {
 	public static void main(String[] args) {
 		try {
 			var lexer = new IsiLanguageLexer(CharStreams.fromFileName("input.isi"));
+			Scanner sc = new Scanner(System.in);
 			CommonTokenStream tokenStream = new CommonTokenStream(lexer);
 			var parser = new IsiLanguageParser(tokenStream);
 			parser.init();
@@ -17,8 +21,8 @@ public class MainClass {
 			System.out.println("-----------------------------");
 			parser.exibirID();
 			System.out.println("------- TARGET --------------");
-			parser.generateObjectCode();
-			parser.runInterpreter();
+			parser.generateObjectCode(TargetLang.JS);
+			//parser.runInterpreter();
 		}
 		catch(Exception ex) {
 			ex.printStackTrace();

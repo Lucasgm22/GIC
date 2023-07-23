@@ -117,8 +117,8 @@ public class IsiLanguageLexer extends Lexer {
 			symbolTable.getSymbols().values().stream().forEach((id)->System.out.println(id));
 		}
 		
-		public void generateObjectCode(){
-			program.generateTarget();
+		public void generateObjectCode(TargetLang target){
+			program.generateTarget(target);
 		}
 		
 		public void runInterpreter(){

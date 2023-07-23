@@ -14,8 +14,13 @@ public class CmdAttribString extends AbstractCommand{
     }
 
     @Override
-    public String generateCode() {
-        return id.getText() + "=" + content + ";\n";
+    public String generateJSCode() {
+        return id.getText() + " = " + content + ";\n";
+    }
+
+    @Override
+    public String generateJavaCode() {
+        return id.getText() + " = " + content + ";\n";
     }
 
     @Override

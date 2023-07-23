@@ -25,8 +25,13 @@ public class CmdWrite extends AbstractCommand {
 	}
 
 	@Override
-	public String generateCode() {
+	public String generateJSCode() {
 		return "alert(" + (id!=null?id.getText():text) + ");\n";
+	}
+
+	@Override
+	public String generateJavaCode() {
+		return "System.out.println(" + (id!=null?id.getText():text) +");\n";
 	}
 
 	public Identifier getId() {

@@ -4,7 +4,7 @@ import javax.swing.JOptionPane;
 
 import symbols.Identifier;
 
-public class CmdRead extends AbstractCommand{
+public class CmdRead extends AbstractCommand {
 	
 	private Identifier id;
 	
@@ -18,9 +18,19 @@ public class CmdRead extends AbstractCommand{
 
 
 	@Override
-	public String generateCode() {
+	public String generateJSCode() {
 		return id.getText() + " = " + "prompt(\"Type you input\");\n";
 	}
+
+	@Override
+	public String generateJavaCode() {
+		return switch (id.getType()) {
+			case REAL -> id.getText() + " = " + "sc.nextDouble();\n";
+			case INTEGER -> id.getText() + " = " + "sc.nextInt();\n";
+			case TEXT -> id.getText() + " = " + "sc.nextLine();\n";
+		};
+	}
+
 	@Override
 	public void run() {
 		id.setValue(Integer.parseInt(JOptionPane.showInputDialog("Type Your Input")));

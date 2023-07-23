@@ -14,26 +14,52 @@ public class Program {
 	private SymbolTable symbolTable;
 
 	public Program() {
-		this.filename = "output.js";
+		this.filename = "output";
 		this.comandos = new ArrayList<>();
 	}
 
-	public void generateTarget() {
+	public void generateTarget(TargetLang target) {
 		try {
-			try (var fw = new FileWriter(filename)) {
+			var extension = generateExtension(target);
+			try (var fw = new FileWriter(filename + extension)) {
 				try (var pw = new PrintWriter(fw)) {
 					StringBuilder strBuilder = new StringBuilder();
+					generateHeader(target, strBuilder);
 					comandos.forEach(c -> {
-						System.out.print(c.generateCode());
-						strBuilder.append(c.generateCode());
+						System.out.print(c.generateCode(target));
+						strBuilder.append(c.generateCode(target));
 					});
-					pw.println(strBuilder.toString());
+					generateFooter(target, strBuilder);
+					pw.println(strBuilder);
 				}
 			} catch (Exception ex) {
 				ex.printStackTrace();
 			}
 		} catch (Exception ex) {
 			ex.printStackTrace();
+		}
+	}
+
+	private String  generateExtension(TargetLang target) {
+		return switch (target) {
+			case JAVA -> ".java";
+			case JS -> ".js";
+		};
+	}
+
+	private void generateFooter(TargetLang target, StringBuilder strBuilder) {
+		if (TargetLang.JAVA == target) {
+			strBuilder.append("}\n");
+			strBuilder.append("}\n");
+		}
+	}
+
+	private void generateHeader(TargetLang target, StringBuilder strBuilder) {
+		if (TargetLang.JAVA == target) {
+			strBuilder.append("import java.util.Scanner;\n\n");
+			strBuilder.append("public class Main {\n");
+			strBuilder.append("public static void main(String[] args) {\n");
+			strBuilder.append("Scanner sc = new Scanner(System.in);\n");
 		}
 	}
 
