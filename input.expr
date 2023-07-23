@@ -1,0 +1,16 @@
+programa
+    TEXT a.
+	INTEGER b,c,d.
+	REAL e.	
+	
+	escreva("Hello World!").
+	escreva("Digite o valor C").
+	leia(c).
+
+	a := "Ola mundo aqui e a IsiLanguage".
+	e := 3.14.
+	b := 3 + 2 - 1 + 5 - 3.
+	escreva(a).
+	escreva(b).
+	escreva(e).
+fimprog.
