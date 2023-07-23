@@ -19,12 +19,10 @@ public class CmdRead extends AbstractCommand{
 
 	@Override
 	public String generateCode() {
-		// TODO Auto-generated method stub
 		return id.getText() + " = " + "prompt(\"Type you input\");\n";
 	}
 	@Override
 	public void run() {
-		// TODO Auto-generated method stub
 		id.setValue(Integer.parseInt(JOptionPane.showInputDialog("Type Your Input")));
 	}
 

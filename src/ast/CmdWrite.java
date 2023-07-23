@@ -26,7 +26,6 @@ public class CmdWrite extends AbstractCommand{
 
 	@Override
 	public String generateCode() {
-		// TODO Auto-generated method stub
 		return "alert(" + (id!=null?id.getText():text) + ");\n";
 	}
 

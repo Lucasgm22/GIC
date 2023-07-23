@@ -7,14 +7,11 @@ public class BinaryExpression extends AbstractExpression{
 	private AbstractExpression rightSide;
 	
 	public double eval() {
-		switch(operator) {
-		case '+':
-			return leftSide.eval() + rightSide.eval();
-		case '-':
-			return leftSide.eval() - rightSide.eval();
-		default:
-			return 0;
-		}
+		return switch (operator) {
+			case '+' -> leftSide.eval() + rightSide.eval();
+			case '-' -> leftSide.eval() - rightSide.eval();
+			default -> 0;
+		};
 	}
 
 	public BinaryExpression(char operator, AbstractExpression leftSide, AbstractExpression rightSide) {

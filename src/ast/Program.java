@@ -15,21 +15,23 @@ public class Program {
 
 	public Program() {
 		this.filename = "output.js";
-		this.comandos = new ArrayList<AbstractCommand>();
+		this.comandos = new ArrayList<>();
 	}
 
 	public void generateTarget() {
 		try {
-			FileWriter fw = new FileWriter(filename);
-			PrintWriter pw = new PrintWriter(fw);
-			StringBuilder strBuilder = new StringBuilder();
-			comandos.stream().forEach(c -> {
-				System.out.print(c.generateCode());
-				strBuilder.append(c.generateCode());
-			});
-			pw.println(strBuilder.toString());
-			pw.close();
-			fw.close();
+			try (var fw = new FileWriter(filename)) {
+				try (var pw = new PrintWriter(fw)) {
+					StringBuilder strBuilder = new StringBuilder();
+					comandos.forEach(c -> {
+						System.out.print(c.generateCode());
+						strBuilder.append(c.generateCode());
+					});
+					pw.println(strBuilder.toString());
+				}
+			} catch (Exception ex) {
+				ex.printStackTrace();
+			}
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
@@ -54,9 +56,10 @@ public class Program {
 	public void run() {
 		RuntimeEntity runtime = new RuntimeEntity();
 		runtime.updateContent(symbolTable.getSymbols().values());
-		comandos.stream().forEach(c -> {
+		comandos.forEach(c -> {
 			c.run();
 			runtime.updateContent(symbolTable.getSymbols().values());
 		});
+		runtime.close();
 	}
 }

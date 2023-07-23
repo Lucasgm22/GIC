@@ -7,7 +7,7 @@ import javax.swing.JTextArea;
 
 import symbols.Identifier;
 
-public class RuntimeEntity extends JFrame{
+public class RuntimeEntity extends JFrame {
 	
 	private JTextArea txtContent;
 	public RuntimeEntity() {
@@ -24,8 +24,12 @@ public class RuntimeEntity extends JFrame{
 	
 	public void updateContent(Collection<Identifier> values) {
 		StringBuilder strBuilder = new StringBuilder();
-		values.stream().forEach(i -> strBuilder.append(i+"\n"));
+		values.forEach(i -> strBuilder.append(i).append("\n"));
 		txtContent.setText(strBuilder.toString());
+	}
+
+	public void close() {
+		dispose();
 	}
 	
 	
