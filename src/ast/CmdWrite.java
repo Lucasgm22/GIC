@@ -4,7 +4,7 @@ import javax.swing.JOptionPane;
 
 import symbols.Identifier;
 
-public class CmdWrite extends AbstractCommand{
+public class CmdWrite extends AbstractCommand {
 	
 	private Identifier id;
 	private String text;

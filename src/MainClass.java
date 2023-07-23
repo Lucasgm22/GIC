@@ -7,7 +7,7 @@ import parser.IsiLanguageParser;
 public class MainClass {
 	public static void main(String[] args) {
 		try {
-			var lexer = new IsiLanguageLexer(CharStreams.fromFileName("input.expr"));
+			var lexer = new IsiLanguageLexer(CharStreams.fromFileName("input.isi"));
 			CommonTokenStream tokenStream = new CommonTokenStream(lexer);
 			var parser = new IsiLanguageParser(tokenStream);
 			parser.init();

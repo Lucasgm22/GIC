@@ -9,8 +9,10 @@ programa
 
 	a := "Ola mundo aqui e a IsiLanguage".
 	e := 3.14.
-	b := 3 + 2 - 1 + 5 - 3.
+	b := (2 + 2) * 2.
+	d := b.
 	escreva(a).
 	escreva(b).
 	escreva(e).
+	escreva(d).
 fimprog.

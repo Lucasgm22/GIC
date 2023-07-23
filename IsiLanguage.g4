@@ -13,7 +13,7 @@ grammar IsiLanguage;
 @members{
 	private SymbolTable symbolTable = new SymbolTable();
 	private DataType currentType;
-	private AbstractExpression expression;
+	private ExpressionTree expression;
 	private char operator;
 	private DataType leftDT;
 	private DataType rightDT;
@@ -104,7 +104,11 @@ cmdAttr   : ID {
 				leftDT = symbolTable.get(_input.LT(-1).getText()).getType();
 				rightDT = null;
 			}
-         	ATTR expr PF
+         	ATTR
+         	{
+         	    expression = new ExpressionTree();
+         	}
+         	expr PF
 				{
 					// logica para atribuir o valor da expressao no identificador
 					AbstractCommand _attr;
@@ -114,7 +118,7 @@ cmdAttr   : ID {
                         id.setValue(expression.eval());
                         symbolTable.add(idAtribuido, id);
 
-                        System.out.println("EVAL ("+expression+") = "+expression.eval());
+                        System.out.println("EVAL ["+expression+"] = "+expression.eval());
 					
 					    _attr = new CmdAttrib(id, expression);
 					} else {
@@ -132,7 +136,7 @@ termo     : (NUMBER | NUMBERDEC)
 			{
 				rightDT = _input.LT(-1).getType() == 13 ? DataType.REAL : DataType.INTEGER;
 				validateBinaryOperation();
-				expression = new NumberExpression(Double.parseDouble(_input.LT(-1).getText()), rightDT);
+				expression.addOperand(new NumberExpression(Double.parseDouble(_input.LT(-1).getText()), rightDT));
 			}
 		  |
 		    TEXT {
@@ -151,28 +155,31 @@ termo     : (NUMBER | NUMBERDEC)
 				
 				Identifier id = symbolTable.get(_input.LT(-1).getText());
 				if (id.getValue() != null){
-					expression = new IDExpression(id);
+					expression.addOperand(new IDExpression(id));
 				}
 				else{
 					throw new RuntimeException("Semantic ERROR - Unassigned variable");
 				}
 			}
+			|
+			AP {
+               		        expression.addOperator(new OperatorExpression('('));
+            }
+			expr
+			FP {
+               		        expression.addOperator(new OperatorExpression(')'));
+            }
 		  ;
 		  
-exprl     : (SUM | SUB) {
+exprl     : (SUM | SUB | MUL | DIV) {
 				operator = _input.LT(-1).getText().charAt(0);
 				if (leftDT == DataType.TEXT) {
 				    throw new RuntimeException("Semantic ERROR - Cannot apply operand " + operator + " to TEXT");
 				}
-				BinaryExpression _exprADD = new BinaryExpression(operator);
-				_exprADD.setLeftSide(expression);
+				expression.addOperator(new OperatorExpression(operator));
 			} 
 			termo
-			{
-				_exprADD.setRightSide(expression);
-				expression = _exprADD;
-				
-			}
+
           ;		         
 		  
 NUMBER	  : ('-')?[0-9]+
@@ -191,6 +198,12 @@ SUM	      : '+'
 		  ;
 		  
 SUB		  : '-'		     		    
+          ;
+
+MUL       : '*'
+          ;
+
+DIV       : '/'
           ;
           
 OPREL     : '>' | '>=' | '<' | '<=' | '==' | '<>'

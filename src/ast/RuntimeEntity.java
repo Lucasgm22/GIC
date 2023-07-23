@@ -31,7 +31,5 @@ public class RuntimeEntity extends JFrame {
 	public void close() {
 		dispose();
 	}
-	
-	
 
 }
