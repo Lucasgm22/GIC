@@ -9,8 +9,8 @@ programa
 
 	a := "Ola mundo aqui e a IsiLanguage".
 	e := 3.14.
-	b := ((2 + 2) * 2) / 8.
-	d := b.
+	b := 100 * ( 2 + 12 ) / 14.
+	d := (b + 2) / 2.
 	escreva(a).
 	escreva(b).
 	escreva(e).

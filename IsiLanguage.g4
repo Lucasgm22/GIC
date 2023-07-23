@@ -44,7 +44,7 @@ grammar IsiLanguage;
         }
     }
 }
-programa  : 'programa' cmd+ 'fimprog.'
+programa  : 'programa' decl+ cmd* 'fimprog.'
 		  ;
 		  
 decl	  : tipo lista_var PF
@@ -71,7 +71,7 @@ lista_var : ID {
            )*
    		  ;
    		  
-cmd		  : cmdAttr | cmdRead | cmdWrite | cmdIf | decl
+cmd		  : cmdAttr | cmdRead | cmdWrite | cmdIf
 		  ;
 		  
 cmdIf     : 'se' AP expr OPREL expr FP 'entao' cmd+ ('senao' cmd+)? 'fimse' PF		 
