@@ -35,15 +35,15 @@ public class CmdWrite extends AbstractCommand {
 		String content = "";
 		if (id != null) {
 			content = switch (id.getType()) {
-				case INTEGER -> "printf(\"%d\", " + id.getText()+ ");\n";
-				case REAL -> "printf(\"%lf\", " + id.getText()+ ");\n";
-				case TEXT -> "printf(\"%s\" ," + id.getText()+ ");\n";
+				case INTEGER -> "printf(\"%d\\n\", " + id.getText()+ ");\n";
+				case REAL -> "printf(\"%lf\\n\", " + id.getText()+ ");\n";
+				case TEXT -> "printf(\"%s\\n\" ," + id.getText()+ ");\n";
 			};
 		} else {
-			content = "printf(\"%s\", "+ text +");\n";
+			content = "printf(\"%s\\n\" ," + text + ");\n";
 		}
 
-		return super.generateCCode().concat(content) + super.generateCCode() + "printf(\"\\n\");\n";
+		return super.generateCCode().concat(content);
 	}
 
 	public Identifier getId() {

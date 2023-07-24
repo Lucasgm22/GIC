@@ -8,25 +8,18 @@ int main() {
     int b;
     int c;
     int d;
-    printf("%s", "Hello World!");
-    printf("\n");
-    printf("%s", "Digite o valor C");
-    printf("\n");
+    printf("%s\n" ,"Hello World!");
+    printf("%s\n" ,"Digite o valor C");
     strcpy(a, "Ola mundo aqui e a IsiLanguage");
     e = 3.14;
     b = 100*(2+12)/14;
     d = (b+2)/2;
     strcpy(f, "Ola mundo aqui e a IsiLanguage");
     scanf("%d", &c);
-    printf("%s" ,a);
-    printf("\n");
-    printf("%s" ,f);
-    printf("\n");
-    printf("%d", b);
-    printf("\n");
-    printf("%lf", e);
-    printf("\n");
-    printf("%d", d);
-    printf("\n");
+    printf("%s\n" ,a);
+    printf("%s\n" ,f);
+    printf("%d\n", b);
+    printf("%lf\n", e);
+    printf("%d\n", d);
 }
 
