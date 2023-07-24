@@ -42,6 +42,10 @@ public class Identifier {
 		return value;
 	}
 
+	public String getValueText() {
+		return valueText;
+	}
+
 	public String show() {
 		if (value != null) {
 			return type == DataType.INTEGER ? String.valueOf((int) Math.round(value)) : String.valueOf(value);

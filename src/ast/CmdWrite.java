@@ -30,6 +30,22 @@ public class CmdWrite extends AbstractCommand {
 		return super.generateJavaCode() + "System.out.println(" + (id!=null?id.getText():text) +");\n";
 	}
 
+	@Override
+	public String generateCCode() {
+		String content = "";
+		if (id != null) {
+			content = switch (id.getType()) {
+				case INTEGER -> "printf(\"%d\", " + id.getText()+ ");\n";
+				case REAL -> "printf(\"%lf\", " + id.getText()+ ");\n";
+				case TEXT -> "printf(\"%s\" ," + id.getText()+ ");\n";
+			};
+		} else {
+			content = "printf(\"%s\", "+ text +");\n";
+		}
+
+		return super.generateCCode().concat(content) + super.generateCCode() + "printf(\"\\n\");\n";
+	}
+
 	public Identifier getId() {
 		return id;
 	}

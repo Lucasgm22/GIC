@@ -7,6 +7,17 @@ public class CmdAttrib extends AbstractCommand {
 
 	private Identifier id;
 	private AbstractExpression expr;
+
+	public CmdAttrib(Identifier id, AbstractExpression expr, int indentation) {
+		super(indentation);
+		this.id = id;
+		this.expr = expr;
+	}
+
+	public CmdAttrib(Identifier id, int indentationLvl) {
+		super(indentationLvl);
+		this.id = id;
+	}
 	
 	@Override
 	public String generateJSCode() {
@@ -18,15 +29,9 @@ public class CmdAttrib extends AbstractCommand {
 		return super.generateJavaCode() + id.getText() + " = " + expr.toString() + ";\n";
 	}
 
-	public CmdAttrib(Identifier id, AbstractExpression expr, int indentation) {
-		super(indentation);
-		this.id = id;
-		this.expr = expr;
-	}
-
-	public CmdAttrib(Identifier id, int indentationLvl) {
-		super(indentationLvl);
-		this.id = id;
+	@Override
+	public String generateCCode() {
+		return super.generateCCode() + id.getText() + " = " + expr.toString() + ";\n";
 	}
 
 	public Identifier getId() {

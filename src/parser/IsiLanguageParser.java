@@ -790,6 +790,7 @@ public class IsiLanguageParser extends Parser {
 								
 								    _attr = new CmdAttrib(id, expression, indentationLvl);
 								} else {
+								    id.setValueText(textContent);
 								    _attr = new CmdAttribString(id, textContent, indentationLvl);
 								}
 								program.getComandos().add(_attr);
@@ -948,13 +949,18 @@ public class IsiLanguageParser extends Parser {
 								}
 								rightDT = symbolTable.get(_input.LT(-1).getText()).getType();
 								validateBinaryOperation();
-								
+
 								Identifier id = symbolTable.get(_input.LT(-1).getText());
-								if (id.getValue() != null){
-									expression.addOperand(new IDExpression(id));
-								}
-								else{
-									throw new RuntimeException("Semantic ERROR - Unassigned variable");
+								if (rightDT == DataType.TEXT) {
+								    textContent = id.getValueText();
+								} else {
+
+				                	if (id.getValue() != null || id.getValueText() != null){
+				                		expression.addOperand(new IDExpression(id));
+				                	}
+				                	else{
+				                		throw new RuntimeException("Semantic ERROR - Unassigned variable");
+				                	}
 								}
 							
 				}

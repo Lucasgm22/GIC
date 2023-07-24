@@ -25,6 +25,11 @@ public class CmdAttribString extends AbstractCommand{
     }
 
     @Override
+    public String generateCCode() {
+        return super.generateCCode() + "strcpy(" + id.getText() + ", " + content +");\n";
+    }
+
+    @Override
     public void run() {
         id.setValueText(content);
     }

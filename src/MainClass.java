@@ -21,7 +21,7 @@ public class MainClass {
 			System.out.println("-----------------------------");
 			parser.exibirID();
 			System.out.println("------- TARGET --------------");
-			parser.generateObjectCode(TargetLang.JS);
+			parser.generateObjectCode(TargetLang.C);
 			//parser.runInterpreter();
 		}
 		catch(Exception ex) {

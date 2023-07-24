@@ -14,6 +14,7 @@ public abstract class AbstractCommand {
 		return switch (target) {
 			case JS -> generateJSCode();
 			case JAVA -> generateJavaCode();
+			case C -> generateCCode();
 			default -> throw new IllegalArgumentException("Cant convert to this target");
 		};
 	}
@@ -24,6 +25,10 @@ public abstract class AbstractCommand {
 
 	public String generateJavaCode() {
 		return StringUtil.getIndentationLvl(indentation + 2);
+	}
+
+	public String generateCCode() {
+		return StringUtil.getIndentationLvl(indentation + 1);
 	}
 	public abstract void run();
 

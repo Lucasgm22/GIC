@@ -26,5 +26,15 @@ public class CmdDecl extends AbstractCommand {
     }
 
     @Override
+    public String generateCCode() {
+        String content = switch (id.getType()) {
+            case TEXT -> "char " + id.getText() + "[100];\n";
+            case REAL -> "double " + id.getText() + ";\n";
+            case INTEGER -> "int " + id.getText() + ";\n";
+        };
+        return super.generateCCode().concat(content);
+    }
+
+    @Override
     public void run() {}
 }

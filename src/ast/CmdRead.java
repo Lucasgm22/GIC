@@ -30,6 +30,17 @@ public class CmdRead extends AbstractCommand {
 	}
 
 	@Override
+	public String generateCCode() {
+		String content = switch (id.getType()) {
+			case REAL -> "scanf(\"%lf\", &" + id.getText() + ");\n";
+			case INTEGER -> "scanf(\"%d\", &" + id.getText() + ");\n";
+			case TEXT -> "scanf(\"%s\", &" + id.getText() + ");\n";
+		};
+
+		return super.generateCCode().concat(content);
+	}
+
+	@Override
 	public void run() {
 		id.setValue(Integer.parseInt(JOptionPane.showInputDialog("Type Your Input")));
 	}

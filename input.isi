@@ -1,17 +1,20 @@
 programa
-    TEXT a.
+    TEXT a, f.
+    REAL e.
 	INTEGER b,c,d.
-	REAL e.	
+
 	
 	escreva("Hello World!").
 	escreva("Digite o valor C").
-	leia(c).
 
 	a := "Ola mundo aqui e a IsiLanguage".
 	e := 3.14.
 	b := 100 * ( 2 + 12 ) / 14.
 	d := (b + 2) / 2.
+	f := a.
+	leia(c).
 	escreva(a).
+	escreva(f).
 	escreva(b).
 	escreva(e).
 	escreva(d).
