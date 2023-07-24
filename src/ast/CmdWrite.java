@@ -8,30 +8,26 @@ public class CmdWrite extends AbstractCommand {
 	
 	private Identifier id;
 	private String text;
-	
-	public CmdWrite() {
-		super();
-	}
-	
-	public CmdWrite(Identifier id) {
-		super();
+
+	public CmdWrite(Identifier id, int indentation) {
+		super(indentation);
 		this.id = id;
 	}
 	
 
-	public CmdWrite(String text) {
-		super();
+	public CmdWrite(String text, int indentation) {
+		super(indentation);
 		this.text = text;
 	}
 
 	@Override
 	public String generateJSCode() {
-		return "alert(" + (id!=null?id.getText():text) + ");\n";
+		return super.generateJSCode() + "alert(" + (id!=null?id.getText():text) + ");\n";
 	}
 
 	@Override
 	public String generateJavaCode() {
-		return "System.out.println(" + (id!=null?id.getText():text) +");\n";
+		return super.generateJavaCode() + "System.out.println(" + (id!=null?id.getText():text) +");\n";
 	}
 
 	public Identifier getId() {

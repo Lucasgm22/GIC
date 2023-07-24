@@ -1,6 +1,14 @@
 package ast;
 
+import util.StringUtil;
+
 public abstract class AbstractCommand {
+
+	private final int indentation;
+
+	protected AbstractCommand(int indentation) {
+		this.indentation = indentation;
+	}
 
 	public final String generateCode(TargetLang target) {
 		return switch (target) {
@@ -10,8 +18,16 @@ public abstract class AbstractCommand {
 		};
 	}
 
-	public abstract String generateJSCode();
+	public String generateJSCode() {
+		return StringUtil.getIndentationLvl(indentation);
+	}
 
-	public abstract String generateJavaCode();
+	public String generateJavaCode() {
+		return StringUtil.getIndentationLvl(indentation + 2);
+	}
 	public abstract void run();
+
+	public int getIndentation() {
+		return indentation;
+	}
 }

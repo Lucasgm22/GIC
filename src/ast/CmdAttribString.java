@@ -8,19 +8,20 @@ public class CmdAttribString extends AbstractCommand{
 
     private String content;
 
-    public CmdAttribString(Identifier id, String content) {
+    public CmdAttribString(Identifier id, String content, int indentation) {
+        super(indentation);
         this.id = id;
         this.content = content;
     }
 
     @Override
     public String generateJSCode() {
-        return id.getText() + " = " + content + ";\n";
+        return super.generateJSCode() + id.getText() + " = " + content + ";\n";
     }
 
     @Override
     public String generateJavaCode() {
-        return id.getText() + " = " + content + ";\n";
+        return super.generateJavaCode() + id.getText() + " = " + content + ";\n";
     }
 
     @Override

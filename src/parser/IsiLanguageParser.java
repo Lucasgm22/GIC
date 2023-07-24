@@ -115,6 +115,7 @@ public class IsiLanguageParser extends Parser {
 		private String   text;
 		private String textContent;
 		private Program  program = new Program();
+		private int indentationLvl = 0;
 		
 		public void init(){
 			program.setSymbolTable(symbolTable);
@@ -369,7 +370,7 @@ public class IsiLanguageParser extends Parser {
 
 			                 Identifier dcId = new Identifier(_input.LT(-1).getText(), currentType);
 			                 symbolTable.add(_input.LT(-1).getText(), dcId);
-			                 CmdDecl _decl = new CmdDecl(dcId);
+			                 CmdDecl _decl = new CmdDecl(dcId, indentationLvl);
 			                 program.getComandos().add(_decl);
 			                 
 			setState(57);
@@ -385,7 +386,7 @@ public class IsiLanguageParser extends Parser {
 
 				           	     Identifier dcId2 = new Identifier(_input.LT(-1).getText(), currentType);
 				           	     symbolTable.add(_input.LT(-1).getText(), dcId2);
-				           	     CmdDecl _decl2 = new CmdDecl(dcId2);
+				           	     CmdDecl _decl2 = new CmdDecl(dcId2, indentationLvl);
 				           	     program.getComandos().add(_decl2);
 				           	     
 				}
@@ -630,7 +631,7 @@ public class IsiLanguageParser extends Parser {
 							if (id == null){
 								throw new RuntimeException("Undeclared Variable");
 							}
-							CmdRead _read = new CmdRead(id);
+							CmdRead _read = new CmdRead(id, indentationLvl);
 							program.getComandos().add(_read);
 						 
 			setState(93);
@@ -693,7 +694,7 @@ public class IsiLanguageParser extends Parser {
 					         	if (id == null){
 					         		throw new RuntimeException("Undeclared Variable");	         		
 					         	}
-					         	CmdWrite _write = new CmdWrite(id);
+					         	CmdWrite _write = new CmdWrite(id, indentationLvl);
 					         	program.getComandos().add(_write);
 					         
 				}
@@ -703,7 +704,7 @@ public class IsiLanguageParser extends Parser {
 				setState(100);
 				match(TEXT);
 
-					         	CmdWrite _write = new CmdWrite(_input.LT(-1).getText());
+					         	CmdWrite _write = new CmdWrite(_input.LT(-1).getText(), indentationLvl);
 					         	program.getComandos().add(_write);
 					         	
 					         
@@ -787,9 +788,9 @@ public class IsiLanguageParser extends Parser {
 
 			                        System.out.println("EVAL ["+expression+"] = "+expression.eval());
 								
-								    _attr = new CmdAttrib(id, expression);
+								    _attr = new CmdAttrib(id, expression, indentationLvl);
 								} else {
-								    _attr = new CmdAttribString(id, textContent);
+								    _attr = new CmdAttribString(id, textContent, indentationLvl);
 								}
 								program.getComandos().add(_attr);
 								textContent = null;

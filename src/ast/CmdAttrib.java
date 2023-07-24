@@ -10,27 +10,23 @@ public class CmdAttrib extends AbstractCommand {
 	
 	@Override
 	public String generateJSCode() {
-		return id.getText() + " = " + expr.toString() + ";\n";
+		return super.generateJSCode() + id.getText() + " = " + expr.toString() + ";\n";
 	}
 
 	@Override
 	public String generateJavaCode() {
-		return id.getText() + " = " + expr.toString() + ";\n";
+		return super.generateJavaCode() + id.getText() + " = " + expr.toString() + ";\n";
 	}
 
-	public CmdAttrib(Identifier id, AbstractExpression expr) {
-		super();
+	public CmdAttrib(Identifier id, AbstractExpression expr, int indentation) {
+		super(indentation);
 		this.id = id;
 		this.expr = expr;
 	}
 
-	public CmdAttrib(Identifier id) {
-		super();
+	public CmdAttrib(Identifier id, int indentationLvl) {
+		super(indentationLvl);
 		this.id = id;
-	}
-
-	public CmdAttrib() {
-		super();
 	}
 
 	public Identifier getId() {

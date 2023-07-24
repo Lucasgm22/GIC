@@ -26,7 +26,7 @@ public class Program {
 					StringBuilder strBuilder = new StringBuilder();
 					generateHeader(target, strBuilder);
 					comandos.forEach(c -> {
-						System.out.print(c.generateCode(target));
+						//System.out.print(c.generateCode(target));
 						strBuilder.append(c.generateCode(target));
 					});
 					generateFooter(target, strBuilder);
@@ -49,7 +49,7 @@ public class Program {
 
 	private void generateFooter(TargetLang target, StringBuilder strBuilder) {
 		if (TargetLang.JAVA == target) {
-			strBuilder.append("}\n");
+			strBuilder.append("    }\n");
 			strBuilder.append("}\n");
 		}
 	}
@@ -58,8 +58,8 @@ public class Program {
 		if (TargetLang.JAVA == target) {
 			strBuilder.append("import java.util.Scanner;\n\n");
 			strBuilder.append("public class Main {\n");
-			strBuilder.append("public static void main(String[] args) {\n");
-			strBuilder.append("Scanner sc = new Scanner(System.in);\n");
+			strBuilder.append("    public static void main(String[] args) {\n");
+			strBuilder.append("        Scanner sc = new Scanner(System.in);\n");
 		}
 	}
 

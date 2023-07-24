@@ -108,6 +108,7 @@ public class IsiLanguageLexer extends Lexer {
 		private String   text;
 		private String textContent;
 		private Program  program = new Program();
+		private int indentationLvl = 0;
 		
 		public void init(){
 			program.setSymbolTable(symbolTable);
