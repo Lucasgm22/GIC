@@ -17,8 +17,8 @@ if (0<1) {
         alert("7 > 9");
     } else {
         alert("7 < 9");
-     }
- }
+    }
+}
 b = 2;
 alert(a);
 alert(f);

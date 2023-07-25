@@ -28,8 +28,8 @@ public class Main {
                 System.out.println("7 > 9");
             } else {
                 System.out.println("7 < 9");
-             }
-         }
+            }
+        }
         b = 2;
         System.out.println(a);
         System.out.println(f);

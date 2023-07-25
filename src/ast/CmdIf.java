@@ -1,6 +1,7 @@
 package ast;
 
 import expressions.AbstractExpression;
+import expressions.BinaryRelationalExpression;
 import expressions.ExpressionTree;
 import util.StringUtil;
 
@@ -9,9 +10,7 @@ import java.util.List;
 
 public class CmdIf extends AbstractCommand {
 
-    private ExpressionTree expressionLeft;
-    private ExpressionTree expressionRight;
-    private String operator;
+    private BinaryRelationalExpression bExpression;
 
     private List<AbstractCommand> listTrue = new ArrayList<>();
     private List<AbstractCommand> listFalse = new ArrayList<>();
@@ -21,9 +20,7 @@ public class CmdIf extends AbstractCommand {
                     ExpressionTree expressionRight,
                     String operator) {
         super(indentation);
-        this.expressionLeft = expressionLeft;
-        this.expressionRight = expressionRight;
-        this.operator = operator;
+        bExpression = new BinaryRelationalExpression(expressionLeft, expressionRight, operator);
     }
 
     @Override
@@ -39,10 +36,10 @@ public class CmdIf extends AbstractCommand {
         }
         String elseblock = "\n";
         if (!cmdFalse.isEmpty()) {
-            elseblock = " else {\n" + cmdFalse + indentation +" }\n";
+            elseblock = " else {\n" + cmdFalse + indentation +"}\n";
         }
         return indentation
-                + "if (" + expressionLeft + operator + expressionRight + ") {\n"
+                + "if (" + bExpression + ") {\n"
                 + cmdTrue
                 + indentation
                 + "}" + elseblock;
@@ -61,10 +58,10 @@ public class CmdIf extends AbstractCommand {
         }
         String elseblock = "\n";
         if (!cmdFalse.isEmpty()) {
-            elseblock = " else {\n" + cmdFalse + indentation +" }\n";
+            elseblock = " else {\n" + cmdFalse + indentation +"}\n";
         }
         return indentation
-                + "if (" + expressionLeft + operator + expressionRight + ") {\n"
+                + "if (" + bExpression + ") {\n"
                 + cmdTrue
                 + indentation
                 + "}" + elseblock;
@@ -83,10 +80,10 @@ public class CmdIf extends AbstractCommand {
         }
         String elseblock = "\n";
         if (!cmdFalse.isEmpty()) {
-            elseblock = " else {\n" + cmdFalse + indentation +" }\n";
+            elseblock = " else {\n" + cmdFalse + indentation +"}\n";
         }
         return indentation
-                + "if (" + expressionLeft + operator + expressionRight + ") {\n"
+                + "if (" + bExpression + ") {\n"
                 + cmdTrue
                 + indentation
                 + "}" + elseblock;
@@ -94,16 +91,7 @@ public class CmdIf extends AbstractCommand {
 
     @Override
     public void run() {
-        var condition = switch (operator) {
-            case "<" -> expressionLeft.eval() < expressionRight.eval();
-            case "<=" -> expressionLeft.eval() <= expressionRight.eval();
-            case ">" -> expressionLeft.eval() > expressionRight.eval();
-            case ">=" -> expressionLeft.eval() >= expressionRight.eval();
-            case "==" -> expressionLeft.eval() == expressionRight.eval();
-            case "<>" -> expressionLeft.eval() != expressionRight.eval();
-            default -> throw new RuntimeException("unknown rel operator");
-        };
-        if (condition) {
+        if (bExpression.eval()) {
             listTrue.forEach(AbstractCommand::run);
         } else {
             listFalse.forEach(AbstractCommand::run);

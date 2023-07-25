@@ -27,8 +27,8 @@ int main() {
             printf("%s\n" ,"7 > 9");
         } else {
             printf("%s\n" ,"7 < 9");
-         }
-     }
+        }
+    }
     b = 2;
     printf("%s\n" ,a);
     printf("%s\n" ,f);
