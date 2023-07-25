@@ -23,9 +23,9 @@ public class MainClass {
 			var lexer = new IsiLanguageLexer(CharStreams.fromFileName(inputName + inputExt));
 			CommonTokenStream tokenStream = new CommonTokenStream(lexer);
 			var parser = new IsiLanguageParser(tokenStream);
+			System.out.println("Starting Expression Analysis");
 			parser.init();
 			parser.programa();
-			System.out.println("Starting Expression Analysis");
 			System.out.println("Compilation Successful! Good Job");
 			System.out.println("-----------------------------");
 			parser.exibirID();

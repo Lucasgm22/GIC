@@ -2,6 +2,7 @@
 package parser;
 
 	import java.util.ArrayList;
+	import java.util.Stack;
 	import symbols.DataType;
 	import symbols.Identifier;
 	import symbols.SymbolTable;
@@ -101,6 +102,9 @@ public class IsiLanguageLexer extends Lexer {
 		private SymbolTable symbolTable = new SymbolTable();
 		private DataType currentType;
 		private ExpressionTree expression;
+		private ExpressionTree _leftExpression;
+		private ExpressionTree _rightExpression;
+		private String _relOp;
 		private char operator;
 		private DataType leftDT;
 		private DataType rightDT;
@@ -109,6 +113,9 @@ public class IsiLanguageLexer extends Lexer {
 		private String textContent;
 		private Program  program = new Program();
 		private int indentationLvl = 0;
+		private Stack<ArrayList<AbstractCommand>> stack = new Stack<>();
+		private Stack<CmdIf> stackIfCmds = new Stack<>();
+		private ArrayList<AbstractCommand> curThread;
 		
 		public void init(){
 			program.setSymbolTable(symbolTable);
@@ -127,7 +134,7 @@ public class IsiLanguageLexer extends Lexer {
 		}
 
 		private void validateBinaryOperation() {
-			if (leftDT != rightDT) {
+			if (leftDT != null && leftDT != rightDT) {
 	    	    throw new RuntimeException("Semantic ERROR - Type Mismatching "+leftDT+ "-"+rightDT);
 	        }
 	    }
@@ -191,7 +198,7 @@ public class IsiLanguageLexer extends Lexer {
 		"\u0002\u0005\u0003\u0007\u0004\t\u0005\u000b\u0006\r\u0007\u000f\b\u0011"+
 		"\t\u0013\n\u0015\u000b\u0017\f\u0019\r\u001b\u000e\u001d\u000f\u001f\u0010"+
 		"!\u0011#\u0012%\u0013\'\u0014)\u0015+\u0016-\u0017/\u00181\u00193\u001a"+
-		"\u0001\u0000\u0005\u0001\u000009\u0006\u0000\t\t !--09AZaz\u0001\u0000"+
+		"\u0001\u0000\u0005\u0001\u000009\b\u0000\t\t !--09<<>>AZaz\u0001\u0000"+
 		"az\u0003\u000009AZaz\u0003\u0000\t\n\r\r  \u00d0\u0000\u0001\u0001\u0000"+
 		"\u0000\u0000\u0000\u0003\u0001\u0000\u0000\u0000\u0000\u0005\u0001\u0000"+
 		"\u0000\u0000\u0000\u0007\u0001\u0000\u0000\u0000\u0000\t\u0001\u0000\u0000"+

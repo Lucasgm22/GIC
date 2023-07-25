@@ -8,14 +8,27 @@ programa
 	escreva("Digite o valor C").
 
 	a := "Ola mundo aqui e a IsiLanguage".
-	e := 3.14.
 	b := 100 * ( 2 + 12 ) / 14.
 	d := (b + 2) / 2.
+
 	f := a.
 	leia(c).
+	se (0 < 1) entao
+        escreva("0 < 1").
+        se (2 < 3) entao
+            escreva("2 < 3").
+        fimse.
+    senao
+        escreva("0 > 1").
+        se (7 > 9) entao
+            escreva("7 > 9").
+        senao
+            escreva("7 < 9").
+        fimse.
+    fimse.
+    b := 2.
 	escreva(a).
 	escreva(f).
 	escreva(b).
-	escreva(e).
 	escreva(d).
 fimprog.

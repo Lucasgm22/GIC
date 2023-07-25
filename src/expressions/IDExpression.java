@@ -3,20 +3,18 @@ package expressions;
 import symbols.Identifier;
 
 public class IDExpression extends AbstractExpression{
-	private String id;
-	private Double value;
+	private Identifier id;
 
 
-	public IDExpression(Identifier identifier) {
-		id = identifier.getText();
-		value = identifier.getValue();
+	public IDExpression(Identifier id) {
+		this.id = id;
 	}
 	public double eval() {
-		return this.value;
+		return id.getValue();
 	}
 
 	@Override
 	public String toString() {
-		return id;
+		return id.getText();
 	}
 }

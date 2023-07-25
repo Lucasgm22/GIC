@@ -2,6 +2,7 @@
 package parser;
 
 	import java.util.ArrayList;
+	import java.util.Stack;
 	import symbols.DataType;
 	import symbols.Identifier;
 	import symbols.SymbolTable;

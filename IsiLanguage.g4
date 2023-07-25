@@ -2,6 +2,7 @@ grammar IsiLanguage;
 
 @header{
 	import java.util.ArrayList;
+	import java.util.Stack;
 	import symbols.DataType;
 	import symbols.Identifier;
 	import symbols.SymbolTable;
@@ -14,6 +15,9 @@ grammar IsiLanguage;
 	private SymbolTable symbolTable = new SymbolTable();
 	private DataType currentType;
 	private ExpressionTree expression;
+	private ExpressionTree _leftExpression;
+	private ExpressionTree _rightExpression;
+	private String _relOp;
 	private char operator;
 	private DataType leftDT;
 	private DataType rightDT;
@@ -22,6 +26,9 @@ grammar IsiLanguage;
 	private String textContent;
 	private Program  program = new Program();
 	private int indentationLvl = 0;
+	private Stack<ArrayList<AbstractCommand>> stack = new Stack<>();
+	private Stack<CmdIf> stackIfCmds = new Stack<>();
+	private ArrayList<AbstractCommand> curThread;
 	
 	public void init(){
 		program.setSymbolTable(symbolTable);
@@ -40,12 +47,18 @@ grammar IsiLanguage;
 	}
 
 	private void validateBinaryOperation() {
-		if (leftDT != rightDT) {
+		if (leftDT != null && leftDT != rightDT) {
     	    throw new RuntimeException("Semantic ERROR - Type Mismatching "+leftDT+ "-"+rightDT);
         }
     }
 }
-programa  : 'programa' decl+ cmd* 'fimprog.'
+programa  : 'programa' {
+             curThread = new ArrayList<AbstractCommand>();
+             stack.push(curThread);
+           } decl+ cmd* 'fimprog.'
+           {
+             program.setComandos(stack.pop());
+           }
 		  ;
 		  
 decl	  : tipo lista_var PF
@@ -60,14 +73,14 @@ lista_var : ID {
                  Identifier dcId = new Identifier(_input.LT(-1).getText(), currentType);
                  symbolTable.add(_input.LT(-1).getText(), dcId);
                  CmdDecl _decl = new CmdDecl(dcId, indentationLvl);
-                 program.getComandos().add(_decl);
+                 stack.peek().add(_decl);
                  }
            (VIRG
            	ID {
            	     Identifier dcId2 = new Identifier(_input.LT(-1).getText(), currentType);
            	     symbolTable.add(_input.LT(-1).getText(), dcId2);
            	     CmdDecl _decl2 = new CmdDecl(dcId2, indentationLvl);
-           	     program.getComandos().add(_decl2);
+           	     stack.peek().add(_decl2);
            	     }
            )*
    		  ;
@@ -75,7 +88,44 @@ lista_var : ID {
 cmd		  : cmdAttr | cmdRead | cmdWrite | cmdIf
 		  ;
 		  
-cmdIf     : 'se' AP expr OPREL expr FP 'entao' cmd+ ('senao' cmd+)? 'fimse' PF		 
+cmdIf     : 'se' AP
+            {
+                expression = new ExpressionTree();
+            }
+            expr {
+                _leftExpression = expression;
+                expression = null;
+            } OPREL {
+                _relOp = _input.LT(-1).getText();
+                expression = new ExpressionTree();
+            } expr {
+                _rightExpression = expression;
+                expression = null;
+                CmdIf _cmdIf = new CmdIf(indentationLvl, _leftExpression, _rightExpression, _relOp);
+                stackIfCmds.push(_cmdIf);
+                _cmdIf = null;
+                _leftExpression = null;
+                _rightExpression = null;
+                _relOp = null;
+                indentationLvl += 1;
+            } FP 'entao'
+            {
+                curThread = new ArrayList<AbstractCommand>();
+                stack.push(curThread);
+            }cmd+
+            {
+               stackIfCmds.peek().setListTrue(stack.pop());
+            }('senao'
+             {
+               curThread = new ArrayList<AbstractCommand>();
+               stack.push(curThread);
+             }cmd+
+             {
+               stackIfCmds.peek().setListFalse(stack.pop());
+             })? 'fimse' PF {
+                stack.peek().add(stackIfCmds.pop());
+                indentationLvl -= 1;
+             }
 		  ; 
 		  
 cmdRead   : 'leia' AP ID {
@@ -84,7 +134,7 @@ cmdRead   : 'leia' AP ID {
 					throw new RuntimeException("Undeclared Variable");
 				}
 				CmdRead _read = new CmdRead(id, indentationLvl);
-				program.getComandos().add(_read);
+				stack.peek().add(_read);
 			 }
 			 FP PF
 		  ;		 
@@ -96,12 +146,12 @@ cmdWrite  : 'escreva' AP (
 	         		throw new RuntimeException("Undeclared Variable");	         		
 	         	}
 	         	CmdWrite _write = new CmdWrite(id, indentationLvl);
-	         	program.getComandos().add(_write);
+	         	stack.peek().add(_write);
 	         } 
 	         | 
 	         TEXT {
 	         	CmdWrite _write = new CmdWrite(_input.LT(-1).getText(), indentationLvl);
-	         	program.getComandos().add(_write);
+	         	stack.peek().add(_write);
 	         	
 	         }
              ) FP PF
@@ -136,9 +186,11 @@ cmdAttr   : ID {
 					    id.setValueText(textContent);
 					    _attr = new CmdAttribString(id, textContent, indentationLvl);
 					}
-					program.getComandos().add(_attr);
+					stack.peek().add(_attr);
 					textContent = null;
-					expression = null;					
+					expression = null;
+					leftDT = null;
+					rightDT = null;
 				}
 		  ;   		  
 		  
@@ -147,8 +199,14 @@ expr	  : termo exprl*
           
 termo     : (NUMBER | NUMBERDEC)
 			{
-				rightDT = _input.LT(-1).getType() == 13 ? DataType.REAL : DataType.INTEGER;
-				validateBinaryOperation();
+			    if (leftDT != null) {
+				    rightDT = _input.LT(-1).getType() == 13 ? DataType.REAL : DataType.INTEGER;
+				    validateBinaryOperation();
+				}
+				else {
+				    leftDT = _input.LT(-1).getType() == 13 ? DataType.REAL : DataType.INTEGER;
+				}
+
 				expression.addOperand(new NumberExpression(Double.parseDouble(_input.LT(-1).getText()), rightDT));
 			}
 		  |
@@ -206,7 +264,7 @@ NUMBER	  : ('-')?[0-9]+
 NUMBERDEC : ('-')?[0-9]+('.'[0-9]+)
           ;
 		  
-TEXT 	  : '"' ([a-z]|[A-Z]|[0-9]|' '|'\t'|'!'|'-')* '"'
+TEXT 	  : '"' ([a-z]|[A-Z]|[0-9]|' '|'\t'|'!'|'-'|'<'|'>')* '"'
 		  ;		  
 		  
 ATTR	  : ':='
