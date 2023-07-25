@@ -12,14 +12,15 @@ import java.util.Objects;
 public class MainClass {
 	public static void main(String[] args) {
 		try {
-			var inputSplitExt = args[0].split("\\.", 2);
+			int i = args[0].lastIndexOf(".");
+			String[] inputSplitExt =  {args[0].substring(0, i), args[0].substring(i)};
 			var inputName = inputSplitExt[0];
 			var inputExt = inputSplitExt[1];
-			if (!Objects.equals(inputExt, "isi")) {
+			if (!Objects.equals(inputExt, ".isi")) {
 				throw new RuntimeException("unsupported extension");
 			}
 			var mode = ProgramMode.valueOf(args[1]);
-			var lexer = new IsiLanguageLexer(CharStreams.fromFileName(inputName + ".isi"));
+			var lexer = new IsiLanguageLexer(CharStreams.fromFileName(inputName + inputExt));
 			CommonTokenStream tokenStream = new CommonTokenStream(lexer);
 			var parser = new IsiLanguageParser(tokenStream);
 			parser.init();
