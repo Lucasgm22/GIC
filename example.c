@@ -23,10 +23,10 @@ int main() {
         }
     } else {
         printf("%s\n" ,"0 > 1");
-        if (7>9) {
-            printf("%s\n" ,"7 > 9");
+        if (7!=9) {
+            printf("%s\n" ,"7 != 9");
         } else {
-            printf("%s\n" ,"7 < 9");
+            printf("%s\n" ,"7 == 9");
         }
     }
     b = 2;

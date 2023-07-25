@@ -21,10 +21,10 @@ programa
         fimse.
     senao
         escreva("0 > 1").
-        se (7 > 9) entao
-            escreva("7 > 9").
+        se (7 != 9) entao
+            escreva("7 != 9").
         senao
-            escreva("7 < 9").
+            escreva("7 == 9").
         fimse.
     fimse.
     b := 2.

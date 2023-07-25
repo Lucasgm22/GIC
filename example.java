@@ -24,10 +24,10 @@ public class Main {
             }
         } else {
             System.out.println("0 > 1");
-            if (7>9) {
-                System.out.println("7 > 9");
+            if (7!=9) {
+                System.out.println("7 != 9");
             } else {
-                System.out.println("7 < 9");
+                System.out.println("7 == 9");
             }
         }
         b = 2;
