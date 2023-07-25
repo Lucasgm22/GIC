@@ -31,8 +31,8 @@ grammar IsiLanguage;
 		symbolTable.getSymbols().values().stream().forEach((id)->System.out.println(id));
 	}
 	
-	public void generateObjectCode(TargetLang target){
-		program.generateTarget(target);
+	public void generateObjectCode(String filename, TargetLang target){
+		program.generateTarget(filename, target);
 	}
 	
 	public void runInterpreter(){

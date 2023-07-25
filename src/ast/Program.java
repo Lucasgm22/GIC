@@ -14,11 +14,10 @@ public class Program {
 	private SymbolTable symbolTable;
 
 	public Program() {
-		this.filename = "output";
 		this.comandos = new ArrayList<>();
 	}
 
-	public void generateTarget(TargetLang target) {
+	public void generateTarget(String filename, TargetLang target) {
 		try {
 			var extension = generateExtension(target);
 			try (var fw = new FileWriter(filename + extension)) {
