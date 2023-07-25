@@ -16,11 +16,10 @@ public class CmdIf extends AbstractCommand {
     private List<AbstractCommand> listFalse = new ArrayList<>();
 
     public CmdIf(int indentation,
-                    ExpressionTree expressionLeft,
-                    ExpressionTree expressionRight,
-                    String operator) {
+                    BinaryRelationalExpression bExpression
+                 ) {
         super(indentation);
-        bExpression = new BinaryRelationalExpression(expressionLeft, expressionRight, operator);
+        this.bExpression = bExpression;
     }
 
     @Override

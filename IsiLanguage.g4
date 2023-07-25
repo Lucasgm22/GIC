@@ -29,6 +29,7 @@ grammar IsiLanguage;
 	private Stack<ArrayList<AbstractCommand>> stack = new Stack<>();
 	private Stack<CmdIf> stackIfCmds = new Stack<>();
 	private ArrayList<AbstractCommand> curThread;
+	private BinaryRelationalExpression _bExpression;
 	
 	public void init(){
 		program.setSymbolTable(symbolTable);
@@ -88,28 +89,12 @@ lista_var : ID {
 cmd		  : cmdAttr | cmdRead | cmdWrite | cmdIf
 		  ;
 		  
-cmdIf     : 'se' AP
+cmdIf     : 'se' AP brelationalexpr FP 'entao'
             {
-                expression = new ExpressionTree();
-            }
-            expr {
-                _leftExpression = expression;
-                expression = null;
-            } OPREL {
-                _relOp = _input.LT(-1).getText();
-                expression = new ExpressionTree();
-            } expr {
-                _rightExpression = expression;
-                expression = null;
-                CmdIf _cmdIf = new CmdIf(indentationLvl, _leftExpression, _rightExpression, _relOp);
+                CmdIf _cmdIf = new CmdIf(indentationLvl, _bExpression);
+                _bExpression = null;
                 stackIfCmds.push(_cmdIf);
-                _cmdIf = null;
-                _leftExpression = null;
-                _rightExpression = null;
-                _relOp = null;
                 indentationLvl += 1;
-            } FP 'entao'
-            {
                 curThread = new ArrayList<AbstractCommand>();
                 stack.push(curThread);
             }cmd+
@@ -196,6 +181,25 @@ cmdAttr   : ID {
 		  
 expr	  : termo exprl*
           ;
+
+brelationalexpr: {
+                                 expression = new ExpressionTree();
+                             }
+                             expr {
+                                 _leftExpression = expression;
+                                 expression = null;
+                             } OPREL {
+                                 _relOp = _input.LT(-1).getText();
+                                 expression = new ExpressionTree();
+                             } expr {
+                                 _rightExpression = expression;
+                                 expression = null;
+                                 _bExpression = new BinaryRelationalExpression(_leftExpression, _rightExpression,_relOp);
+                                 _leftExpression = null;
+                                 _rightExpression = null;
+                                 _relOp = null;
+                             }
+               ;
           
 termo     : (NUMBER | NUMBERDEC)
 			{

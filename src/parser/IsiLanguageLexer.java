@@ -116,6 +116,7 @@ public class IsiLanguageLexer extends Lexer {
 		private Stack<ArrayList<AbstractCommand>> stack = new Stack<>();
 		private Stack<CmdIf> stackIfCmds = new Stack<>();
 		private ArrayList<AbstractCommand> curThread;
+		private BinaryRelationalExpression _bExpression;
 		
 		public void init(){
 			program.setSymbolTable(symbolTable);

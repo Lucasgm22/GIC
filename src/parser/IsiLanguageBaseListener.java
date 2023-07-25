@@ -147,6 +147,18 @@ public class IsiLanguageBaseListener implements IsiLanguageListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterBrelationalexpr(IsiLanguageParser.BrelationalexprContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitBrelationalexpr(IsiLanguageParser.BrelationalexprContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterTermo(IsiLanguageParser.TermoContext ctx) { }
 	/**
 	 * {@inheritDoc}
