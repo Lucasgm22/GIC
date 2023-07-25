@@ -1,7 +1,7 @@
 programa
-    TEXT a, f.
+    TEXTO a, f.
     REAL e.
-	INTEGER b,c,d.
+	INTEIRO b,c,d.
 
 	
 	escreva("Hello World!").

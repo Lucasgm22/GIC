@@ -1,6 +1,7 @@
 package ast;
 
 import symbols.Identifier;
+import util.StringUtil;
 
 public class CmdDecl extends AbstractCommand {
 
@@ -17,20 +18,22 @@ public class CmdDecl extends AbstractCommand {
 
     @Override
     public String generateJavaCode() {
-        return switch (id.getType()) {
+        var content = switch (id.getType()) {
             case TEXT -> "String " + id.getText() + ";\n";
             case REAL -> "double " + id.getText() + ";\n";
             case INTEGER -> "int " + id.getText() + ";\n";
         };
+        return StringUtil.indentationByTarget(getIndentation(), TargetLang.JAVA) + content;
     }
 
     @Override
     public String generateCCode() {
-        return switch (id.getType()) {
+        var content = switch (id.getType()) {
             case TEXT -> "char " + id.getText() + "[100];\n";
             case REAL -> "double " + id.getText() + ";\n";
             case INTEGER -> "int " + id.getText() + ";\n";
         };
+        return StringUtil.indentationByTarget(getIndentation(), TargetLang.C) + content;
     }
 
     @Override

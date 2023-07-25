@@ -2,9 +2,9 @@ token literal names:
 null
 'programa'
 'fimprog.'
-'INTEGER'
+'INTEIRO'
 'REAL'
-'TEXT'
+'TEXTO'
 'se'
 'entao'
 'senao'

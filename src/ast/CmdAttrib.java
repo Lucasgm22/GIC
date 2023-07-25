@@ -2,6 +2,7 @@ package ast;
 
 import expressions.AbstractExpression;
 import symbols.Identifier;
+import util.StringUtil;
 
 public class CmdAttrib extends AbstractCommand {
 
@@ -21,17 +22,20 @@ public class CmdAttrib extends AbstractCommand {
 	
 	@Override
 	public String generateJSCode() {
-		return id.getText() + " = " + expr.toString() + ";\n";
+		return StringUtil.indentationByTarget(getIndentation(), TargetLang.JS) +
+				id.getText() + " = " + expr.toString() + ";\n";
 	}
 
 	@Override
 	public String generateJavaCode() {
-		return id.getText() + " = " + expr.toString() + ";\n";
+		return StringUtil.indentationByTarget(getIndentation(), TargetLang.JAVA) +
+				id.getText() + " = " + expr.toString() + ";\n";
 	}
 
 	@Override
 	public String generateCCode() {
-		return id.getText() + " = " + expr.toString() + ";\n";
+		return StringUtil.indentationByTarget(getIndentation(), TargetLang.C) +
+				id.getText() + " = " + expr.toString() + ";\n";
 	}
 
 	public Identifier getId() {

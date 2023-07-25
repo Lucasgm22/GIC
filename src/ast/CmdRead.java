@@ -3,6 +3,7 @@ package ast;
 import javax.swing.JOptionPane;
 
 import symbols.Identifier;
+import util.StringUtil;
 
 public class CmdRead extends AbstractCommand {
 	
@@ -15,25 +16,30 @@ public class CmdRead extends AbstractCommand {
 
 	@Override
 	public String generateJSCode() {
-		return id.getText() + " = " + "prompt(\"Type you input\");\n";
+		return StringUtil.indentationByTarget(getIndentation(), TargetLang.JS) +
+				id.getText() + " = " + "prompt(\"Type you input\");\n";
 	}
 
 	@Override
 	public String generateJavaCode() {
-		return switch (id.getType()) {
+		var content = switch (id.getType()) {
 			case REAL -> id.getText() + " = " + "sc.nextDouble();\n";
 			case INTEGER -> id.getText() + " = " + "sc.nextInt();\n";
 			case TEXT -> id.getText() + " = " + "sc.nextLine();\n";
 		};
+		return StringUtil.indentationByTarget(getIndentation(), TargetLang.JAVA) +
+				content;
 	}
 
 	@Override
 	public String generateCCode() {
-		return  switch (id.getType()) {
+		var content = switch (id.getType()) {
 			case REAL -> "scanf(\"%lf\", &" + id.getText() + ");\n";
 			case INTEGER -> "scanf(\"%d\", &" + id.getText() + ");\n";
 			case TEXT -> "scanf(\"%s\", &" + id.getText() + ");\n";
 		};
+		return StringUtil.indentationByTarget(getIndentation(), TargetLang.C) +
+				content;
 	}
 
 	@Override

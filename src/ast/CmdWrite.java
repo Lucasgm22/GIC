@@ -3,6 +3,7 @@ package ast;
 import javax.swing.JOptionPane;
 
 import symbols.Identifier;
+import util.StringUtil;
 
 public class CmdWrite extends AbstractCommand {
 	
@@ -22,25 +23,30 @@ public class CmdWrite extends AbstractCommand {
 
 	@Override
 	public String generateJSCode() {
-		return "alert(" + (id!=null?id.getText():text) + ");\n";
+		return StringUtil.indentationByTarget(getIndentation(), TargetLang.JS) +
+				"alert(" + (id!=null?id.getText():text) + ");\n";
 	}
 
 	@Override
 	public String generateJavaCode() {
-		return "System.out.println(" + (id!=null?id.getText():text) +");\n";
+		return StringUtil.indentationByTarget(getIndentation(), TargetLang.JAVA)
+				+ "System.out.println(" + (id!=null?id.getText():text) +");\n";
 	}
 
 	@Override
 	public String generateCCode() {
+		String content = "";
 		if (id != null) {
-			return switch (id.getType()) {
+			content = switch (id.getType()) {
 				case INTEGER -> "printf(\"%d\\n\", " + id.getText()+ ");\n";
 				case REAL -> "printf(\"%lf\\n\", " + id.getText()+ ");\n";
 				case TEXT -> "printf(\"%s\\n\" ," + id.getText()+ ");\n";
 			};
 		} else {
-			return  "printf(\"%s\\n\" ," + text + ");\n";
+			content = "printf(\"%s\\n\" ," + text + ");\n";
 		}
+		return StringUtil.indentationByTarget(getIndentation(), TargetLang.C) +
+				content;
 	}
 
 	public Identifier getId() {

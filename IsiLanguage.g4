@@ -51,9 +51,9 @@ programa  : 'programa' decl+ cmd* 'fimprog.'
 decl	  : tipo lista_var PF
 		  ;
 		 
-tipo	  : 'INTEGER' { currentType = DataType.INTEGER; }
+tipo	  : 'INTEIRO' { currentType = DataType.INTEGER; }
           | 'REAL'    { currentType = DataType.REAL; }
-          | 'TEXT'    { currentType = DataType.TEXT; }
+          | 'TEXTO'    { currentType = DataType.TEXT; }
           ;
 
 lista_var : ID {

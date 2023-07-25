@@ -1,7 +1,5 @@
 package ast;
 
-import util.StringUtil;
-
 public abstract class AbstractCommand {
 
 	private final int indentation;
@@ -11,13 +9,11 @@ public abstract class AbstractCommand {
 	}
 
 	public final String generateCode(TargetLang target) {
-		String compiledCommand = switch (target) {
+		return switch (target) {
 			case JS -> generateJSCode();
 			case JAVA -> generateJavaCode();
 			case C -> generateCCode();
 		};
-
-		return StringUtil.indentCommand(compiledCommand, indentation, target);
 	}
 
 	public abstract String generateJSCode();
@@ -27,4 +23,8 @@ public abstract class AbstractCommand {
 	public abstract String generateCCode();
 
 	public abstract void run();
+
+	public int getIndentation() {
+		return indentation;
+	}
 }

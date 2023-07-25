@@ -1,6 +1,7 @@
 package ast;
 
 import symbols.Identifier;
+import util.StringUtil;
 
 public class CmdAttribString extends AbstractCommand{
 
@@ -16,17 +17,20 @@ public class CmdAttribString extends AbstractCommand{
 
     @Override
     public String generateJSCode() {
-        return id.getText() + " = " + content + ";\n";
+        return StringUtil.indentationByTarget(getIndentation(), TargetLang.JS) +
+                id.getText() + " = " + content + ";\n";
     }
 
     @Override
     public String generateJavaCode() {
-        return id.getText() + " = " + content + ";\n";
+        return StringUtil.indentationByTarget(getIndentation(), TargetLang.JAVA) +
+                id.getText() + " = " + content + ";\n";
     }
 
     @Override
     public String generateCCode() {
-        return "strcpy(" + id.getText() + ", " + content +");\n";
+        return StringUtil.indentationByTarget(getIndentation(), TargetLang.C) +
+                "strcpy(" + id.getText() + ", " + content +");\n";
     }
 
     @Override
