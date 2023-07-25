@@ -28,6 +28,7 @@ grammar IsiLanguage;
 	private int indentationLvl = 0;
 	private Stack<ArrayList<AbstractCommand>> stack = new Stack<>();
 	private Stack<CmdIf> stackIfCmds = new Stack<>();
+	private Stack<CmdWhile> stackWhileCmds = new Stack<>();
 	private ArrayList<AbstractCommand> curThread;
 	private BinaryRelationalExpression _bExpression;
 	
@@ -86,10 +87,43 @@ lista_var : ID {
            )*
    		  ;
    		  
-cmd		  : cmdAttr | cmdRead | cmdWrite | cmdIf
+cmd		  : cmdAttr | cmdRead | cmdWrite | cmdIf | cmdWhile | cmdDoWhile
 		  ;
+
+cmdDoWhile : 'execute' {
+                curThread = new ArrayList<AbstractCommand>();
+                stack.push(curThread);
+                indentationLvl += 1;
+              }
+              cmd+
+              'enquanto'
+              AP bRelationalExpr FP {
+                indentationLvl -= 1;
+                CmdDoWhile _cmdDoWhile = new CmdDoWhile(indentationLvl, _bExpression, stack.pop());
+                stack.peek().add(_cmdDoWhile);
+                _bExpression = null;
+              }  PF
+           ;
+
+cmdWhile  : 'enquanto' AP bRelationalExpr FP 'execute'
+            {
+                CmdWhile _cmdWhile = new CmdWhile(indentationLvl, _bExpression);
+                _bExpression = null;
+                stackWhileCmds.push(_cmdWhile);
+                indentationLvl += 1;
+                curThread = new ArrayList<AbstractCommand>();
+                stack.push(curThread);
+            }
+            cmd+
+            {
+                stackWhileCmds.peek().setListCommands(stack.pop());
+            }'fimenquanto' PF {
+                stack.peek().add(stackWhileCmds.pop());
+                indentationLvl -=1;
+            }
+          ;
 		  
-cmdIf     : 'se' AP brelationalexpr FP 'entao'
+cmdIf     : 'se' AP bRelationalExpr FP 'execute'
             {
                 CmdIf _cmdIf = new CmdIf(indentationLvl, _bExpression);
                 _bExpression = null;
@@ -182,7 +216,7 @@ cmdAttr   : ID {
 expr	  : termo exprl*
           ;
 
-brelationalexpr: {
+bRelationalExpr: {
                                  expression = new ExpressionTree();
                              }
                              expr {
@@ -204,11 +238,11 @@ brelationalexpr: {
 termo     : (NUMBER | NUMBERDEC)
 			{
 			    if (leftDT != null) {
-				    rightDT = _input.LT(-1).getType() == 13 ? DataType.REAL : DataType.INTEGER;
+				    rightDT = _input.LT(-1).getType() == 15 ? DataType.REAL : DataType.INTEGER;
 				    validateBinaryOperation();
 				}
 				else {
-				    leftDT = _input.LT(-1).getType() == 13 ? DataType.REAL : DataType.INTEGER;
+				    leftDT = _input.LT(-1).getType() == 15 ? DataType.REAL : DataType.INTEGER;
 				}
 
 				expression.addOperand(new NumberExpression(Double.parseDouble(_input.LT(-1).getText()), rightDT));

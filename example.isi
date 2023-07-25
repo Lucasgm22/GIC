@@ -8,26 +8,47 @@ programa
 	escreva("Digite o valor C").
 
 	a := "Ola mundo aqui e a IsiLanguage".
-	e := 2.1.
+	e := 2.1 .
 	b := 100 * ( 2 + 12 ) / 14.
 	d := (b + 2) / 2.
 
 	f := a.
 	leia(c).
-	se (0 < 1) entao
+	escreva("SE").
+	se (0 < 1) execute
         escreva("0 < 1").
-        se (2 < 3) entao
+        se (2 < 3) execute
             escreva("2 < 3").
         fimse.
     senao
         escreva("0 > 1").
-        se (7 != 9) entao
+        se (7 != 9) execute
             escreva("7 != 9").
         senao
             escreva("7 == 9").
         fimse.
     fimse.
     b := 2.
+    c := 2.
+    escreva("ENQUANTO").
+    enquanto (b < 5) execute
+        b := b + 1.
+        enquanto (c < 5) execute
+            escreva(c).
+            c:= c + 2.
+        fimenquanto.
+        escreva(b).
+    fimenquanto.
+    escreva("EXECUTE").
+    execute
+        execute
+            c := c + 2.
+            escreva(c).
+        enquanto (c < 10).
+        escreva(b).
+        b := b + 1.
+    enquanto (b < 10).
+
 	escreva(a).
 	escreva(f).
 	escreva(b).

@@ -16,8 +16,7 @@ public class CmdIf extends AbstractCommand {
     private List<AbstractCommand> listFalse = new ArrayList<>();
 
     public CmdIf(int indentation,
-                    BinaryRelationalExpression bExpression
-                 ) {
+                 BinaryRelationalExpression bExpression) {
         super(indentation);
         this.bExpression = bExpression;
     }
