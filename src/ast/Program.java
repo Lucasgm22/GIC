@@ -9,7 +9,6 @@ import symbols.SymbolTable;
 
 public class Program {
 
-    private String filename;
     private List<AbstractCommand> comandos;
     private SymbolTable symbolTable;
 
@@ -48,28 +47,24 @@ public class Program {
     }
 
     private void generateFooter(TargetLang target, StringBuilder strBuilder) {
-        switch (target) {
-            case JAVA -> {
-                strBuilder.append("    }\n");
-                strBuilder.append("}\n");
-            }
-            case C -> strBuilder.append("}\n");
+        if (target == TargetLang.JAVA) {
+            strBuilder.append("    }\n");
+            strBuilder.append("}\n");
+        } else if (target == TargetLang.C) {
+            strBuilder.append("}\n");
         }
     }
 
     private void generateHeader(TargetLang target, StringBuilder strBuilder) {
-        switch (target) {
-            case JAVA -> {
-                strBuilder.append("import java.util.Scanner;\n\n");
-                strBuilder.append("public class Main {\n");
-                strBuilder.append("    public static void main(String[] args) {\n");
-                strBuilder.append("        Scanner sc = new Scanner(System.in);\n");
-            }
-            case C -> {
-                strBuilder.append("#include <stdio.h>\n");
-                strBuilder.append("#include <string.h>\n\n");
-                strBuilder.append("int main() {\n");
-            }
+        if (target == TargetLang.JAVA) {
+            strBuilder.append("import java.util.Scanner;\n\n");
+            strBuilder.append("public class Main {\n");
+            strBuilder.append("    public static void main(String[] args) {\n");
+            strBuilder.append("        Scanner sc = new Scanner(System.in);\n");
+        } else if (target == TargetLang.C) {
+            strBuilder.append("#include <stdio.h>\n");
+            strBuilder.append("#include <string.h>\n\n");
+            strBuilder.append("int main() {\n");
         }
     }
 
