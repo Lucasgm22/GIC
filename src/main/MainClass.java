@@ -35,8 +35,13 @@ public class MainClass {
 				var target = TargetLang.valueOf(args[2]);
 				parser.generateObjectCode(inputName, target);
 			} else if (mode == ProgramMode.I) {
-				parser.runInterpreter();
-
+				try {
+					parser.runInterpreter();
+				} catch (Exception e) {
+					e.printStackTrace();
+				} finally {
+					parser.stopInterpreter();
+				}
 			}
 		}
 		//TODO: NoSuchFileException

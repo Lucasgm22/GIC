@@ -87,6 +87,30 @@ public class IsiLanguageBaseListener implements IsiLanguageListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterCmdDoWhile(IsiLanguageParser.CmdDoWhileContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitCmdDoWhile(IsiLanguageParser.CmdDoWhileContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterCmdWhile(IsiLanguageParser.CmdWhileContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitCmdWhile(IsiLanguageParser.CmdWhileContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterCmdIf(IsiLanguageParser.CmdIfContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -147,13 +171,13 @@ public class IsiLanguageBaseListener implements IsiLanguageListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterBrelationalexpr(IsiLanguageParser.BrelationalexprContext ctx) { }
+	@Override public void enterBRelationalExpr(IsiLanguageParser.BRelationalExprContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitBrelationalexpr(IsiLanguageParser.BrelationalexprContext ctx) { }
+	@Override public void exitBRelationalExpr(IsiLanguageParser.BRelationalExprContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

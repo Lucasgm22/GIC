@@ -68,6 +68,26 @@ public interface IsiLanguageListener extends ParseTreeListener {
 	 */
 	void exitCmd(IsiLanguageParser.CmdContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link IsiLanguageParser#cmdDoWhile}.
+	 * @param ctx the parse tree
+	 */
+	void enterCmdDoWhile(IsiLanguageParser.CmdDoWhileContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link IsiLanguageParser#cmdDoWhile}.
+	 * @param ctx the parse tree
+	 */
+	void exitCmdDoWhile(IsiLanguageParser.CmdDoWhileContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link IsiLanguageParser#cmdWhile}.
+	 * @param ctx the parse tree
+	 */
+	void enterCmdWhile(IsiLanguageParser.CmdWhileContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link IsiLanguageParser#cmdWhile}.
+	 * @param ctx the parse tree
+	 */
+	void exitCmdWhile(IsiLanguageParser.CmdWhileContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link IsiLanguageParser#cmdIf}.
 	 * @param ctx the parse tree
 	 */
@@ -118,15 +138,15 @@ public interface IsiLanguageListener extends ParseTreeListener {
 	 */
 	void exitExpr(IsiLanguageParser.ExprContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link IsiLanguageParser#brelationalexpr}.
+	 * Enter a parse tree produced by {@link IsiLanguageParser#bRelationalExpr}.
 	 * @param ctx the parse tree
 	 */
-	void enterBrelationalexpr(IsiLanguageParser.BrelationalexprContext ctx);
+	void enterBRelationalExpr(IsiLanguageParser.BRelationalExprContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link IsiLanguageParser#brelationalexpr}.
+	 * Exit a parse tree produced by {@link IsiLanguageParser#bRelationalExpr}.
 	 * @param ctx the parse tree
 	 */
-	void exitBrelationalexpr(IsiLanguageParser.BrelationalexprContext ctx);
+	void exitBRelationalExpr(IsiLanguageParser.BRelationalExprContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link IsiLanguageParser#termo}.
 	 * @param ctx the parse tree

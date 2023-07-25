@@ -16,6 +16,7 @@ int main() {
     d = (b+2)/2;
     strcpy(f, "Ola mundo aqui e a IsiLanguage");
     scanf("%d", &c);
+    printf("%s\n" ,"SE");
     if (0<1) {
         printf("%s\n" ,"0 < 1");
         if (2<3) {
@@ -30,6 +31,25 @@ int main() {
         }
     }
     b = 2;
+    c = 2;
+    printf("%s\n" ,"ENQUANTO");
+    while (b<5) {
+        b = b+1;
+        while (c<5) {
+            printf("%d\n", c);
+            c = c+2;
+        }
+        printf("%d\n", b);
+    }
+    printf("%s\n" ,"EXECUTE");
+    do {
+        do {
+            c = c+2;
+            printf("%d\n", c);
+        } while (c<10);
+        printf("%d\n", b);
+        b = b+1;
+    } while (b<10);
     printf("%s\n" ,a);
     printf("%s\n" ,f);
     printf("%d\n", b);

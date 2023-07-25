@@ -17,6 +17,7 @@ public class Main {
         d = (b+2)/2;
         f = "Ola mundo aqui e a IsiLanguage";
         c = sc.nextInt();
+        System.out.println("SE");
         if (0<1) {
             System.out.println("0 < 1");
             if (2<3) {
@@ -31,6 +32,25 @@ public class Main {
             }
         }
         b = 2;
+        c = 2;
+        System.out.println("ENQUANTO");
+        while (b<5) {
+            b = b+1;
+            while (c<5) {
+                System.out.println(c);
+                c = c+2;
+            }
+            System.out.println(b);
+        }
+        System.out.println("EXECUTE");
+        do {
+            do {
+                c = c+2;
+                System.out.println(c);
+            } while (c<10);
+            System.out.println(b);
+            b = b+1;
+        } while (b<10);
         System.out.println(a);
         System.out.println(f);
         System.out.println(b);

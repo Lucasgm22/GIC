@@ -1,6 +1,7 @@
 package ast;
 
 import expressions.AbstractExpression;
+import symbols.DataType;
 import symbols.Identifier;
 import util.StringUtil;
 
@@ -8,6 +9,7 @@ public class CmdAttrib extends AbstractCommand {
 
 	private Identifier id;
 	private AbstractExpression expr;
+	private String content;
 
 	public CmdAttrib(Identifier id, AbstractExpression expr, int indentation) {
 		super(indentation);
@@ -15,29 +17,40 @@ public class CmdAttrib extends AbstractCommand {
 		this.expr = expr;
 	}
 
-	public CmdAttrib(Identifier id, int indentationLvl) {
-		super(indentationLvl);
+	public CmdAttrib(Identifier id, String content, int indentation) {
+		super(indentation);
 		this.id = id;
+		this.content = content;
 	}
-	
+
 	@Override
 	public String generateJSCode() {
 		return StringUtil.indentationByTarget(getIndentation(), TargetLang.JS) +
-				id.getText() + " = " + expr.toString() + ";\n";
+				id.getText() + " = " +
+				getAttribuition() +
+				";\n";
 	}
 
 	@Override
 	public String generateJavaCode() {
 		return StringUtil.indentationByTarget(getIndentation(), TargetLang.JAVA) +
-				id.getText() + " = " + expr.toString() + ";\n";
+				id.getText() + " = " + getAttribuition() + ";\n";
 	}
 
 	@Override
 	public String generateCCode() {
-		return StringUtil.indentationByTarget(getIndentation(), TargetLang.C) +
-				id.getText() + " = " + expr.toString() + ";\n";
+		if (!DataType.TEXT.equals(id.getType())) {
+			return StringUtil.indentationByTarget(getIndentation(), TargetLang.C) +
+					id.getText() + " = " + getAttribuition() + ";\n";
+		} else {
+			return StringUtil.indentationByTarget(getIndentation(), TargetLang.C) +
+					"strcpy(" + id.getText() + ", " + content +");\n";
+		}
 	}
 
+	private String getAttribuition() {
+		return DataType.TEXT.equals(id.getType()) ? content : expr.toString();
+	}
 	public Identifier getId() {
 		return id;
 	}
@@ -46,17 +59,13 @@ public class CmdAttrib extends AbstractCommand {
 		this.id = id;
 	}
 
-	public AbstractExpression getExpr() {
-		return expr;
-	}
-
-	public void setExpr(AbstractExpression expr) {
-		this.expr = expr;
-	}
-
 	@Override
 	public void run() {
-		id.setValue(expr.eval());
+		if (DataType.TEXT.equals(id.getType())) {
+			id.setValueText(content);
+		} else {
+			id.setValue(expr.eval());
+		}
 	}
 
 }

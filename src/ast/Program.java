@@ -12,6 +12,8 @@ public class Program {
     private List<AbstractCommand> comandos;
     private SymbolTable symbolTable;
 
+    RuntimeEntity runtime;
+
     public Program() {
         this.comandos = new ArrayList<>();
     }
@@ -85,12 +87,17 @@ public class Program {
     }
 
     public void run() {
-        RuntimeEntity runtime = new RuntimeEntity();
+        runtime = new RuntimeEntity();
         runtime.updateContent(symbolTable.getSymbols().values());
         comandos.forEach(c -> {
             c.run();
             runtime.updateContent(symbolTable.getSymbols().values());
         });
+    }
+
+    public void stop() {
         runtime.close();
     }
+
+
 }
