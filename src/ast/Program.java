@@ -53,7 +53,6 @@ public class Program {
 				strBuilder.append("    }\n");
 				strBuilder.append("}\n");
 			}
-			case JS -> {}
 			case C -> strBuilder.append("}\n");
 		}
 	}
@@ -66,7 +65,6 @@ public class Program {
 				strBuilder.append("    public static void main(String[] args) {\n");
 				strBuilder.append("        Scanner sc = new Scanner(System.in);\n");
 			}
-			case JS -> {}
 			case C -> {
 				strBuilder.append("#include <stdio.h>\n");
 				strBuilder.append("#include <string.h>\n\n");
