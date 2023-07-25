@@ -12,9 +12,9 @@ public class Main {
         System.out.println("Hello World!");
         System.out.println("Digite o valor C");
         a = "Ola mundo aqui e a IsiLanguage";
+        e = 2.1;
         b = 100*(2+12)/14;
         d = (b+2)/2;
-        b = 2;
         f = "Ola mundo aqui e a IsiLanguage";
         c = sc.nextInt();
         if (0<1) {
@@ -30,6 +30,7 @@ public class Main {
                 System.out.println("7 < 9");
              }
          }
+        b = 2;
         System.out.println(a);
         System.out.println(f);
         System.out.println(b);
