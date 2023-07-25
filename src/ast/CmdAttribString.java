@@ -16,17 +16,17 @@ public class CmdAttribString extends AbstractCommand{
 
     @Override
     public String generateJSCode() {
-        return super.generateJSCode() + id.getText() + " = " + content + ";\n";
+        return id.getText() + " = " + content + ";\n";
     }
 
     @Override
     public String generateJavaCode() {
-        return super.generateJavaCode() + id.getText() + " = " + content + ";\n";
+        return id.getText() + " = " + content + ";\n";
     }
 
     @Override
     public String generateCCode() {
-        return super.generateCCode() + "strcpy(" + id.getText() + ", " + content +");\n";
+        return "strcpy(" + id.getText() + ", " + content +");\n";
     }
 
     @Override

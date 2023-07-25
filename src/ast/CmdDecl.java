@@ -17,22 +17,20 @@ public class CmdDecl extends AbstractCommand {
 
     @Override
     public String generateJavaCode() {
-        String content = switch (id.getType()) {
+        return switch (id.getType()) {
             case TEXT -> "String " + id.getText() + ";\n";
             case REAL -> "double " + id.getText() + ";\n";
             case INTEGER -> "int " + id.getText() + ";\n";
         };
-        return super.generateJavaCode().concat(content);
     }
 
     @Override
     public String generateCCode() {
-        String content = switch (id.getType()) {
+        return switch (id.getType()) {
             case TEXT -> "char " + id.getText() + "[100];\n";
             case REAL -> "double " + id.getText() + ";\n";
             case INTEGER -> "int " + id.getText() + ";\n";
         };
-        return super.generateCCode().concat(content);
     }
 
     @Override

@@ -21,17 +21,17 @@ public class CmdAttrib extends AbstractCommand {
 	
 	@Override
 	public String generateJSCode() {
-		return super.generateJSCode() + id.getText() + " = " + expr.toString() + ";\n";
+		return id.getText() + " = " + expr.toString() + ";\n";
 	}
 
 	@Override
 	public String generateJavaCode() {
-		return super.generateJavaCode() + id.getText() + " = " + expr.toString() + ";\n";
+		return id.getText() + " = " + expr.toString() + ";\n";
 	}
 
 	@Override
 	public String generateCCode() {
-		return super.generateCCode() + id.getText() + " = " + expr.toString() + ";\n";
+		return id.getText() + " = " + expr.toString() + ";\n";
 	}
 
 	public Identifier getId() {

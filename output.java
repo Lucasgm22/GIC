@@ -5,10 +5,10 @@ public class Main {
         Scanner sc = new Scanner(System.in);
         String a;
         String f;
+        double e;
         int b;
         int c;
         int d;
-        double e;
         System.out.println("Hello World!");
         System.out.println("Digite o valor C");
         a = "Ola mundo aqui e a IsiLanguage";

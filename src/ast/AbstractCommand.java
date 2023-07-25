@@ -11,28 +11,20 @@ public abstract class AbstractCommand {
 	}
 
 	public final String generateCode(TargetLang target) {
-		return switch (target) {
+		String compiledCommand = switch (target) {
 			case JS -> generateJSCode();
 			case JAVA -> generateJavaCode();
 			case C -> generateCCode();
-			default -> throw new IllegalArgumentException("Cant convert to this target");
 		};
+
+		return StringUtil.indentCommand(compiledCommand, indentation, target);
 	}
 
-	public String generateJSCode() {
-		return StringUtil.getIndentationLvl(indentation);
-	}
+	public abstract String generateJSCode();
 
-	public String generateJavaCode() {
-		return StringUtil.getIndentationLvl(indentation + 2);
-	}
+	public abstract String generateJavaCode();
 
-	public String generateCCode() {
-		return StringUtil.getIndentationLvl(indentation + 1);
-	}
+	public abstract String generateCCode();
+
 	public abstract void run();
-
-	public int getIndentation() {
-		return indentation;
-	}
 }

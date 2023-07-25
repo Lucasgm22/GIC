@@ -22,28 +22,25 @@ public class CmdWrite extends AbstractCommand {
 
 	@Override
 	public String generateJSCode() {
-		return super.generateJSCode() + "alert(" + (id!=null?id.getText():text) + ");\n";
+		return "alert(" + (id!=null?id.getText():text) + ");\n";
 	}
 
 	@Override
 	public String generateJavaCode() {
-		return super.generateJavaCode() + "System.out.println(" + (id!=null?id.getText():text) +");\n";
+		return "System.out.println(" + (id!=null?id.getText():text) +");\n";
 	}
 
 	@Override
 	public String generateCCode() {
-		String content = "";
 		if (id != null) {
-			content = switch (id.getType()) {
+			return switch (id.getType()) {
 				case INTEGER -> "printf(\"%d\\n\", " + id.getText()+ ");\n";
 				case REAL -> "printf(\"%lf\\n\", " + id.getText()+ ");\n";
 				case TEXT -> "printf(\"%s\\n\" ," + id.getText()+ ");\n";
 			};
 		} else {
-			content = "printf(\"%s\\n\" ," + text + ");\n";
+			return  "printf(\"%s\\n\" ," + text + ");\n";
 		}
-
-		return super.generateCCode().concat(content);
 	}
 
 	public Identifier getId() {
