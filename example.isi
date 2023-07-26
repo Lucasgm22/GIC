@@ -7,7 +7,7 @@ programa
     escreva("Hello World!").
     escreva("Digite o valor C").
 
-    a := "Ola mundo aqui e a IsiLanguage".
+    a := "Ola mundo aqui e a IsiLanguage" + "concat".
     e := 2.1 .
     b := 100 * ( 2 + 12 ) / 14.
     d := (b + 2) / 2.
@@ -15,7 +15,7 @@ programa
     f := a.
     leia(c).
     escreva("SE").
-    se (x + 0 < 1) execute
+    se (0 < 1) execute
         escreva("0 < 1").
         se (2 < 3) execute
             escreva("2 < 3").

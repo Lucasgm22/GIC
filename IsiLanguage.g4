@@ -53,9 +53,9 @@ grammar IsiLanguage;
 	    return program.getUnassignedIdentifiers();
 	}
 
-	private void validateBinaryOperation() {
+	private void validateBinaryOperation(int line, int column) {
 		if (leftDT != null && leftDT != rightDT) {
-    	    throw new RuntimeException("Semantic ERROR - Type Mismatching "+leftDT+ "-"+rightDT);
+    	    throw new IsiTypeMismatchException(leftDT, rightDT, line, column);
         }
     }
 }
@@ -242,7 +242,7 @@ termo     : (NUMBER | NUMBERDEC)
 			{
 			    if (leftDT != null) {
 				    rightDT = _input.LT(-1).getType() == 15 ? DataType.REAL : DataType.INTEGER;
-				    validateBinaryOperation();
+				    validateBinaryOperation(_input.LT(-1).getLine(), _input.LT(-1).getCharPositionInLine());
 				}
 				else {
 				    leftDT = _input.LT(-1).getType() == 15 ? DataType.REAL : DataType.INTEGER;
@@ -253,7 +253,7 @@ termo     : (NUMBER | NUMBERDEC)
 		  |
 		    TEXT {
 		       rightDT = DataType.TEXT;
-		       validateBinaryOperation();
+		       validateBinaryOperation(_input.LT(-1).getLine(), _input.LT(-1).getCharPositionInLine());
 
 		       textContent = _input.LT(-1).getText();
 		    }
@@ -263,7 +263,7 @@ termo     : (NUMBER | NUMBERDEC)
 					throw new IsiUndeclaredVariableException(_input.LT(-1).getText(), _input.LT(-1).getLine(), _input.LT(-1).getCharPositionInLine());
 				}
 				rightDT = symbolTable.get(_input.LT(-1).getText()).getType();
-				validateBinaryOperation();
+				validateBinaryOperation(_input.LT(-1).getLine(), _input.LT(-1).getCharPositionInLine());
 
 				Identifier id = symbolTable.get(_input.LT(-1).getText());
 				if (rightDT == DataType.TEXT) {
@@ -291,7 +291,7 @@ termo     : (NUMBER | NUMBERDEC)
 exprl     : (SUM | SUB | MUL | DIV) {
 				operator = _input.LT(-1).getText().charAt(0);
 				if (leftDT == DataType.TEXT) {
-				    throw new RuntimeException("Semantic ERROR - Cannot apply operand " + operator + " to TEXT");
+				    throw new IsiIllegalOperationException(operator, leftDT, _input.LT(-1).getLine(), _input.LT(-1).getCharPositionInLine());
 				}
 				expression.addOperator(new OperatorExpression(operator));
 			} 

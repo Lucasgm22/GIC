@@ -141,9 +141,9 @@ public class IsiLanguageLexer extends Lexer {
 		    return program.getUnassignedIdentifiers();
 		}
 
-		private void validateBinaryOperation() {
+		private void validateBinaryOperation(int line, int column) {
 			if (leftDT != null && leftDT != rightDT) {
-	    	    throw new RuntimeException("Semantic ERROR - Type Mismatching "+leftDT+ "-"+rightDT);
+	    	    throw new IsiTypeMismatchException(leftDT, rightDT, line, column);
 	        }
 	    }
 
