@@ -1,7 +1,6 @@
 package ast;
 
 import symbols.Identifier;
-import util.StringUtil;
 
 public class CmdDecl extends AbstractCommand {
 
@@ -23,7 +22,7 @@ public class CmdDecl extends AbstractCommand {
             case REAL -> "double " + id.getText() + ";\n";
             case INTEGER -> "int " + id.getText() + ";\n";
         };
-        return StringUtil.indentationByTarget(getIndentation(), TargetLang.JAVA) + content;
+        return getIndentationByTarget(TargetLang.JAVA) + content;
     }
 
     @Override
@@ -33,7 +32,7 @@ public class CmdDecl extends AbstractCommand {
             case REAL -> "double " + id.getText() + ";\n";
             case INTEGER -> "int " + id.getText() + ";\n";
         };
-        return StringUtil.indentationByTarget(getIndentation(), TargetLang.C) + content;
+        return getIndentationByTarget(TargetLang.C) + content;
     }
 
     @Override

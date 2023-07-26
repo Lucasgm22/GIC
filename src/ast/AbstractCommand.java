@@ -3,6 +3,8 @@ package ast;
 public abstract class AbstractCommand {
 
 	private final int indentation;
+	private static final String STR_INDENTATION = "    ";
+
 
 	protected AbstractCommand(int indentation) {
 		this.indentation = indentation;
@@ -24,7 +26,20 @@ public abstract class AbstractCommand {
 
 	public abstract void run();
 
-	public int getIndentation() {
+	protected int getIndentation() {
 		return indentation;
+	}
+
+
+	protected String getIndentationByTarget(TargetLang targetLang) {
+		return STR_INDENTATION.repeat(indentation + getDefaultIndentation(targetLang));
+	}
+
+	private static int getDefaultIndentation(TargetLang target) {
+		return switch (target) {
+			case JAVA -> 2;
+			case C -> 1;
+			case JS -> 0;
+		};
 	}
 }

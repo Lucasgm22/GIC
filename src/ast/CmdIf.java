@@ -1,9 +1,6 @@
 package ast;
 
-import expressions.AbstractExpression;
 import expressions.BinaryRelationalExpression;
-import expressions.ExpressionTree;
-import util.StringUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +20,7 @@ public class CmdIf extends AbstractCommand {
 
     @Override
     public String generateJSCode() {
-        var indentation = StringUtil.indentationByTarget(getIndentation(), TargetLang.JS);
+        var indentation = getIndentationByTarget(TargetLang.JS);
         StringBuilder cmdTrue = new StringBuilder();
         StringBuilder cmdFalse = new StringBuilder();
         for (AbstractCommand cmd : listTrue) {
@@ -45,7 +42,7 @@ public class CmdIf extends AbstractCommand {
 
     @Override
     public String generateJavaCode() {
-        var indentation = StringUtil.indentationByTarget(getIndentation(), TargetLang.JAVA);
+        var indentation = getIndentationByTarget(TargetLang.JAVA);
         StringBuilder cmdTrue = new StringBuilder();
         StringBuilder cmdFalse = new StringBuilder();
         for (AbstractCommand cmd : listTrue) {
@@ -67,7 +64,7 @@ public class CmdIf extends AbstractCommand {
 
     @Override
     public String generateCCode() {
-        var indentation = StringUtil.indentationByTarget(getIndentation(), TargetLang.C);
+        var indentation = getIndentationByTarget(TargetLang.C);
         StringBuilder cmdTrue = new StringBuilder();
         StringBuilder cmdFalse = new StringBuilder();
         for (AbstractCommand cmd : listTrue) {

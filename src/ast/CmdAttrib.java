@@ -3,7 +3,6 @@ package ast;
 import expressions.AbstractExpression;
 import symbols.DataType;
 import symbols.Identifier;
-import util.StringUtil;
 
 public class CmdAttrib extends AbstractCommand {
 
@@ -25,7 +24,7 @@ public class CmdAttrib extends AbstractCommand {
 
 	@Override
 	public String generateJSCode() {
-		return StringUtil.indentationByTarget(getIndentation(), TargetLang.JS) +
+		return getIndentationByTarget(TargetLang.JS) +
 				id.getText() + " = " +
 				getAttribuition() +
 				";\n";
@@ -33,17 +32,17 @@ public class CmdAttrib extends AbstractCommand {
 
 	@Override
 	public String generateJavaCode() {
-		return StringUtil.indentationByTarget(getIndentation(), TargetLang.JAVA) +
+		return getIndentationByTarget(TargetLang.JAVA) +
 				id.getText() + " = " + getAttribuition() + ";\n";
 	}
 
 	@Override
 	public String generateCCode() {
 		if (!DataType.TEXT.equals(id.getType())) {
-			return StringUtil.indentationByTarget(getIndentation(), TargetLang.C) +
+			return getIndentationByTarget(TargetLang.C) +
 					id.getText() + " = " + getAttribuition() + ";\n";
 		} else {
-			return StringUtil.indentationByTarget(getIndentation(), TargetLang.C) +
+			return getIndentationByTarget(TargetLang.C) +
 					"strcpy(" + id.getText() + ", " + content +");\n";
 		}
 	}

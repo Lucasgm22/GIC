@@ -3,7 +3,6 @@ package ast;
 import javax.swing.JOptionPane;
 
 import symbols.Identifier;
-import util.StringUtil;
 
 public class CmdWrite extends AbstractCommand {
 	
@@ -23,13 +22,13 @@ public class CmdWrite extends AbstractCommand {
 
 	@Override
 	public String generateJSCode() {
-		return StringUtil.indentationByTarget(getIndentation(), TargetLang.JS) +
+		return getIndentationByTarget(TargetLang.JS) +
 				"alert(" + (id!=null?id.getText():text) + ");\n";
 	}
 
 	@Override
 	public String generateJavaCode() {
-		return StringUtil.indentationByTarget(getIndentation(), TargetLang.JAVA)
+		return getIndentationByTarget(TargetLang.JAVA)
 				+ "System.out.println(" + (id!=null?id.getText():text) +");\n";
 	}
 
@@ -45,7 +44,7 @@ public class CmdWrite extends AbstractCommand {
 		} else {
 			content = "printf(\"%s\\n\" ," + text + ");\n";
 		}
-		return StringUtil.indentationByTarget(getIndentation(), TargetLang.C) +
+		return getIndentationByTarget(TargetLang.C) +
 				content;
 	}
 
