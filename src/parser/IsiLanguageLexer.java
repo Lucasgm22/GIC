@@ -1,6 +1,7 @@
 // Generated from IsiLanguage.g4 by ANTLR 4.13.0
 package parser;
 
+    import java.util.List;
 	import java.util.ArrayList;
 	import java.util.Stack;
 	import symbols.DataType;
@@ -8,7 +9,7 @@ package parser;
 	import symbols.SymbolTable;
 	import expressions.*;
 	import ast.*;
-	
+	import exception.*;
 
 import org.antlr.v4.runtime.Lexer;
 import org.antlr.v4.runtime.CharStream;
@@ -123,11 +124,7 @@ public class IsiLanguageLexer extends Lexer {
 		public void init(){
 			program.setSymbolTable(symbolTable);
 		}
-			
-		public void exibirID(){
-			symbolTable.getSymbols().values().stream().forEach((id)->System.out.println(id));
-		}
-		
+
 		public void generateObjectCode(String filename, TargetLang target){
 			program.generateTarget(filename, target);
 		}
@@ -138,6 +135,10 @@ public class IsiLanguageLexer extends Lexer {
 
 		public void stopInterpreter() {
 		    program.stop();
+		}
+
+		public List<Identifier> getUnassignedIdentifiers() {
+		    return program.getUnassignedIdentifiers();
 		}
 
 		private void validateBinaryOperation() {

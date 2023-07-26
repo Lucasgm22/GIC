@@ -1,6 +1,7 @@
 // Generated from IsiLanguage.g4 by ANTLR 4.13.0
 package parser;
 
+    import java.util.List;
 	import java.util.ArrayList;
 	import java.util.Stack;
 	import symbols.DataType;
@@ -8,7 +9,7 @@ package parser;
 	import symbols.SymbolTable;
 	import expressions.*;
 	import ast.*;
-	
+	import exception.*;
 
 import org.antlr.v4.runtime.atn.*;
 import org.antlr.v4.runtime.dfa.DFA;
@@ -131,11 +132,7 @@ public class IsiLanguageParser extends Parser {
 		public void init(){
 			program.setSymbolTable(symbolTable);
 		}
-			
-		public void exibirID(){
-			symbolTable.getSymbols().values().stream().forEach((id)->System.out.println(id));
-		}
-		
+
 		public void generateObjectCode(String filename, TargetLang target){
 			program.generateTarget(filename, target);
 		}
@@ -146,6 +143,10 @@ public class IsiLanguageParser extends Parser {
 
 		public void stopInterpreter() {
 		    program.stop();
+		}
+
+		public List<Identifier> getUnassignedIdentifiers() {
+		    return program.getUnassignedIdentifiers();
 		}
 
 		private void validateBinaryOperation() {
@@ -867,7 +868,7 @@ public class IsiLanguageParser extends Parser {
 
 							Identifier id = symbolTable.get(_input.LT(-1).getText());
 							if (id == null){
-								throw new RuntimeException("Undeclared Variable");
+								throw new IsiUndeclaredVariableException(_input.LT(-1).getText(), _input.LT(-1).getLine(), _input.LT(-1).getCharPositionInLine());
 							}
 							CmdRead _read = new CmdRead(id, indentationLvl);
 							stack.peek().add(_read);
@@ -930,7 +931,7 @@ public class IsiLanguageParser extends Parser {
 
 					         	Identifier id = symbolTable.get(_input.LT(-1).getText());
 					         	if (id == null){
-					         		throw new RuntimeException("Undeclared Variable");	         		
+					         		throw new IsiUndeclaredVariableException(_input.LT(-1).getText(), _input.LT(-1).getLine(), _input.LT(-1).getCharPositionInLine());
 					         	}
 					         	CmdWrite _write = new CmdWrite(id, indentationLvl);
 					         	stack.peek().add(_write);
@@ -1001,7 +1002,7 @@ public class IsiLanguageParser extends Parser {
 
 							idAtribuido = _input.LT(-1).getText();
 							if (!symbolTable.exists(_input.LT(-1).getText())){
-								throw new RuntimeException("Semantic ERROR - Undeclared Identifier");
+								throw new IsiUndeclaredVariableException(_input.LT(-1).getText(), _input.LT(-1).getLine(), _input.LT(-1).getCharPositionInLine());
 							}
 							leftDT = symbolTable.get(_input.LT(-1).getText()).getType();
 							rightDT = null;
@@ -1024,8 +1025,6 @@ public class IsiLanguageParser extends Parser {
 			                        id.setValue(expression.eval());
 			                        symbolTable.add(idAtribuido, id);
 
-			                        System.out.println("EVAL ["+expression+"] = "+expression.eval());
-								
 								    _attr = new CmdAttrib(id, expression, indentationLvl);
 								} else {
 								    id.setValueText(textContent);
@@ -1258,7 +1257,7 @@ public class IsiLanguageParser extends Parser {
 				match(ID);
 
 								if (!symbolTable.exists(_input.LT(-1).getText())){
-									throw new RuntimeException("Semantic ERROR - Undeclared Identifier: "+_input.LT(-1).getText());
+									throw new IsiUndeclaredVariableException(_input.LT(-1).getText(), _input.LT(-1).getLine(), _input.LT(-1).getCharPositionInLine());
 								}
 								rightDT = symbolTable.get(_input.LT(-1).getText()).getType();
 								validateBinaryOperation();
@@ -1272,7 +1271,7 @@ public class IsiLanguageParser extends Parser {
 				                		expression.addOperand(new IDExpression(id));
 				                	}
 				                	else{
-				                		throw new RuntimeException("Semantic ERROR - Unassigned variable");
+				                		throw new IsiUndeclaredVariableException(_input.LT(-1).getText(), _input.LT(-1).getLine(), _input.LT(-1).getCharPositionInLine());
 				                	}
 								}
 							

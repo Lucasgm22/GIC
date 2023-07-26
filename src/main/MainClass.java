@@ -2,6 +2,7 @@ package main;
 
 import ast.ProgramMode;
 import ast.TargetLang;
+import exception.IsiSemanticException;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
 import parser.IsiLanguageLexer;
@@ -27,13 +28,12 @@ public class MainClass {
 			parser.init();
 			parser.programa();
 			System.out.println("Compilation Successful! Good Job");
-			System.out.println("-----------------------------");
-			parser.exibirID();
-			System.out.println("------- TARGET --------------");
 
 			if (mode == ProgramMode.C) {
 				var target = TargetLang.valueOf(args[2]);
 				parser.generateObjectCode(inputName, target);
+				parser.getUnassignedIdentifiers().forEach(ui ->
+						System.out.println("WARNING - Identifier '" + ui.getText() + "' declared but not assigned."));
 			} else if (mode == ProgramMode.I) {
 				try {
 					parser.runInterpreter();
@@ -47,7 +47,11 @@ public class MainClass {
 		//TODO: NoSuchFileException
 		catch (ArrayIndexOutOfBoundsException ex) {
 			System.out.println("Usage: pass the arguments in command Line");
-			System.out.println("<INPUT> <C|I> (<C|JAVA|JS>)?");
+			System.out.println("<INPUT> (<I> | (<C> (<C|JAVA|JS>))");
+		}
+		catch (IsiSemanticException ex) {
+			System.err.println("Compilation Failed!");
+			System.err.println(ex.getMessage());
 		}
 		catch(Exception ex) {
 			ex.printStackTrace();

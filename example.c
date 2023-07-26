@@ -4,6 +4,7 @@
 int main() {
     char a[100];
     char f[100];
+    char g[100];
     double e;
     int b;
     int c;

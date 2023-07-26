@@ -5,6 +5,7 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
+import symbols.Identifier;
 import symbols.SymbolTable;
 
 public class Program {
@@ -26,7 +27,6 @@ public class Program {
                     StringBuilder strBuilder = new StringBuilder();
                     generateHeader(target, strBuilder);
                     comandos.forEach(c -> {
-                        System.out.print(c.generateCode(target));
                         strBuilder.append(c.generateCode(target));
                     });
                     generateFooter(target, strBuilder);
@@ -70,9 +70,6 @@ public class Program {
         }
     }
 
-    public List<AbstractCommand> getComandos() {
-        return comandos;
-    }
 
     public void setComandos(List<AbstractCommand> comandos) {
         this.comandos = comandos;
@@ -97,6 +94,10 @@ public class Program {
 
     public void stop() {
         runtime.close();
+    }
+
+    public List<Identifier> getUnassignedIdentifiers() {
+        return symbolTable.getUnassignedIdentifiers();
     }
 
 

@@ -1,6 +1,7 @@
 grammar IsiLanguage;
 
 @header{
+    import java.util.List;
 	import java.util.ArrayList;
 	import java.util.Stack;
 	import symbols.DataType;
@@ -8,7 +9,7 @@ grammar IsiLanguage;
 	import symbols.SymbolTable;
 	import expressions.*;
 	import ast.*;
-	
+	import exception.*;
 }
 
 @members{
@@ -35,11 +36,7 @@ grammar IsiLanguage;
 	public void init(){
 		program.setSymbolTable(symbolTable);
 	}
-		
-	public void exibirID(){
-		symbolTable.getSymbols().values().stream().forEach((id)->System.out.println(id));
-	}
-	
+
 	public void generateObjectCode(String filename, TargetLang target){
 		program.generateTarget(filename, target);
 	}
@@ -50,6 +47,10 @@ grammar IsiLanguage;
 
 	public void stopInterpreter() {
 	    program.stop();
+	}
+
+	public List<Identifier> getUnassignedIdentifiers() {
+	    return program.getUnassignedIdentifiers();
 	}
 
 	private void validateBinaryOperation() {
@@ -154,7 +155,7 @@ cmdIf     : 'se' AP bRelationalExpr FP 'execute'
 cmdRead   : 'leia' AP ID {
 				Identifier id = symbolTable.get(_input.LT(-1).getText());
 				if (id == null){
-					throw new RuntimeException("Undeclared Variable");
+					throw new IsiUndeclaredVariableException(_input.LT(-1).getText(), _input.LT(-1).getLine(), _input.LT(-1).getCharPositionInLine());
 				}
 				CmdRead _read = new CmdRead(id, indentationLvl);
 				stack.peek().add(_read);
@@ -166,7 +167,7 @@ cmdWrite  : 'escreva' AP (
 	         ID {
 	         	Identifier id = symbolTable.get(_input.LT(-1).getText());
 	         	if (id == null){
-	         		throw new RuntimeException("Undeclared Variable");	         		
+	         		throw new IsiUndeclaredVariableException(_input.LT(-1).getText(), _input.LT(-1).getLine(), _input.LT(-1).getCharPositionInLine());
 	         	}
 	         	CmdWrite _write = new CmdWrite(id, indentationLvl);
 	         	stack.peek().add(_write);
@@ -183,7 +184,7 @@ cmdWrite  : 'escreva' AP (
 cmdAttr   : ID {
 				idAtribuido = _input.LT(-1).getText();
 				if (!symbolTable.exists(_input.LT(-1).getText())){
-					throw new RuntimeException("Semantic ERROR - Undeclared Identifier");
+					throw new IsiUndeclaredVariableException(_input.LT(-1).getText(), _input.LT(-1).getLine(), _input.LT(-1).getCharPositionInLine());
 				}
 				leftDT = symbolTable.get(_input.LT(-1).getText()).getType();
 				rightDT = null;
@@ -202,8 +203,6 @@ cmdAttr   : ID {
                         id.setValue(expression.eval());
                         symbolTable.add(idAtribuido, id);
 
-                        System.out.println("EVAL ["+expression+"] = "+expression.eval());
-					
 					    _attr = new CmdAttrib(id, expression, indentationLvl);
 					} else {
 					    id.setValueText(textContent);
@@ -261,7 +260,7 @@ termo     : (NUMBER | NUMBERDEC)
 		  |
 			ID {
 				if (!symbolTable.exists(_input.LT(-1).getText())){
-					throw new RuntimeException("Semantic ERROR - Undeclared Identifier: "+_input.LT(-1).getText());
+					throw new IsiUndeclaredVariableException(_input.LT(-1).getText(), _input.LT(-1).getLine(), _input.LT(-1).getCharPositionInLine());
 				}
 				rightDT = symbolTable.get(_input.LT(-1).getText()).getType();
 				validateBinaryOperation();
@@ -275,7 +274,7 @@ termo     : (NUMBER | NUMBERDEC)
                 		expression.addOperand(new IDExpression(id));
                 	}
                 	else{
-                		throw new RuntimeException("Semantic ERROR - Unassigned variable");
+                		throw new IsiUndeclaredVariableException(_input.LT(-1).getText(), _input.LT(-1).getLine(), _input.LT(-1).getCharPositionInLine());
                 	}
 				}
 			}

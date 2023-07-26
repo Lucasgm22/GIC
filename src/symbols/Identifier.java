@@ -18,21 +18,15 @@ public class Identifier {
 	public DataType getType() {
 		return type;
 	}
-
-	public void setType(DataType type) {
-		this.type = type;
-	}
-
 	public Identifier(String text, DataType type) {
 		super();
 		this.text = text;
 		this.type = type;
 	}
 
-	public Identifier() {
-		super();
+	public boolean isAssigned() {
+		return value != null || valueText != null;
 	}
-
 	@Override
 	public String toString() {
 		return "Identifier [text=" + text + ", type=" + type + ", value=" + value + "]";
