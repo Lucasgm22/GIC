@@ -5,6 +5,7 @@ public class Main {
         Scanner sc = new Scanner(System.in);
         String a;
         String f;
+        String g;
         double e;
         int b;
         int c;

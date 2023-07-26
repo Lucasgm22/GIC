@@ -2,7 +2,6 @@
 package parser;
 
     import java.util.List;
-	import java.util.ArrayList;
 	import java.util.Stack;
 	import symbols.DataType;
 	import symbols.Identifier;
@@ -123,10 +122,10 @@ public class IsiLanguageParser extends Parser {
 		private String textContent;
 		private Program  program = new Program();
 		private int indentationLvl = 0;
-		private Stack<ArrayList<AbstractCommand>> stack = new Stack<>();
+		private Stack<List<AbstractCommand>> stack = new Stack<>();
 		private Stack<CmdIf> stackIfCmds = new Stack<>();
 		private Stack<CmdWhile> stackWhileCmds = new Stack<>();
-		private ArrayList<AbstractCommand> curThread;
+		private List<AbstractCommand> curThread;
 		private BinaryRelationalExpression _bExpression;
 		
 		public void init(){
@@ -198,8 +197,7 @@ public class IsiLanguageParser extends Parser {
 			setState(30);
 			match(T__0);
 
-			             curThread = new ArrayList<AbstractCommand>();
-			             stack.push(curThread);
+			             stack.push(program.getComandos());
 			           
 			setState(33); 
 			_errHandler.sync(this);

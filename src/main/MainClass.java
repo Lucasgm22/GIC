@@ -26,7 +26,12 @@ public class MainClass {
 			var parser = new IsiLanguageParser(tokenStream);
 			System.out.println("Starting Expression Analysis");
 			parser.init();
-			parser.programa();
+			try {
+				parser.programa();
+			} catch (IsiSemanticException ex) {
+				System.err.println("Compilation Failed!");
+				System.err.println(ex.getMessage());
+			}
 			System.out.println("Compilation Successful! Good Job");
 
 			if (mode == ProgramMode.C) {
@@ -48,10 +53,6 @@ public class MainClass {
 		catch (ArrayIndexOutOfBoundsException ex) {
 			System.out.println("Usage: pass the arguments in command Line");
 			System.out.println("<INPUT> (<I> | (<C> (<C|JAVA|JS>))");
-		}
-		catch (IsiSemanticException ex) {
-			System.err.println("Compilation Failed!");
-			System.err.println(ex.getMessage());
 		}
 		catch(Exception ex) {
 			ex.printStackTrace();

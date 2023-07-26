@@ -71,12 +71,12 @@ public class Program {
     }
 
 
-    public void setComandos(List<AbstractCommand> comandos) {
-        this.comandos = comandos;
+    public List<AbstractCommand> getComandos() {
+        return comandos;
     }
 
-    public SymbolTable getSymbolTable() {
-        return symbolTable;
+    public void setComandos(List<AbstractCommand> comandos) {
+        this.comandos = comandos;
     }
 
     public void setSymbolTable(SymbolTable symbolTable) {
