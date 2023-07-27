@@ -61,12 +61,12 @@ grammar IsiLanguage;
         }
     }
 
-    private void validateId(Identifier id, boolean validateValue, int line, int column) {
+    private void validateId(String idTxt, Identifier id, boolean validateValue, int line, int column) {
     	if (id == null){
-    	    throw new IsiUndeclaredVariableException(id.getText(), line, column);
+    	    throw new IsiUndeclaredVariableException(idTxt, line, column);
     	}
-    	if (validateValue && !id.isAssigned()) {
-            throw new IsiUnassignedVariableException(id.getText(), line, column);
+    	if (validateValue && (id == null || !id.isAssigned())) {
+            throw new IsiUnassignedVariableException(idTxt, line, column);
         }
     }
 }
@@ -164,7 +164,7 @@ cmdIf     : 'se' AP bRelationalExpr FP 'execute'
 		  
 cmdRead   : 'leia' AP ID {
 				Identifier id = symbolTable.get(_input.LT(-1).getText());
-				validateId(id, true, _input.LT(-1).getLine(), _input.LT(-1).getCharPositionInLine());
+				validateId(id.getText(), id, true, _input.LT(-1).getLine(), _input.LT(-1).getCharPositionInLine());
 				CmdRead _read = new CmdRead(id, blockLvl);
 				stack.peek().add(_read);
 			 }
@@ -174,7 +174,7 @@ cmdRead   : 'leia' AP ID {
 cmdWrite  : 'escreva' AP (
 	         ID {
 	         	Identifier id = symbolTable.get(_input.LT(-1).getText());
-				validateId(id, true, _input.LT(-1).getLine(), _input.LT(-1).getCharPositionInLine());
+				validateId(id.getText(), id, true, _input.LT(-1).getLine(), _input.LT(-1).getCharPositionInLine());
 	         	CmdWrite _write = new CmdWrite(id, blockLvl);
 	         	stack.peek().add(_write);
 	         } 
@@ -189,7 +189,7 @@ cmdWrite  : 'escreva' AP (
    		  
 cmdAttr   : ID {
                 idAtribuido = _input.LT(-1).getText();
-				validateId(symbolTable.get(_input.LT(-1).getText()), false,_input.LT(-1).getLine(), _input.LT(-1).getCharPositionInLine());
+				validateId(idAtribuido, symbolTable.get(idAtribuido), false,_input.LT(-1).getLine(), _input.LT(-1).getCharPositionInLine());
 				leftDT = symbolTable.get(_input.LT(-1).getText()).getType();
 				rightDT = null;
 			}
@@ -274,7 +274,7 @@ termo     : (NUMBER | NUMBERDEC)
 				validateBinaryOperation(_input.LT(-1).getLine(), _input.LT(-1).getCharPositionInLine());
 
 				Identifier id = symbolTable.get(_input.LT(-1).getText());
-				validateId(id, true,_input.LT(-1).getLine(), _input.LT(-1).getCharPositionInLine());
+				validateId(id.getText(), id, true,_input.LT(-1).getLine(), _input.LT(-1).getCharPositionInLine());
 
 				if (rightDT == DataType.TEXT) {
 				    textContent = id.getValueText();

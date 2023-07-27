@@ -29,10 +29,9 @@ public class MainClass {
 			var parser = new IsiLanguageParser(tokenStream);
 
 			parser.init();
-			compile(parser);
+			compile(parser, mode);
 
 			if (mode == ProgramMode.C) {
-				System.out.println("Compilation Successful! Good Job");
 				var target = TargetLang.valueOf(args[2]);
 				if (target == TargetLang.ALL) {
 					Arrays.stream(TargetLang.values())
@@ -56,21 +55,25 @@ public class MainClass {
 			System.err.println("Usage: pass the following arguments in command line.");
 			System.err.println("<PATH_INPUT> (<I> | (<C> (<C|JAVA|JS|ALL>)).");
 		}
+		catch (IsiSemanticException ex) {
+			System.err.println("Compilation Failed!");
+			System.err.println(ex.getMessage());
+		}
 		catch(Exception ex) {
 			ex.printStackTrace();
 		}
 	}
 
-	public static void compile(IsiLanguageParser parser) {
+	public static void compile(IsiLanguageParser parser, ProgramMode mode) {
 		if (parser == null) {
 			throw new IllegalArgumentException("parser not initialized");
 		}
 		try {
 			parser.programa();
 		} catch (IsiSemanticException ex) {
-			System.err.println("Compilation Failed!");
-			System.err.println(ex.getMessage());
+			if (mode != ProgramMode.I) throw ex;
 		}
+		System.out.println("Compilation Successful! Good Job");
 	}
 
 	public static void interpret(IsiLanguageParser parser) {

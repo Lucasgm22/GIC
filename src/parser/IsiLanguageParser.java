@@ -121,7 +121,7 @@ public class IsiLanguageParser extends Parser {
 		private String   text;
 		private String textContent;
 		private Program  program = new Program();
-		private int indentationLvl = 0;
+		private int blockLvl = 0;
 		private Stack<List<AbstractCommand>> stack = new Stack<>();
 		private Stack<CmdIf> stackIfCmds = new Stack<>();
 		private Stack<CmdWhile> stackWhileCmds = new Stack<>();
@@ -157,12 +157,12 @@ public class IsiLanguageParser extends Parser {
 	        }
 	    }
 
-	    private void validateId(Identifier id, boolean validateValue, int line, int column) {
+	    private void validateId(String idTxt, Identifier id, boolean validateValue, int line, int column) {
 	    	if (id == null){
-	    	    throw new IsiUndeclaredVariableException(id.getText(), line, column);
+	    	    throw new IsiUndeclaredVariableException(idTxt, line, column);
 	    	}
-	    	if (validateValue && !id.isAssigned()) {
-	            throw new IsiUnassignedVariableException(id.getText(), line, column);
+	    	if (validateValue && (id == null || !id.isAssigned())) {
+	            throw new IsiUnassignedVariableException(idTxt, line, column);
 	        }
 	    }
 
@@ -403,7 +403,7 @@ public class IsiLanguageParser extends Parser {
 
 			                 Identifier dcId = new Identifier(_input.LT(-1).getText(), currentType);
 			                 symbolTable.add(_input.LT(-1).getText(), dcId);
-			                 CmdDecl _decl = new CmdDecl(dcId, indentationLvl);
+			                 CmdDecl _decl = new CmdDecl(dcId, blockLvl);
 			                 stack.peek().add(_decl);
 			                 
 			setState(65);
@@ -419,7 +419,7 @@ public class IsiLanguageParser extends Parser {
 
 				           	     Identifier dcId2 = new Identifier(_input.LT(-1).getText(), currentType);
 				           	     symbolTable.add(_input.LT(-1).getText(), dcId2);
-				           	     CmdDecl _decl2 = new CmdDecl(dcId2, indentationLvl);
+				           	     CmdDecl _decl2 = new CmdDecl(dcId2, blockLvl);
 				           	     stack.peek().add(_decl2);
 				           	     
 				}
@@ -579,7 +579,7 @@ public class IsiLanguageParser extends Parser {
 
 			                curThread = new ArrayList<AbstractCommand>();
 			                stack.push(curThread);
-			                indentationLvl += 1;
+			                blockLvl += 1;
 			              
 			setState(79); 
 			_errHandler.sync(this);
@@ -610,8 +610,8 @@ public class IsiLanguageParser extends Parser {
 			setState(86);
 			match(FP);
 
-			                indentationLvl -= 1;
-			                CmdDoWhile _cmdDoWhile = new CmdDoWhile(indentationLvl, _bExpression, stack.pop());
+			                blockLvl -= 1;
+			                CmdDoWhile _cmdDoWhile = new CmdDoWhile(blockLvl, _bExpression, stack.pop());
 			                stack.peek().add(_cmdDoWhile);
 			                _bExpression = null;
 			              
@@ -676,10 +676,10 @@ public class IsiLanguageParser extends Parser {
 			setState(94);
 			match(T__5);
 
-			                CmdWhile _cmdWhile = new CmdWhile(indentationLvl, _bExpression);
+			                CmdWhile _cmdWhile = new CmdWhile(blockLvl, _bExpression);
 			                _bExpression = null;
 			                stackWhileCmds.push(_cmdWhile);
-			                indentationLvl += 1;
+			                blockLvl += 1;
 			                curThread = new ArrayList<AbstractCommand>();
 			                stack.push(curThread);
 			            
@@ -706,7 +706,7 @@ public class IsiLanguageParser extends Parser {
 			match(PF);
 
 			                stack.peek().add(stackWhileCmds.pop());
-			                indentationLvl -=1;
+			                blockLvl -=1;
 			            
 			}
 		}
@@ -767,10 +767,10 @@ public class IsiLanguageParser extends Parser {
 			setState(110);
 			match(T__5);
 
-			                CmdIf _cmdIf = new CmdIf(indentationLvl, _bExpression);
+			                CmdIf _cmdIf = new CmdIf(blockLvl, _bExpression);
 			                _bExpression = null;
 			                stackIfCmds.push(_cmdIf);
-			                indentationLvl += 1;
+			                blockLvl += 1;
 			                curThread = new ArrayList<AbstractCommand>();
 			                stack.push(curThread);
 			            
@@ -828,7 +828,7 @@ public class IsiLanguageParser extends Parser {
 			match(PF);
 
 			                stack.peek().add(stackIfCmds.pop());
-			                indentationLvl -= 1;
+			                blockLvl -= 1;
 			             
 			}
 		}
@@ -877,8 +877,8 @@ public class IsiLanguageParser extends Parser {
 			match(ID);
 
 							Identifier id = symbolTable.get(_input.LT(-1).getText());
-							validateId(id, true, _input.LT(-1).getLine(), _input.LT(-1).getCharPositionInLine());
-							CmdRead _read = new CmdRead(id, indentationLvl);
+							validateId(id.getText(), id, true, _input.LT(-1).getLine(), _input.LT(-1).getCharPositionInLine());
+							CmdRead _read = new CmdRead(id, blockLvl);
 							stack.peek().add(_read);
 						 
 			setState(137);
@@ -938,8 +938,8 @@ public class IsiLanguageParser extends Parser {
 				match(ID);
 
 					         	Identifier id = symbolTable.get(_input.LT(-1).getText());
-								validateId(id, true, _input.LT(-1).getLine(), _input.LT(-1).getCharPositionInLine());
-					         	CmdWrite _write = new CmdWrite(id, indentationLvl);
+								validateId(id.getText(), id, true, _input.LT(-1).getLine(), _input.LT(-1).getCharPositionInLine());
+					         	CmdWrite _write = new CmdWrite(id, blockLvl);
 					         	stack.peek().add(_write);
 					         
 				}
@@ -949,7 +949,7 @@ public class IsiLanguageParser extends Parser {
 				setState(144);
 				match(TEXT);
 
-					         	CmdWrite _write = new CmdWrite(_input.LT(-1).getText(), indentationLvl);
+					         	CmdWrite _write = new CmdWrite(_input.LT(-1).getText(), blockLvl);
 					         	stack.peek().add(_write);
 					         	
 					         
@@ -1007,7 +1007,7 @@ public class IsiLanguageParser extends Parser {
 			match(ID);
 
 			                idAtribuido = _input.LT(-1).getText();
-							validateId(symbolTable.get(_input.LT(-1).getText()), false,_input.LT(-1).getLine(), _input.LT(-1).getCharPositionInLine());
+							validateId(idAtribuido, symbolTable.get(idAtribuido), false,_input.LT(-1).getLine(), _input.LT(-1).getCharPositionInLine());
 							leftDT = symbolTable.get(_input.LT(-1).getText()).getType();
 							rightDT = null;
 						
@@ -1025,18 +1025,18 @@ public class IsiLanguageParser extends Parser {
 								AbstractCommand _attr;
 			                    Identifier id = symbolTable.get(idAtribuido);
 								if (!DataType.TEXT.equals(id.getType())) {
-			                        if (stack.size() == 1) {
+			                        if (blockLvl == 0) {
 			                            id.setValue(expression.eval());
 			                            symbolTable.add(idAtribuido, id);
 			                        }
 
-								    _attr = new CmdAttrib(id, expression, indentationLvl);
+								    _attr = new CmdAttrib(id, expression, blockLvl);
 								} else {
-			                        if (stack.size() == 1) {
+			                        if (blockLvl == 0) {
 			                            id.setValueText(textContent);
 			                            symbolTable.add(idAtribuido, id);
 								    }
-								    _attr = new CmdAttrib(id, textContent, indentationLvl);
+								    _attr = new CmdAttrib(id, textContent, blockLvl);
 								}
 								stack.peek().add(_attr);
 								textContent = null;
@@ -1271,7 +1271,7 @@ public class IsiLanguageParser extends Parser {
 								validateBinaryOperation(_input.LT(-1).getLine(), _input.LT(-1).getCharPositionInLine());
 
 								Identifier id = symbolTable.get(_input.LT(-1).getText());
-								validateId(id, true,_input.LT(-1).getLine(), _input.LT(-1).getCharPositionInLine());
+								validateId(id.getText(), id, true,_input.LT(-1).getLine(), _input.LT(-1).getCharPositionInLine());
 
 								if (rightDT == DataType.TEXT) {
 								    textContent = id.getValueText();

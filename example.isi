@@ -7,6 +7,14 @@ programa
     escreva("Hello World!").
     escreva("Digite o valor C").
 
+    c := 0.
+
+    se (0<1) execute
+         c := 0.
+    senao
+         escreva(c).
+    fimse.
+
     a := "Ola mundo aqui e a IsiLanguage".
     e := 2.1 .
     c := 0.

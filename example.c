@@ -11,6 +11,12 @@ int main() {
     int d;
     printf("%s\n" ,"Hello World!");
     printf("%s\n" ,"Digite o valor C");
+    c = 0;
+    if (0<1) {
+        c = 0;
+    } else {
+        printf("%d\n", c);
+    }
     strcpy(a, "Ola mundo aqui e a IsiLanguage");
     e = 2.1;
     c = 0;

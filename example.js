@@ -1,5 +1,11 @@
 alert("Hello World!");
 alert("Digite o valor C");
+c = 0;
+if (0<1) {
+    c = 0;
+} else {
+    alert(c);
+}
 a = "Ola mundo aqui e a IsiLanguage";
 e = 2.1;
 c = 0;

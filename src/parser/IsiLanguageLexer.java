@@ -113,7 +113,7 @@ public class IsiLanguageLexer extends Lexer {
 		private String   text;
 		private String textContent;
 		private Program  program = new Program();
-		private int indentationLvl = 0;
+		private int blockLvl = 0;
 		private Stack<List<AbstractCommand>> stack = new Stack<>();
 		private Stack<CmdIf> stackIfCmds = new Stack<>();
 		private Stack<CmdWhile> stackWhileCmds = new Stack<>();
@@ -149,12 +149,12 @@ public class IsiLanguageLexer extends Lexer {
 	        }
 	    }
 
-	    private void validateId(Identifier id, boolean validateValue, int line, int column) {
+	    private void validateId(String idTxt, Identifier id, boolean validateValue, int line, int column) {
 	    	if (id == null){
-	    	    throw new IsiUndeclaredVariableException(id.getText(), line, column);
+	    	    throw new IsiUndeclaredVariableException(idTxt, line, column);
 	    	}
-	    	if (validateValue && !id.isAssigned()) {
-	            throw new IsiUnassignedVariableException(id.getText(), line, column);
+	    	if (validateValue && (id == null || !id.isAssigned())) {
+	            throw new IsiUnassignedVariableException(idTxt, line, column);
 	        }
 	    }
 
