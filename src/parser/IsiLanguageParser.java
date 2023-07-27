@@ -410,7 +410,7 @@ public class IsiLanguageParser extends Parser {
 
 			                 Identifier dcId = new Identifier(_input.LT(-1).getText(), currentType);
 			                 symbolTable.add(_input.LT(-1).getText(), dcId);
-			                 CmdDecl _decl = new CmdDecl(dcId, blockLvl);
+			                 CmdDecl _decl = new CmdDecl(dcId, blockLvl, _input.LT(-1).getLine(), _input.LT(-1).getCharPositionInLine());
 			                 stack.peek().add(_decl);
 			                 
 			setState(65);
@@ -426,7 +426,7 @@ public class IsiLanguageParser extends Parser {
 
 				           	     Identifier dcId2 = new Identifier(_input.LT(-1).getText(), currentType);
 				           	     symbolTable.add(_input.LT(-1).getText(), dcId2);
-				           	     CmdDecl _decl2 = new CmdDecl(dcId2, blockLvl);
+				           	     CmdDecl _decl2 = new CmdDecl(dcId2, blockLvl, _input.LT(-1).getLine(), _input.LT(-1).getCharPositionInLine());
 				           	     stack.peek().add(_decl2);
 				           	     
 				}

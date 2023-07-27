@@ -6,9 +6,11 @@ public class CmdDecl extends AbstractCommand {
 
     private final Identifier id;
 
-    public  CmdDecl(Identifier id, int indentation) {
+    public  CmdDecl(Identifier id, int indentation, int line, int column) {
         super(indentation);
         this.id = id;
+        this.id.setLine(line);
+        this.id.setColumn(column);
     }
     @Override
     public String generateJSCode() {

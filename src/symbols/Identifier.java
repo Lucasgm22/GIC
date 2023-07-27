@@ -9,6 +9,9 @@ public class Identifier {
 
 	private boolean used = false;
 
+	private int line;
+	private int column;
+
 	public String getText() {
 		return text;
 	}
@@ -63,5 +66,21 @@ public class Identifier {
 
 	public boolean isUsed() {
 		return used;
+	}
+
+	public int getColumn() {
+		return column;
+	}
+
+	public void setColumn(int column) {
+		this.column = column;
+	}
+
+	public int getLine() {
+		return line;
+	}
+
+	public void setLine(int line) {
+		this.line = line;
 	}
 }
