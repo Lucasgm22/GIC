@@ -884,7 +884,7 @@ public class IsiLanguageParser extends Parser {
 			match(ID);
 
 							Identifier id = symbolTable.get(_input.LT(-1).getText());
-							validateId(id.getText(), id, true, _input.LT(-1).getLine(), _input.LT(-1).getCharPositionInLine());
+							validateId(_input.LT(-1).getText(), id, true, _input.LT(-1).getLine(), _input.LT(-1).getCharPositionInLine());
 							CmdRead _read = new CmdRead(id, blockLvl);
 							stack.peek().add(_read);
 						 
@@ -945,7 +945,7 @@ public class IsiLanguageParser extends Parser {
 				match(ID);
 
 					         	Identifier id = symbolTable.get(_input.LT(-1).getText());
-								validateId(id.getText(), id, true, _input.LT(-1).getLine(), _input.LT(-1).getCharPositionInLine());
+								validateId(_input.LT(-1).getText(), id, true, _input.LT(-1).getLine(), _input.LT(-1).getCharPositionInLine());
 					         	CmdWrite _write = new CmdWrite(id, blockLvl);
 					         	stack.peek().add(_write);
 					         
@@ -1280,7 +1280,7 @@ public class IsiLanguageParser extends Parser {
 								validateBinaryOperation(_input.LT(-1).getLine(), _input.LT(-1).getCharPositionInLine());
 
 								Identifier id = symbolTable.get(_input.LT(-1).getText());
-								validateId(id.getText(), id, true,_input.LT(-1).getLine(), _input.LT(-1).getCharPositionInLine());
+								validateId(_input.LT(-1).getText(), id, true,_input.LT(-1).getLine(), _input.LT(-1).getCharPositionInLine());
 
 								if (rightDT == DataType.TEXT) {
 								    textContent = id.getValueText();
