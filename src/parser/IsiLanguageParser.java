@@ -157,6 +157,15 @@ public class IsiLanguageParser extends Parser {
 	        }
 	    }
 
+	    private void validateId(Identifier id, boolean validateValue, int line, int column) {
+	    	if (id == null){
+	    	    throw new IsiUndeclaredVariableException(id.getText(), line, column);
+	    	}
+	    	if (validateValue && !id.isAssigned()) {
+	            throw new IsiUnassignedVariableException(id.getText(), line, column);
+	        }
+	    }
+
 	public IsiLanguageParser(TokenStream input) {
 		super(input);
 		_interp = new ParserATNSimulator(this,_ATN,_decisionToDFA,_sharedContextCache);
@@ -868,9 +877,7 @@ public class IsiLanguageParser extends Parser {
 			match(ID);
 
 							Identifier id = symbolTable.get(_input.LT(-1).getText());
-							if (id == null){
-								throw new IsiUndeclaredVariableException(_input.LT(-1).getText(), _input.LT(-1).getLine(), _input.LT(-1).getCharPositionInLine());
-							}
+							validateId(id, true, _input.LT(-1).getLine(), _input.LT(-1).getCharPositionInLine());
 							CmdRead _read = new CmdRead(id, indentationLvl);
 							stack.peek().add(_read);
 						 
@@ -931,9 +938,7 @@ public class IsiLanguageParser extends Parser {
 				match(ID);
 
 					         	Identifier id = symbolTable.get(_input.LT(-1).getText());
-					         	if (id == null){
-					         		throw new IsiUndeclaredVariableException(_input.LT(-1).getText(), _input.LT(-1).getLine(), _input.LT(-1).getCharPositionInLine());
-					         	}
+								validateId(id, true, _input.LT(-1).getLine(), _input.LT(-1).getCharPositionInLine());
 					         	CmdWrite _write = new CmdWrite(id, indentationLvl);
 					         	stack.peek().add(_write);
 					         
@@ -1001,10 +1006,8 @@ public class IsiLanguageParser extends Parser {
 			setState(151);
 			match(ID);
 
-							idAtribuido = _input.LT(-1).getText();
-							if (!symbolTable.exists(_input.LT(-1).getText())){
-								throw new IsiUndeclaredVariableException(_input.LT(-1).getText(), _input.LT(-1).getLine(), _input.LT(-1).getCharPositionInLine());
-							}
+			                idAtribuido = _input.LT(-1).getText();
+							validateId(symbolTable.get(_input.LT(-1).getText()), false,_input.LT(-1).getLine(), _input.LT(-1).getCharPositionInLine());
 							leftDT = symbolTable.get(_input.LT(-1).getText()).getType();
 							rightDT = null;
 						
@@ -1022,13 +1025,17 @@ public class IsiLanguageParser extends Parser {
 								AbstractCommand _attr;
 			                    Identifier id = symbolTable.get(idAtribuido);
 								if (!DataType.TEXT.equals(id.getType())) {
-
-			                        id.setValue(expression.eval());
-			                        symbolTable.add(idAtribuido, id);
+			                        if (stack.size() == 1) {
+			                            id.setValue(expression.eval());
+			                            symbolTable.add(idAtribuido, id);
+			                        }
 
 								    _attr = new CmdAttrib(id, expression, indentationLvl);
 								} else {
-								    id.setValueText(textContent);
+			                        if (stack.size() == 1) {
+			                            id.setValueText(textContent);
+			                            symbolTable.add(idAtribuido, id);
+								    }
 								    _attr = new CmdAttrib(id, textContent, indentationLvl);
 								}
 								stack.peek().add(_attr);
@@ -1264,6 +1271,8 @@ public class IsiLanguageParser extends Parser {
 								validateBinaryOperation(_input.LT(-1).getLine(), _input.LT(-1).getCharPositionInLine());
 
 								Identifier id = symbolTable.get(_input.LT(-1).getText());
+								validateId(id, true,_input.LT(-1).getLine(), _input.LT(-1).getCharPositionInLine());
+
 								if (rightDT == DataType.TEXT) {
 								    textContent = id.getValueText();
 								} else {

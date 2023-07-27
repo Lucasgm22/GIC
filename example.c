@@ -13,12 +13,13 @@ int main() {
     printf("%s\n" ,"Digite o valor C");
     strcpy(a, "Ola mundo aqui e a IsiLanguage");
     e = 2.1;
+    c = 0;
     b = 100*(2+12)/14;
     d = (b+2)/2;
     strcpy(f, "Ola mundo aqui e a IsiLanguage");
-    scanf("%d", &c);
     printf("%s\n" ,"SE");
     if (0<1) {
+        c = 0;
         printf("%s\n" ,"0 < 1");
         if (2<3) {
             printf("%s\n" ,"2 < 3");
@@ -32,13 +33,12 @@ int main() {
         }
     }
     b = 2;
-    c = 2;
     printf("%s\n" ,"ENQUANTO");
     while (b<5) {
+        c = 0;
         b = b+1;
-        while (c<5) {
-            printf("%d\n", c);
-            c = c+2;
+        while (b<10) {
+            b = b+2;
         }
         printf("%d\n", b);
     }

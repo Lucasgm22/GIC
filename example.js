@@ -2,12 +2,13 @@ alert("Hello World!");
 alert("Digite o valor C");
 a = "Ola mundo aqui e a IsiLanguage";
 e = 2.1;
+c = 0;
 b = 100*(2+12)/14;
 d = (b+2)/2;
 f = "Ola mundo aqui e a IsiLanguage";
-c = prompt("Type you input");
 alert("SE");
 if (0<1) {
+    c = 0;
     alert("0 < 1");
     if (2<3) {
         alert("2 < 3");
@@ -21,13 +22,12 @@ if (0<1) {
     }
 }
 b = 2;
-c = 2;
 alert("ENQUANTO");
 while (b<5) {
+    c = 0;
     b = b+1;
-    while (c<5) {
-        alert(c);
-        c = c+2;
+    while (b<10) {
+        b = b+2;
     }
     alert(b);
 }

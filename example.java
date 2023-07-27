@@ -14,12 +14,13 @@ public class Main {
         System.out.println("Digite o valor C");
         a = "Ola mundo aqui e a IsiLanguage";
         e = 2.1;
+        c = 0;
         b = 100*(2+12)/14;
         d = (b+2)/2;
         f = "Ola mundo aqui e a IsiLanguage";
-        c = sc.nextInt();
         System.out.println("SE");
         if (0<1) {
+            c = 0;
             System.out.println("0 < 1");
             if (2<3) {
                 System.out.println("2 < 3");
@@ -33,13 +34,12 @@ public class Main {
             }
         }
         b = 2;
-        c = 2;
         System.out.println("ENQUANTO");
         while (b<5) {
+            c = 0;
             b = b+1;
-            while (c<5) {
-                System.out.println(c);
-                c = c+2;
+            while (b<10) {
+                b = b+2;
             }
             System.out.println(b);
         }

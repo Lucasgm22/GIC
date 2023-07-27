@@ -9,13 +9,14 @@ programa
 
     a := "Ola mundo aqui e a IsiLanguage".
     e := 2.1 .
+    c := 0.
     b := 100 * ( 2 + 12 ) / 14.
     d := (b + 2) / 2.
 
     f := a.
-    leia(c).
     escreva("SE").
     se (0 < 1) execute
+        c := 0.
         escreva("0 < 1").
         se (2 < 3) execute
             escreva("2 < 3").
@@ -29,13 +30,12 @@ programa
         fimse.
     fimse.
     b := 2.
-    c := 2.
     escreva("ENQUANTO").
     enquanto (b < 5) execute
+        c := 0.
         b := b + 1.
-        enquanto (c < 5) execute
-            escreva(c).
-            c:= c + 2.
+        enquanto (b < 10) execute
+            b:= b + 2.
         fimenquanto.
         escreva(b).
     fimenquanto.
