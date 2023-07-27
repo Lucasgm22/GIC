@@ -47,7 +47,7 @@ public class MainClass {
 		catch (ArrayIndexOutOfBoundsException | IllegalArgumentException ex) {
 			System.err.println(ex.getMessage());
 			System.err.println("Usage: pass the following arguments in command line.");
-			System.err.println("<INPUT> (<I> | (<C> (<C|JAVA|JS>)).");
+			System.err.println("<PATH_INPUT> (<I> | (<C> (<C|JAVA|JS>)).");
 		}
 		catch(Exception ex) {
 			ex.printStackTrace();
