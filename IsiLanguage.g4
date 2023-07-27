@@ -264,6 +264,7 @@ termo     : (NUMBER | NUMBERDEC)
 		       validateBinaryOperation(_input.LT(-1).getLine(), _input.LT(-1).getCharPositionInLine());
 
 		       textContent = _input.LT(-1).getText();
+		       textContent = textContent.substring(1, textContent.length() -1);
 		    }
 		  |
 			ID {

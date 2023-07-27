@@ -57,7 +57,12 @@ int main() {
         printf("%d\n", b);
         b = b+1;
     } while (b<10);
+    scanf("%s", &a);
+    scanf("%d", &b);
+    scanf("%lf", &e);
     printf("%s\n" ,a);
+    printf("%d\n", b);
+    printf("%lf\n", e);
     printf("%s\n" ,f);
     printf("%d\n", b);
     printf("%d\n", d);

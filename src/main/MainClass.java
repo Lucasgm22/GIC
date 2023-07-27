@@ -32,6 +32,7 @@ public class MainClass {
 			compile(parser, mode);
 
 			if (mode == ProgramMode.C) {
+				System.out.println("Compilation Successful! Good Job");
 				var target = TargetLang.valueOf(args[2]);
 				if (target == TargetLang.ALL) {
 					Arrays.stream(TargetLang.values())
@@ -73,7 +74,6 @@ public class MainClass {
 		} catch (IsiSemanticException ex) {
 			if (mode != ProgramMode.I) throw ex;
 		}
-		System.out.println("Compilation Successful! Good Job");
 	}
 
 	public static void interpret(IsiLanguageParser parser) {

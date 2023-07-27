@@ -43,12 +43,12 @@ public class CmdAttrib extends AbstractCommand {
 					id.getText() + " = " + getAttribuition() + ";\n";
 		} else {
 			return getIndentationByTarget(TargetLang.C) +
-					"strcpy(" + id.getText() + ", " + content +");\n";
+					"strcpy(" + id.getText() + ", \""+ content +"\");\n";
 		}
 	}
 
 	private String getAttribuition() {
-		return DataType.TEXT.equals(id.getType()) ? content : expr.toString();
+		return DataType.TEXT.equals(id.getType()) ? ("\"" + content+ "\"") : expr.toString();
 	}
 	public Identifier getId() {
 		return id;

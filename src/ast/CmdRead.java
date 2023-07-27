@@ -43,7 +43,12 @@ public class CmdRead extends AbstractCommand {
 
 	@Override
 	public void run(Program program) {
-		id.setValue(Integer.parseInt(JOptionPane.showInputDialog("Type Your Input")));
+		switch (id.getType()) {
+			case TEXT -> id.setValueText(JOptionPane.showInputDialog("Type Your Input"));
+			case INTEGER -> id.setValue(Integer.parseInt(JOptionPane.showInputDialog("Type Your Input")));
+			case REAL -> id.setValue(Double.parseDouble(JOptionPane.showInputDialog("Type Your Input")));
+		}
+
 		program.updateContent();
 	}
 

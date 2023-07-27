@@ -57,7 +57,12 @@ programa
         b := b + 1.
     enquanto (b < 10).
 
+    leia(a).
+    leia(b).
+    leia(e).
     escreva(a).
+    escreva(b).
+    escreva(e).
     escreva(f).
     escreva(b).
     escreva(d).

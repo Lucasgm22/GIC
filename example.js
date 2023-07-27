@@ -46,7 +46,12 @@ do {
     alert(b);
     b = b+1;
 } while (b<10);
+a = prompt("Type you input");
+b = prompt("Type you input");
+e = prompt("Type you input");
 alert(a);
+alert(b);
+alert(e);
 alert(f);
 alert(b);
 alert(d);
