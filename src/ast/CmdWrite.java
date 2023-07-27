@@ -23,13 +23,13 @@ public class CmdWrite extends AbstractCommand {
 	@Override
 	public String generateJSCode() {
 		return getIndentationByTarget(TargetLang.JS) +
-				"alert(" + (id!=null?id.getText():text) + ");\n";
+				"alert(" + (id!=null?id.getText(): ("\"" + text + "\"")) + ");\n";
 	}
 
 	@Override
 	public String generateJavaCode() {
 		return getIndentationByTarget(TargetLang.JAVA)
-				+ "System.out.println(" + (id!=null?id.getText():text) +");\n";
+				+ "System.out.println(" + (id!=null?id.getText(): ("\"" +text +"\"")) +");\n";
 	}
 
 	@Override
@@ -42,7 +42,7 @@ public class CmdWrite extends AbstractCommand {
 				case TEXT -> "printf(\"%s\\n\", " + id.getText()+ ");\n";
 			};
 		} else {
-			content = "printf(\"%s\\n\", " + text + ");\n";
+			content = "printf(\"%s\\n\", \"" + text + "\");\n";
 		}
 		return getIndentationByTarget(TargetLang.C) +
 				content;

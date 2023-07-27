@@ -69,6 +69,7 @@ public class Main {
         System.out.println(f);
         System.out.println(b);
         System.out.println(d);
+        sc.close();
     }
 }
 
