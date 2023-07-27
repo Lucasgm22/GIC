@@ -41,7 +41,7 @@ public class MainClass {
 					parser.generateObjectCode(inputName, target);
 				}
 				parser.getUnassignedIdentifiers().forEach(ui ->
-						System.out.println("WARNING - Identifier '" + ui.getText() + "' declared but not assigned.")
+						System.out.println("WARNING - Identifier '" + ui.getText() + "' declared but not used.")
 				);
 			} else if (mode == ProgramMode.I) {
 				interpret(parser);
