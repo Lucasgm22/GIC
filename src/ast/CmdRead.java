@@ -42,8 +42,9 @@ public class CmdRead extends AbstractCommand {
 	}
 
 	@Override
-	public void run() {
+	public void run(Program program) {
 		id.setValue(Integer.parseInt(JOptionPane.showInputDialog("Type Your Input")));
+		program.updateContent();
 	}
 
 }

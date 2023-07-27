@@ -55,9 +55,9 @@ public class CmdWhile extends AbstractCommand {
     }
 
     @Override
-    public void run() {
+    public void run(Program program) {
         while (bRelational.eval()) {
-            listCommands.forEach(AbstractCommand::run);
+            listCommands.forEach(cmd -> cmd.run(program));
         }
     }
 

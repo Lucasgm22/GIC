@@ -85,11 +85,11 @@ public class CmdIf extends AbstractCommand {
     }
 
     @Override
-    public void run() {
+    public void run(Program program) {
         if (bExpression.eval()) {
-            listTrue.forEach(AbstractCommand::run);
+            listTrue.forEach(cmd -> cmd.run(program));
         } else {
-            listFalse.forEach(AbstractCommand::run);
+            listFalse.forEach(cmd -> cmd.run(program));
         }
     }
 

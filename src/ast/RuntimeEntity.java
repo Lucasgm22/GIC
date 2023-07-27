@@ -12,11 +12,11 @@ public class RuntimeEntity extends JFrame {
 	private final JTextArea txtContent;
 	public RuntimeEntity() {
 		setTitle("Runtime Entity Program Status ");
-		setBounds(0, 0, 400, 300);
+		setBounds(0, 0, 600, 600);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setLayout(null);
 		txtContent = new JTextArea();
-		txtContent.setBounds(10, 10, 350, 250);
+		txtContent.setBounds(10, 10, 500, 500);
 		getContentPane().add(txtContent);
 		setVisible(true);
 		

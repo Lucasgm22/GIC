@@ -29,7 +29,7 @@ public class Identifier {
 	}
 	@Override
 	public String toString() {
-		return "Identifier [text=" + text + ", type=" + type + ", value=" + value + "]";
+		return "Identifier [text=" + text + ", type=" + type + ", value=" + (type == DataType.TEXT ? valueText : value) + "]";
 	}
 
 	public Double getValue() {

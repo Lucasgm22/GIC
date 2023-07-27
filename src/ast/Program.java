@@ -91,11 +91,15 @@ public class Program {
 
     public void run() {
         runtime = new RuntimeEntity();
-        runtime.updateContent(symbolTable.getSymbols().values());
+        updateContent();
         comandos.forEach(c -> {
-            c.run();
-            runtime.updateContent(symbolTable.getSymbols().values());
+            c.run(this);
+            updateContent();
         });
+    }
+
+    public void updateContent() {
+        runtime.updateContent(symbolTable.getSymbols().values());
     }
 
     public void stop() {

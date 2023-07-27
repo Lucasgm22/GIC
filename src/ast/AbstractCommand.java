@@ -25,7 +25,7 @@ public abstract class AbstractCommand {
 
 	public abstract String generateCCode();
 
-	public abstract void run();
+	public abstract void run(Program program);
 
 	protected String getIndentationByTarget(TargetLang targetLang) {
 		return STR_INDENTATION.repeat(indentation + getDefaultIndentation(targetLang));

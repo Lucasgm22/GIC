@@ -65,7 +65,7 @@ public class CmdWrite extends AbstractCommand {
 	}
 
 	@Override
-	public void run() {
+	public void run(Program program) {
 		JOptionPane.showMessageDialog(null, (id!=null? id.show():text));
 	}
 

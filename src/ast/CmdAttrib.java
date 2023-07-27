@@ -59,12 +59,13 @@ public class CmdAttrib extends AbstractCommand {
 	}
 
 	@Override
-	public void run() {
+	public void run(Program program) {
 		if (DataType.TEXT.equals(id.getType())) {
 			id.setValueText(content);
 		} else {
 			id.setValue(expr.eval());
 		}
+		program.updateContent();
 	}
 
 }
