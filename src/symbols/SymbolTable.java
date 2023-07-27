@@ -35,6 +35,9 @@ public class SymbolTable {
 	public List<Identifier> getUnassignedIdentifiers() {
 		return symbols.values().stream().filter(id -> !id.isAssigned()).toList();
 	}
-	
 
+
+	public List<Identifier> getAssignedUnusedIdentifiers() {
+		return symbols.values().stream().filter(id -> id.isAssigned() && !id.isUsed()).toList();
+	}
 }

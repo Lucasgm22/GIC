@@ -42,8 +42,11 @@ public class MainClass {
 					parser.generateObjectCode(inputName, target);
 				}
 				parser.getUnassignedIdentifiers().forEach(ui ->
-						System.out.println("WARNING - Identifier '" + ui.getText() + "' declared but not used.")
+						System.out.println("WARNING - Identifier '" + ui.getText() + "' declared but not assigned.")
 				);
+				parser.getAssignedUnusedIdentifiers().forEach(ui ->
+						System.out.println("WARNING - Identifier '" + ui.getText() + "' assigned but never used."));
+
 			} else if (mode == ProgramMode.I) {
 				interpret(parser);
 			}
@@ -58,7 +61,7 @@ public class MainClass {
 		}
 		catch (IsiSemanticException ex) {
 			System.err.println("Compilation Failed!");
-			System.err.println(ex.getMessage());
+
 		}
 		catch(Exception ex) {
 			ex.printStackTrace();
@@ -72,6 +75,7 @@ public class MainClass {
 		try {
 			parser.programa();
 		} catch (IsiSemanticException ex) {
+			System.err.println(ex.getMessage());
 			if (mode != ProgramMode.I) throw ex;
 		}
 	}

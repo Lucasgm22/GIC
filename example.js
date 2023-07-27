@@ -1,6 +1,7 @@
 alert("Hello World!");
 alert("Digite o valor C");
 c = 0;
+i = "Nunca use essa variavel";
 if (0<1) {
     c = 0;
 } else {

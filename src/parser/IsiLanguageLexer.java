@@ -143,6 +143,10 @@ public class IsiLanguageLexer extends Lexer {
 		    return program.getUnassignedIdentifiers();
 		}
 
+	    public List<Identifier> getAssignedUnusedIdentifiers() {
+	    	return program.getAssignedUnusedIdentifiers();
+	    }
+
 		private void validateBinaryOperation(int line, int column) {
 			if (leftDT != null && leftDT != rightDT) {
 	    	    throw new IsiTypeMismatchException(leftDT, rightDT, line, column);
@@ -150,11 +154,14 @@ public class IsiLanguageLexer extends Lexer {
 	    }
 
 	    private void validateId(String idTxt, Identifier id, boolean validateValue, int line, int column) {
-	    	if (id == null){
+	    	if (id == null) {
 	    	    throw new IsiUndeclaredVariableException(idTxt, line, column);
 	    	}
-	    	if (validateValue && (id == null || !id.isAssigned())) {
-	            throw new IsiUnassignedVariableException(idTxt, line, column);
+	    	if (validateValue) {
+	    	    if ((id == null || !id.isAssigned())) {
+	                throw new IsiUnassignedVariableException(idTxt, line, column);
+	            }
+	            id.setUsed(true);
 	        }
 	    }
 

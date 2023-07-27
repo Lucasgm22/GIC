@@ -6,6 +6,7 @@ public class Main {
         String a;
         String f;
         String g;
+        String i;
         double e;
         int b;
         int c;
@@ -13,6 +14,7 @@ public class Main {
         System.out.println("Hello World!");
         System.out.println("Digite o valor C");
         c = 0;
+        i = "Nunca use essa variavel";
         if (0<1) {
             c = 0;
         } else {

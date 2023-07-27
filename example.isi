@@ -1,5 +1,5 @@
 programa
-    TEXTO a, f, g.
+    TEXTO a, f, g, i.
     REAL e.
     INTEIRO b,c,d.
 
@@ -8,6 +8,7 @@ programa
     escreva("Digite o valor C").
 
     c := 0.
+    i := "Nunca use essa variavel".
 
     se (0<1) execute
          c := 0.

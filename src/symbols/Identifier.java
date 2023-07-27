@@ -7,6 +7,8 @@ public class Identifier {
 
 	private String  valueText;
 
+	private boolean used = false;
+
 	public String getText() {
 		return text;
 	}
@@ -53,5 +55,13 @@ public class Identifier {
 
 	public void setValueText(String valueText) {
 		this.valueText = valueText;
+	}
+
+	public void setUsed(boolean used) {
+		this.used = used;
+	}
+
+	public boolean isUsed() {
+		return used;
 	}
 }

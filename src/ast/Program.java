@@ -110,5 +110,9 @@ public class Program {
         return symbolTable.getUnassignedIdentifiers();
     }
 
+    public List<Identifier> getAssignedUnusedIdentifiers() {
+        return symbolTable.getAssignedUnusedIdentifiers();
+    }
+
 
 }

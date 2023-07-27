@@ -5,6 +5,7 @@ int main() {
     char a[100];
     char f[100];
     char g[100];
+    char i[100];
     double e;
     int b;
     int c;
@@ -12,6 +13,7 @@ int main() {
     printf("%s\n" ,"Hello World!");
     printf("%s\n" ,"Digite o valor C");
     c = 0;
+    strcpy(i, "Nunca use essa variavel");
     if (0<1) {
         c = 0;
     } else {
