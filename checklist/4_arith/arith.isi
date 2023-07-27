@@ -1,0 +1,9 @@
+programa
+    INTEIRO b.
+
+    b := 7 * (5 + 15) / (2 * 5) - 3.
+
+    escreva("11").
+    escreva(b).
+
+fimprog.

@@ -1,0 +1,7 @@
+programa
+    TEXTO a.
+    REAL b.
+    b := 3.0.
+
+    a := b.
+fimprog.

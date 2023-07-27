@@ -1,0 +1,16 @@
+programa
+    INTEIRO b, c.
+
+    c := 0.
+    b := 0.
+
+    execute
+        b := b + 1.
+        c := 0.
+        execute
+            escreva(c).
+            c := c + 2.
+        enquanto (c < 10).
+        escreva(b).
+    enquanto (b < 5).
+fimprog.

@@ -1,0 +1,8 @@
+programa
+    REAL b.
+    INTEIRO a.
+
+    a := 3.
+
+    b := a.
+fimprog.

@@ -1,0 +1,4 @@
+programa
+    REAL b.
+    b := 3.
+fimprog.

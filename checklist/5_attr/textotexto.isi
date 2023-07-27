@@ -1,0 +1,7 @@
+programa
+    TEXTO a, b.
+    a := "TEXTO".
+    escreva(a).
+    b := a.
+    escreva(b).
+fimprog.

@@ -1,0 +1,13 @@
+programa
+    TEXTO a.
+    INTEIRO b.
+    REAL c.
+
+    a := "TEXTO".
+    b := 0.
+    c := 0.5.
+
+    escreva(a).
+    escreva(b).
+    escreva(c).
+fimprog.

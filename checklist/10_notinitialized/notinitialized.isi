@@ -1,0 +1,4 @@
+programa
+    INTEIRO b,a.
+    b := a.
+fimprog.

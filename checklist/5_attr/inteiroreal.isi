@@ -1,0 +1,4 @@
+programa
+    INTEIRO b.
+    b := 3.0.
+fimprog.

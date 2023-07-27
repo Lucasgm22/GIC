@@ -1,0 +1,7 @@
+programa
+    TEXTO a.
+    INTEIRO b.
+    b := 3.
+
+    a := b.
+fimprog.

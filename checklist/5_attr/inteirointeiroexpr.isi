@@ -1,0 +1,7 @@
+programa
+    INTEIRO a, b.
+    a := 2.
+    escreva(a).
+    b := 1 + a + 3.
+    escreva(b).
+fimprog.

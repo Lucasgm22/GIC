@@ -1,0 +1,15 @@
+programa
+    se (0 < 1) execute
+        escreva("0 < 1").
+        se (2 < 3) execute
+            escreva("2 < 3").
+        fimse.
+    senao
+        escreva("0 > 1").
+        se (7 != 9) execute
+            escreva("7 != 9").
+        senao
+            escreva("7 == 9").
+        fimse.
+    fimse.
+fimprog.

@@ -1,0 +1,7 @@
+programa
+    REAL a, b.
+    a := 2.0.
+    escreva(a).
+    b := 1.5 + a + 0.3.
+    escreva(b).
+fimprog.
