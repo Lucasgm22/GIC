@@ -10,8 +10,8 @@ int main() {
     int b;
     int c;
     int d;
-    printf("%s\n" ,"Hello World!");
-    printf("%s\n" ,"Digite o valor C");
+    printf("%s\n", "Hello World!");
+    printf("%s\n", "Digite o valor C");
     c = 0;
     strcpy(i, "Nunca use essa variavel");
     if (0<1) {
@@ -25,23 +25,23 @@ int main() {
     b = 100*(2+12)/14;
     d = (b+2)/2;
     strcpy(f, "Ola mundo aqui e a IsiLanguage");
-    printf("%s\n" ,"SE");
+    printf("%s\n", "SE");
     if (0<1) {
         c = 0;
-        printf("%s\n" ,"0 < 1");
+        printf("%s\n", "0 < 1");
         if (2<3) {
-            printf("%s\n" ,"2 < 3");
+            printf("%s\n", "2 < 3");
         }
     } else {
-        printf("%s\n" ,"0 > 1");
+        printf("%s\n", "0 > 1");
         if (7!=9) {
-            printf("%s\n" ,"7 != 9");
+            printf("%s\n", "7 != 9");
         } else {
-            printf("%s\n" ,"7 == 9");
+            printf("%s\n", "7 == 9");
         }
     }
     b = 2;
-    printf("%s\n" ,"ENQUANTO");
+    printf("%s\n", "ENQUANTO");
     while (b<5) {
         c = 0;
         b = b+1;
@@ -50,7 +50,7 @@ int main() {
         }
         printf("%d\n", b);
     }
-    printf("%s\n" ,"EXECUTE");
+    printf("%s\n", "EXECUTE");
     do {
         do {
             c = c+2;
@@ -62,10 +62,10 @@ int main() {
     scanf("%s", &a);
     scanf("%d", &b);
     scanf("%lf", &e);
-    printf("%s\n" ,a);
+    printf("%s\n", a);
     printf("%d\n", b);
     printf("%lf\n", e);
-    printf("%s\n" ,f);
+    printf("%s\n", f);
     printf("%d\n", b);
     printf("%d\n", d);
 }

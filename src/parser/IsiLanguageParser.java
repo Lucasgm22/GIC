@@ -956,7 +956,8 @@ public class IsiLanguageParser extends Parser {
 				setState(145);
 				match(TEXT);
 
-					         	CmdWrite _write = new CmdWrite(_input.LT(-1).getText(), blockLvl);
+					            String content = _input.LT(-1).getText();
+					         	CmdWrite _write = new CmdWrite(content.substring(1, content.length() -1), blockLvl);
 					         	stack.peek().add(_write);
 					         	
 					         
