@@ -36,5 +36,5 @@ public class CmdDecl extends AbstractCommand {
     }
 
     @Override
-    public void run() {}
+    public void run() { /* Identifiers are already in the Symbol table (declared) when runtime is called */ }
 }

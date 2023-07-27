@@ -6,7 +6,7 @@ import symbols.Identifier;
 
 public class CmdRead extends AbstractCommand {
 	
-	private Identifier id;
+	private final Identifier id;
 	
 	public CmdRead(Identifier id, int indentation) {
 		super(indentation);

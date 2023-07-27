@@ -7,7 +7,7 @@ import java.util.List;
 
 public class CmdWhile extends AbstractCommand {
 
-    private BinaryRelationalExpression bRelational;
+    private final BinaryRelationalExpression bRelational;
     private List<AbstractCommand> listCommands = new ArrayList<>();
 
     public CmdWhile(int indentation, BinaryRelationalExpression bRelational) {

@@ -7,7 +7,7 @@ import java.util.List;
 
 public class CmdIf extends AbstractCommand {
 
-    private BinaryRelationalExpression bExpression;
+    private final BinaryRelationalExpression bExpression;
 
     private List<AbstractCommand> listTrue = new ArrayList<>();
     private List<AbstractCommand> listFalse = new ArrayList<>();

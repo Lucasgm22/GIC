@@ -2,8 +2,8 @@ package expressions;
 
 import symbols.Identifier;
 
-public class IDExpression extends AbstractExpression{
-	private Identifier id;
+public class IDExpression implements AbstractExpression {
+	private final Identifier id;
 
 
 	public IDExpression(Identifier id) {

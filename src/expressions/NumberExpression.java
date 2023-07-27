@@ -2,7 +2,7 @@ package expressions;
 
 import symbols.DataType;
 
-public class NumberExpression extends AbstractExpression{
+public class NumberExpression implements AbstractExpression {
 	
 	private double numberValue;
 
@@ -13,17 +13,6 @@ public class NumberExpression extends AbstractExpression{
 		this.numberValue = numberValue;
 		this.type = type;
 	}
-	
-
-	public double getNumberValue() {
-		return numberValue;
-	}
-
-
-	public void setNumberValue(int numberValue) {
-		this.numberValue = numberValue;
-	}
-
 
 	public NumberExpression() {
 		super();

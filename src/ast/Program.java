@@ -22,18 +22,20 @@ public class Program {
     public void generateTarget(String filename, TargetLang target) {
         try {
             var extension = generateExtension(target);
-            try (var fw = new FileWriter(filename + extension)) {
-                try (var pw = new PrintWriter(fw)) {
-                    StringBuilder strBuilder = new StringBuilder();
-                    generateHeader(target, strBuilder);
-                    comandos.forEach(c -> {
-                        strBuilder.append(c.generateCode(target));
-                    });
-                    generateFooter(target, strBuilder);
-                    pw.println(strBuilder);
-                }
-            } catch (Exception ex) {
-                ex.printStackTrace();
+            writeOutPutFile(filename, target, extension);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    private void writeOutPutFile(String filename, TargetLang target, String extension) {
+        try (var fw = new FileWriter(filename + extension)) {
+            try (var pw = new PrintWriter(fw)) {
+                StringBuilder strBuilder = new StringBuilder();
+                generateHeader(target, strBuilder);
+                comandos.forEach(c -> strBuilder.append(c.generateCode(target)));
+                generateFooter(target, strBuilder);
+                pw.println(strBuilder);
             }
         } catch (Exception ex) {
             ex.printStackTrace();

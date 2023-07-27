@@ -9,7 +9,7 @@ import symbols.Identifier;
 
 public class RuntimeEntity extends JFrame {
 	
-	private JTextArea txtContent;
+	private final JTextArea txtContent;
 	public RuntimeEntity() {
 		setTitle("Runtime Entity Program Status ");
 		setBounds(0, 0, 400, 300);

@@ -1,19 +1,10 @@
 package expressions;
 
-public class OperatorExpression extends AbstractExpression {
+public record OperatorExpression(char operator) implements AbstractExpression {
 
-    private final char operator;
-
-    public OperatorExpression(char operator) {
-        this.operator = operator;
-    }
     @Override
     public double eval() {
         throw new IllegalStateException("cannot eval operator");
-    }
-
-    public char getOperator() {
-        return operator;
     }
 
     @Override

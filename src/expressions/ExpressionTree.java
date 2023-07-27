@@ -1,14 +1,15 @@
 package expressions;
 
 
-import java.util.Stack;
+import java.util.ArrayDeque;
+import java.util.Deque;
 
-public class ExpressionTree  extends AbstractExpression {
-    private Stack<Node> stN = new Stack<>();
-    private Stack<Node> stOp = new Stack<>();
+public class ExpressionTree implements AbstractExpression {
+    private final Deque<Node> stN = new ArrayDeque<>();
+    private final Deque<Node> stOp = new ArrayDeque<>();
 
-    public String expression = "";
-    private int []p = new int[123];
+    private String expression = "";
+    private final int []p = new int[123];
 
     public ExpressionTree() {
         super();
@@ -20,15 +21,16 @@ public class ExpressionTree  extends AbstractExpression {
 
     public void addOperator(OperatorExpression op) {
         expression = expression + op;
-        if (op.getOperator() == '(') {
+        if (op.operator() == '(') {
             var n = new Node(op);
             stOp.push(n);
-        } else if (p[op.getOperator()] > 0) {
+        } else if (p[op.operator()] > 0) {
             while (
-                    !stOp.isEmpty() && p[getPeekOperator()] >= p[op.getOperator()])
+                    !stOp.isEmpty() && p[getPeekOperator()] >= p[op.operator()])
             {
                 // Get and remove the top element
                 // from the character stack
+                assert stOp.peek() != null;
                 var t = new Node(stOp.peek().getData());
                 stOp.pop();
 
@@ -51,9 +53,10 @@ public class ExpressionTree  extends AbstractExpression {
 
             }
             stOp.push(new Node(op));
-        } else if (op.getOperator() == ')') {
+        } else if (op.operator() == ')') {
             while (getPeekOperator() != '(')
             {
+                assert stOp.peek() != null;
                 var t = new Node(stOp.peek().getData());
                 stOp.pop();
                 var t1 = stN.peek();
@@ -70,6 +73,7 @@ public class ExpressionTree  extends AbstractExpression {
 
     private Node buildTree() {
         while (stN.size() > 1) {
+            assert stOp.peek() != null;
             var t = new Node(stOp.peek().getData());
             stOp.pop();
             var t1 = stN.peek();
@@ -89,7 +93,8 @@ public class ExpressionTree  extends AbstractExpression {
     }
 
     private char getPeekOperator() {
-        return ((OperatorExpression) stOp.peek().getData()).getOperator();
+        assert stOp.peek() != null;
+        return ((OperatorExpression) stOp.peek().getData()).operator();
     }
     public void addOperand(AbstractExpression operand) {
         expression = expression + operand;
@@ -106,7 +111,8 @@ public class ExpressionTree  extends AbstractExpression {
 
 class Node {
     AbstractExpression data;
-    Node left,right;
+    Node left;
+    Node right;
     public Node(AbstractExpression data) {
         this.data = data;
         left = right = null;
@@ -129,17 +135,22 @@ class Node {
         if (left == null && right == null)
             return data.eval();
 
+        if (left == null || right == null)
+            throw new IllegalStateException(
+                    "Expression Tree is not complete, Node with single branch: Left: " + left + " Right: " + right
+            );
+
         double leftEval = left.eval();
         double rightEval = right.eval();
 
-        return switch (((OperatorExpression) data).getOperator()) {
+        return switch (((OperatorExpression) data).operator()) {
             case '+' -> leftEval + rightEval;
             case '-' -> leftEval - rightEval;
             case '*' -> leftEval * rightEval;
             case '/' -> leftEval / rightEval;
 
             default ->
-                    throw new IllegalStateException("Unexpected value: " + ((OperatorExpression) data).getOperator());
+                    throw new IllegalStateException("Unexpected value: " + ((OperatorExpression) data).operator());
         };
     }
 }

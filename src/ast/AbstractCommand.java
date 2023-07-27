@@ -26,16 +26,11 @@ public abstract class AbstractCommand {
 
 	public abstract void run();
 
-	protected int getIndentation() {
-		return indentation;
-	}
-
-
 	protected String getIndentationByTarget(TargetLang targetLang) {
 		return STR_INDENTATION.repeat(indentation + getDefaultIndentation(targetLang));
 	}
 
-	private static int getDefaultIndentation(TargetLang target) {
+	private int getDefaultIndentation(TargetLang target) {
 		return switch (target) {
 			case JAVA -> 2;
 			case C -> 1;

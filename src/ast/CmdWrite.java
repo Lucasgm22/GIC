@@ -34,7 +34,7 @@ public class CmdWrite extends AbstractCommand {
 
 	@Override
 	public String generateCCode() {
-		String content = "";
+		String content;
 		if (id != null) {
 			content = switch (id.getType()) {
 				case INTEGER -> "printf(\"%d\\n\", " + id.getText()+ ");\n";

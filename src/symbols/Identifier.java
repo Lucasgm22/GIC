@@ -2,7 +2,7 @@ package symbols;
 
 public class Identifier {
 	private String text;
-	private DataType type;
+	private final DataType type;
 	private Double  value;
 
 	private String  valueText;

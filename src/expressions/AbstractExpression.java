@@ -1,7 +1,7 @@
 package expressions;
 
-public abstract class AbstractExpression {
+public interface AbstractExpression {
 	
-	public abstract double eval();
+	double eval();
 
 }

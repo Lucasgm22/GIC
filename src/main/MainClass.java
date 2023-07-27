@@ -42,11 +42,12 @@ public class MainClass {
 			}
 		}
 		catch (NoSuchFileException ex) {
-			System.err.println("ERROR - file " + ex.getFile() + "not found");
+			System.err.println("ERROR - file " + ex.getFile() + " not found.");
 		}
-		catch (ArrayIndexOutOfBoundsException ex) {
-			System.out.println("Usage: pass the arguments in command Line");
-			System.out.println("<INPUT> (<I> | (<C> (<C|JAVA|JS>))");
+		catch (ArrayIndexOutOfBoundsException | IllegalArgumentException ex) {
+			System.err.println(ex.getMessage());
+			System.err.println("Usage: pass the following arguments in command line.");
+			System.err.println("<INPUT> (<I> | (<C> (<C|JAVA|JS>)).");
 		}
 		catch(Exception ex) {
 			ex.printStackTrace();

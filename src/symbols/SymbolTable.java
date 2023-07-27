@@ -3,11 +3,10 @@ package symbols;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public class SymbolTable {
 	
-	private HashMap<String, Identifier> symbols;
+	private Map<String, Identifier> symbols;
 	
 	public SymbolTable() {
 		this.symbols = new HashMap<>();
@@ -25,11 +24,11 @@ public class SymbolTable {
 		return this.symbols.containsKey(key);
 	}
 
-	public HashMap<String, Identifier> getSymbols() {
+	public Map<String, Identifier> getSymbols() {
 		return symbols;
 	}
 
-	public void setSymbols(HashMap<String, Identifier> symbols) {
+	public void setSymbols(Map<String, Identifier> symbols) {
 		this.symbols = symbols;
 	}
 
