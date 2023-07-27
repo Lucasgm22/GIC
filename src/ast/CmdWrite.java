@@ -39,7 +39,7 @@ public class CmdWrite extends AbstractCommand {
 			content = switch (id.getType()) {
 				case INTEGER -> "printf(\"%d\\n\", " + id.getText()+ ");\n";
 				case REAL -> "printf(\"%lf\\n\", " + id.getText()+ ");\n";
-				case TEXT -> "printf(\"%s\\n\" ," + id.getText()+ ");\n";
+				case TEXT -> "printf(\"%s\\n\", " + id.getText()+ ");\n";
 			};
 		} else {
 			content = "printf(\"%s\\n\" ," + text + ");\n";
