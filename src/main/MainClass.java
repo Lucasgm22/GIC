@@ -3,11 +3,13 @@ package main;
 import ast.ProgramMode;
 import ast.TargetLang;
 import exception.IsiSemanticException;
+import exception.IsiUnsupportedExtensionException;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
 import parser.IsiLanguageLexer;
 import parser.IsiLanguageParser;
 
+import java.nio.file.NoSuchFileException;
 import java.util.Objects;
 
 public class MainClass {
@@ -18,44 +20,61 @@ public class MainClass {
 			var inputName = inputSplitExt[0];
 			var inputExt = inputSplitExt[1];
 			if (!Objects.equals(inputExt, ".isi")) {
-				throw new RuntimeException("unsupported extension");
+				throw new IsiUnsupportedExtensionException(inputExt);
 			}
 			var mode = ProgramMode.valueOf(args[1]);
 			var lexer = new IsiLanguageLexer(CharStreams.fromFileName(inputName + inputExt));
 			CommonTokenStream tokenStream = new CommonTokenStream(lexer);
 			var parser = new IsiLanguageParser(tokenStream);
-			System.out.println("Starting Expression Analysis");
+
 			parser.init();
-			try {
-				parser.programa();
-			} catch (IsiSemanticException ex) {
-				System.err.println("Compilation Failed!");
-				System.err.println(ex.getMessage());
-			}
-			System.out.println("Compilation Successful! Good Job");
+			compile(parser);
 
 			if (mode == ProgramMode.C) {
+				System.out.println("Compilation Successful! Good Job");
 				var target = TargetLang.valueOf(args[2]);
 				parser.generateObjectCode(inputName, target);
 				parser.getUnassignedIdentifiers().forEach(ui ->
-						System.out.println("WARNING - Identifier '" + ui.getText() + "' declared but not assigned."));
+						System.out.println("WARNING - Identifier '" + ui.getText() + "' declared but not assigned.")
+				);
 			} else if (mode == ProgramMode.I) {
-				try {
-					parser.runInterpreter();
-				} catch (Exception e) {
-					e.printStackTrace();
-				} finally {
-					parser.stopInterpreter();
-				}
+				interpret(parser);
 			}
 		}
-		//TODO: NoSuchFileException
+		catch (NoSuchFileException ex) {
+			System.err.println("ERROR - file " + ex.getFile() + "not found");
+		}
 		catch (ArrayIndexOutOfBoundsException ex) {
 			System.out.println("Usage: pass the arguments in command Line");
 			System.out.println("<INPUT> (<I> | (<C> (<C|JAVA|JS>))");
 		}
 		catch(Exception ex) {
 			ex.printStackTrace();
+		}
+	}
+
+	public static void compile(IsiLanguageParser parser) {
+		if (parser == null) {
+			throw new IllegalArgumentException("parser not initialized");
+		}
+		try {
+			parser.programa();
+		} catch (IsiSemanticException ex) {
+			System.err.println("Compilation Failed!");
+			System.err.println(ex.getMessage());
+		}
+	}
+
+	public static void interpret(IsiLanguageParser parser) {
+		if (parser == null) {
+			throw new IllegalArgumentException("parser not initialized");
+		}
+		try {
+			parser.runInterpreter();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			parser.stopInterpreter();
 		}
 	}
 }
