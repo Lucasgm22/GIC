@@ -79,7 +79,7 @@ grammar IsiLanguage;
 }
 programa  : 'programa' {
              stack.push(program.getComandos());
-           } decl+ cmd* 'fimprog.'
+           } decl* cmd* 'fimprog.'
            {
              program.setComandos(stack.pop());
            }
