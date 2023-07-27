@@ -132,7 +132,7 @@ public class IsiLanguageParser extends Parser {
 			program.setSymbolTable(symbolTable);
 		}
 
-		public void generateObjectCode(String filename, TargetLang target){
+		public void generateObjectCode(String filename, TargetLang target) {
 			program.generateTarget(filename, target);
 		}
 		

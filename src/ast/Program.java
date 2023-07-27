@@ -20,6 +20,9 @@ public class Program {
     }
 
     public void generateTarget(String filename, TargetLang target) {
+        if (target == TargetLang.ALL) {
+            throw new IllegalStateException("ALL does not generate code");
+        }
         try {
             var extension = generateExtension(target);
             writeOutPutFile(filename, target, extension);
@@ -47,6 +50,7 @@ public class Program {
             case JAVA -> ".java";
             case JS -> ".js";
             case C -> ".c";
+            case ALL -> throw new IllegalStateException("ALL does not generate code");
         };
     }
 

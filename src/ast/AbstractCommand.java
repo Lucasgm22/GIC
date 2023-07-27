@@ -15,6 +15,7 @@ public abstract class AbstractCommand {
 			case JS -> generateJSCode();
 			case JAVA -> generateJavaCode();
 			case C -> generateCCode();
+			case ALL -> throw new IllegalStateException("ALL does not generate code");
 		};
 	}
 
@@ -35,6 +36,7 @@ public abstract class AbstractCommand {
 			case JAVA -> 2;
 			case C -> 1;
 			case JS -> 0;
+			case ALL -> throw new IllegalStateException("ALL does not generate code");
 		};
 	}
 }

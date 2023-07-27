@@ -10,6 +10,7 @@ import parser.IsiLanguageLexer;
 import parser.IsiLanguageParser;
 
 import java.nio.file.NoSuchFileException;
+import java.util.Arrays;
 import java.util.Objects;
 
 public class MainClass {
@@ -33,7 +34,13 @@ public class MainClass {
 			if (mode == ProgramMode.C) {
 				System.out.println("Compilation Successful! Good Job");
 				var target = TargetLang.valueOf(args[2]);
-				parser.generateObjectCode(inputName, target);
+				if (target == TargetLang.ALL) {
+					Arrays.stream(TargetLang.values())
+							.filter(t -> t != TargetLang.ALL)
+							.forEach(t -> parser.generateObjectCode(inputName, t));
+				} else {
+					parser.generateObjectCode(inputName, target);
+				}
 				parser.getUnassignedIdentifiers().forEach(ui ->
 						System.out.println("WARNING - Identifier '" + ui.getText() + "' declared but not assigned.")
 				);
@@ -47,7 +54,7 @@ public class MainClass {
 		catch (ArrayIndexOutOfBoundsException | IllegalArgumentException ex) {
 			System.err.println(ex.getMessage());
 			System.err.println("Usage: pass the following arguments in command line.");
-			System.err.println("<PATH_INPUT> (<I> | (<C> (<C|JAVA|JS>)).");
+			System.err.println("<PATH_INPUT> (<I> | (<C> (<C|JAVA|JS|ALL>)).");
 		}
 		catch(Exception ex) {
 			ex.printStackTrace();
