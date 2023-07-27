@@ -120,15 +120,18 @@ public class IsiLanguageLexer extends Lexer {
 		private List<AbstractCommand> curThread;
 		private BinaryRelationalExpression _bExpression;
 		
-		public void init(){
+		public void init() {
 			program.setSymbolTable(symbolTable);
 		}
 
-		public void generateObjectCode(String filename, TargetLang target){
+		public void generateObjectCode(String filename, TargetLang target) {
+		    if (target == TargetLang.ALL) {
+	           throw new IllegalStateException("ALL does not generate code");
+	        }
 			program.generateTarget(filename, target);
 		}
 		
-		public void runInterpreter(){
+		public void runInterpreter() {
 			program.run();
 		}
 
