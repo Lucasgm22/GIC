@@ -56,6 +56,7 @@ public class Program {
 
     private void generateFooter(TargetLang target, StringBuilder strBuilder) {
         if (target == TargetLang.JAVA) {
+            strBuilder.append("        sc.close();\n");
             strBuilder.append("    }\n");
             strBuilder.append("}\n");
         } else if (target == TargetLang.C) {
