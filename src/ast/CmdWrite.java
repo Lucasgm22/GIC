@@ -42,7 +42,7 @@ public class CmdWrite extends AbstractCommand {
 				case TEXT -> "printf(\"%s\\n\", " + id.getText()+ ");\n";
 			};
 		} else {
-			content = "printf(\"%s\\n\" ," + text + ");\n";
+			content = "printf(\"%s\\n\", " + text + ");\n";
 		}
 		return getIndentationByTarget(TargetLang.C) +
 				content;
