@@ -257,16 +257,16 @@ bRelationalExpr: {
 termo     : (NUMBER | NUMBERDEC)
 			{
 			    if (leftDT != null) {
-				    rightDT = _input.LT(-1).getType() == 15 ? DataType.REAL : DataType.INTEGER;
+				    rightDT = _input.LT(-1).getType() == 16 ? DataType.REAL : DataType.INTEGER;
 				    validateBinaryOperation(_input.LT(-1).getLine(), _input.LT(-1).getCharPositionInLine());
 				}
 				else {
-				    leftDT = _input.LT(-1).getType() == 15 ? DataType.REAL : DataType.INTEGER;
+				    leftDT = _input.LT(-1).getType() == 16 ? DataType.REAL : DataType.INTEGER;
 				}
 
 				expression.addOperand(new NumberExpression(Double.parseDouble(_input.LT(-1).getText()), rightDT));
 			}
-		  |
+		   |
 		    TEXT {
 		       rightDT = DataType.TEXT;
 		       validateBinaryOperation(_input.LT(-1).getLine(), _input.LT(-1).getCharPositionInLine());
@@ -274,7 +274,7 @@ termo     : (NUMBER | NUMBERDEC)
 		       textContent = _input.LT(-1).getText();
 		       textContent = textContent.substring(1, textContent.length() -1);
 		    }
-		  |
+		   |
 			ID {
 				if (!symbolTable.exists(_input.LT(-1).getText())){
 					throw new IsiUndeclaredVariableException(_input.LT(-1).getText(), _input.LT(-1).getLine(), _input.LT(-1).getCharPositionInLine());
@@ -299,11 +299,26 @@ termo     : (NUMBER | NUMBERDEC)
 			}
 			|
 			AP {
-               		        expression.addOperator(new OperatorExpression('('));
-            }
-			expr
-			FP {
-               		        expression.addOperator(new OperatorExpression(')'));
+                    expression.addOperator(new OperatorExpression('('));
+                }
+                (expr
+                |
+                (NEG_NUMBER | NEG_NUMBER_DEC)
+                    {
+                        if (leftDT != null) {
+                            rightDT = _input.LT(-1).getType() == 17 ? DataType.REAL : DataType.INTEGER;
+                            validateBinaryOperation(_input.LT(-1).getLine(), _input.LT(-1).getCharPositionInLine());
+                        }
+                        else {
+                            leftDT = _input.LT(-1).getType() == 17 ? DataType.REAL : DataType.INTEGER;
+                        }
+
+                            expression.addOperand(new NumberExpression(Double.parseDouble(_input.LT(-1).getText()), rightDT));
+                    }
+                )
+            FP
+            {
+                expression.addOperator(new OperatorExpression(')'));
             }
 		  ;
 		  
@@ -318,11 +333,17 @@ exprl     : (SUM | SUB | MUL | DIV) {
 
           ;		         
 		  
-NUMBER	  : ('-')?[0-9]+
+NUMBER	  : [0-9]+
 		  ;
 
-NUMBERDEC : ('-')?[0-9]+('.'[0-9]+)
+NEG_NUMBER : '-'[0-9]+
+           ;
+
+NUMBERDEC : [0-9]+('.'[0-9]+)
           ;
+
+NEG_NUMBER_DEC : '-'[0-9]+('.'[0-9]+)
+               ;
 		  
 TEXT 	  : '"' ([a-z]|[A-Z]|[0-9]|' '|'\t'|'!'|'-'|'<'|'>'|'='|'.')* '"'
 		  ;		  
