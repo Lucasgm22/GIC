@@ -26,9 +26,6 @@ public class NumberExpression implements AbstractExpression {
 	
 	public String toString() {
 		if (DataType.REAL.equals(type)) {
-			if (numberValue < 0) {
-				return "(" + numberValue + ")";
-			}
 			return String.valueOf(numberValue);
 		} else {
 			if (numberValue < 0) {
