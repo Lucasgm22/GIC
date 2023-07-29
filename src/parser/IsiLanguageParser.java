@@ -409,11 +409,11 @@ public class IsiLanguageParser extends Parser {
 			setState(59);
 			match(ID);
 
-			                 Identifier dcId = new Identifier(_input.LT(-1).getText(), currentType);
-			                 symbolTable.add(_input.LT(-1).getText(), dcId);
-			                 CmdDecl _decl = new CmdDecl(dcId, blockLvl, _input.LT(-1).getLine(), _input.LT(-1).getCharPositionInLine());
-			                 stack.peek().add(_decl);
-			                 
+			                Identifier dcId = new Identifier(_input.LT(-1).getText(), currentType);
+			                symbolTable.add(_input.LT(-1).getText(), dcId);
+			                CmdDecl _decl = new CmdDecl(dcId, blockLvl, _input.LT(-1).getLine(), _input.LT(-1).getCharPositionInLine());
+			                stack.peek().add(_decl);
+			            
 			setState(66);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
@@ -425,11 +425,11 @@ public class IsiLanguageParser extends Parser {
 				setState(62);
 				match(ID);
 
-				           	     Identifier dcId2 = new Identifier(_input.LT(-1).getText(), currentType);
-				           	     symbolTable.add(_input.LT(-1).getText(), dcId2);
-				           	     CmdDecl _decl2 = new CmdDecl(dcId2, blockLvl, _input.LT(-1).getLine(), _input.LT(-1).getCharPositionInLine());
-				           	     stack.peek().add(_decl2);
-				           	     
+				           	    Identifier dcId2 = new Identifier(_input.LT(-1).getText(), currentType);
+				           	    symbolTable.add(_input.LT(-1).getText(), dcId2);
+				           	    CmdDecl _decl2 = new CmdDecl(dcId2, blockLvl, _input.LT(-1).getLine(), _input.LT(-1).getCharPositionInLine());
+				           	    stack.peek().add(_decl2);
+				           	
 				}
 				}
 				setState(68);
@@ -585,9 +585,9 @@ public class IsiLanguageParser extends Parser {
 			setState(77);
 			match(T__5);
 
-			                curThread = new ArrayList<AbstractCommand>();
-			                stack.push(curThread);
-			                blockLvl += 1;
+			                  curThread = new ArrayList<AbstractCommand>();
+			                  stack.push(curThread);
+			                  blockLvl += 1;
 			              
 			setState(80); 
 			_errHandler.sync(this);
@@ -618,10 +618,10 @@ public class IsiLanguageParser extends Parser {
 			setState(87);
 			match(FP);
 
-			                blockLvl -= 1;
-			                CmdDoWhile _cmdDoWhile = new CmdDoWhile(blockLvl, _bExpression, stack.pop());
-			                stack.peek().add(_cmdDoWhile);
-			                _bExpression = null;
+			                  blockLvl -= 1;
+			                  CmdDoWhile _cmdDoWhile = new CmdDoWhile(blockLvl, _bExpression, stack.pop());
+			                  stack.peek().add(_cmdDoWhile);
+			                  _bExpression = null;
 			              
 			setState(89);
 			match(PF);
@@ -807,8 +807,8 @@ public class IsiLanguageParser extends Parser {
 				setState(119);
 				match(T__9);
 
-				               curThread = new ArrayList<AbstractCommand>();
-				               stack.push(curThread);
+				                curThread = new ArrayList<AbstractCommand>();
+				                stack.push(curThread);
 				             
 				setState(122); 
 				_errHandler.sync(this);
@@ -825,7 +825,7 @@ public class IsiLanguageParser extends Parser {
 					_la = _input.LA(1);
 				} while ( (((_la) & ~0x3f) == 0 && ((1L << _la) & 33567424L) != 0) );
 
-				               stackIfCmds.peek().setListFalse(stack.pop());
+				                 stackIfCmds.peek().setListFalse(stack.pop());
 				             
 				}
 			}
@@ -835,8 +835,8 @@ public class IsiLanguageParser extends Parser {
 			setState(131);
 			match(PF);
 
-			                stack.peek().add(stackIfCmds.pop());
-			                blockLvl -= 1;
+			                  stack.peek().add(stackIfCmds.pop());
+			                  blockLvl -= 1;
 			             
 			}
 		}
@@ -884,10 +884,10 @@ public class IsiLanguageParser extends Parser {
 			setState(136);
 			match(ID);
 
-							Identifier id = symbolTable.get(_input.LT(-1).getText());
-							validateId(_input.LT(-1).getText(), id, true, _input.LT(-1).getLine(), _input.LT(-1).getCharPositionInLine());
-							CmdRead _read = new CmdRead(id, blockLvl);
-							stack.peek().add(_read);
+						     Identifier id = symbolTable.get(_input.LT(-1).getText());
+						     validateId(_input.LT(-1).getText(), id, true, _input.LT(-1).getLine(), _input.LT(-1).getCharPositionInLine());
+						     CmdRead _read = new CmdRead(id, blockLvl);
+						     stack.peek().add(_read);
 						 
 			setState(138);
 			match(FP);
@@ -945,10 +945,10 @@ public class IsiLanguageParser extends Parser {
 				setState(143);
 				match(ID);
 
-					         	Identifier id = symbolTable.get(_input.LT(-1).getText());
-								validateId(_input.LT(-1).getText(), id, true, _input.LT(-1).getLine(), _input.LT(-1).getCharPositionInLine());
-					         	CmdWrite _write = new CmdWrite(id, blockLvl);
-					         	stack.peek().add(_write);
+					             Identifier id = symbolTable.get(_input.LT(-1).getText());
+							     validateId(_input.LT(-1).getText(), id, true, _input.LT(-1).getLine(), _input.LT(-1).getCharPositionInLine());
+					             CmdWrite _write = new CmdWrite(id, blockLvl);
+					             stack.peek().add(_write);
 					         
 				}
 				break;
@@ -957,10 +957,9 @@ public class IsiLanguageParser extends Parser {
 				setState(145);
 				match(TEXT);
 
-					            String content = _input.LT(-1).getText();
-					         	CmdWrite _write = new CmdWrite(content.substring(1, content.length() -1), blockLvl);
-					         	stack.peek().add(_write);
-					         	
+					             String content = _input.LT(-1).getText();
+					         	 CmdWrite _write = new CmdWrite(content.substring(1, content.length() -1), blockLvl);
+					         	 stack.peek().add(_write);
 					         
 				}
 				break;
@@ -1030,29 +1029,27 @@ public class IsiLanguageParser extends Parser {
 			setState(157);
 			match(PF);
 
-								// logica para atribuir o valor da expressao no identificador
-								AbstractCommand _attr;
-			                    Identifier id = symbolTable.get(idAtribuido);
-								if (!DataType.TEXT.equals(id.getType())) {
-			                        if (blockLvl == 0) {
-			                            id.setValue(expression.eval());
-			                            symbolTable.add(idAtribuido, id);
-			                        }
-
-								    _attr = new CmdAttrib(id, expression, blockLvl);
-								} else {
-			                        if (blockLvl == 0) {
-			                            id.setValueText(textContent);
-			                            symbolTable.add(idAtribuido, id);
-								    }
-								    _attr = new CmdAttrib(id, textContent, blockLvl);
+			                AbstractCommand _attr;
+			                Identifier id = symbolTable.get(idAtribuido);
+							if (!DataType.TEXT.equals(id.getType())) {
+			                    if (blockLvl == 0) {
+			                        id.setValue(expression.eval());
+			                        symbolTable.add(idAtribuido, id);
+			                    }
+								_attr = new CmdAttrib(id, expression, blockLvl);
+							} else {
+			                    if (blockLvl == 0) {
+			                        id.setValueText(textContent);
+			                        symbolTable.add(idAtribuido, id);
 								}
-								stack.peek().add(_attr);
-								textContent = null;
-								expression = null;
-								leftDT = null;
-								rightDT = null;
-							
+								_attr = new CmdAttrib(id, textContent, blockLvl);
+							}
+							stack.peek().add(_attr);
+							textContent = null;
+							expression = null;
+							leftDT = null;
+							rightDT = null;
+						
 			}
 		}
 		catch (RecognitionException re) {
@@ -1157,30 +1154,30 @@ public class IsiLanguageParser extends Parser {
 			enterOuterAlt(_localctx, 1);
 			{
 
-			                                 expression = new ExpressionTree();
-			                             
+			                     expression = new ExpressionTree();
+			                 
 			setState(168);
 			expr();
 
-			                                 _leftExpression = expression;
-			                                 expression = null;
-			                             
+			                     _leftExpression = expression;
+			                     expression = null;
+			                 
 			setState(170);
 			match(OPREL);
 
-			                                 _relOp = _input.LT(-1).getText();
-			                                 expression = new ExpressionTree();
-			                             
+			                     _relOp = _input.LT(-1).getText();
+			                     expression = new ExpressionTree();
+			                 
 			setState(172);
 			expr();
 
-			                                 _rightExpression = expression;
-			                                 expression = null;
-			                                 _bExpression = new BinaryRelationalExpression(_leftExpression, _rightExpression,_relOp);
-			                                 _leftExpression = null;
-			                                 _rightExpression = null;
-			                                 _relOp = null;
-			                             
+			                     _rightExpression = expression;
+			                     expression = null;
+			                     _bExpression = new BinaryRelationalExpression(_leftExpression, _rightExpression,_relOp);
+			                     _leftExpression = null;
+			                     _rightExpression = null;
+			                     _relOp = null;
+			                 
 			}
 		}
 		catch (RecognitionException re) {
@@ -1305,8 +1302,8 @@ public class IsiLanguageParser extends Parser {
 				setState(181);
 				match(AP);
 
-				                    expression.addOperator(new OperatorExpression('('));
-				                
+				                expression.addOperator(new OperatorExpression('('));
+				            
 				setState(186);
 				_errHandler.sync(this);
 				switch (_input.LA(1)) {

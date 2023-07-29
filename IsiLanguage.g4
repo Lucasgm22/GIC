@@ -77,7 +77,8 @@ grammar IsiLanguage;
         }
     }
 }
-programa  : 'programa' {
+programa  : 'programa'
+           {
              stack.push(program.getComandos());
            } decl* cmd* 'fimprog.'
            {
@@ -93,37 +94,41 @@ tipo	  : 'INTEIRO' { currentType = DataType.INTEGER; }
           | 'TEXTO'    { currentType = DataType.TEXT; }
           ;
 
-lista_var : ID {
-                 Identifier dcId = new Identifier(_input.LT(-1).getText(), currentType);
-                 symbolTable.add(_input.LT(-1).getText(), dcId);
-                 CmdDecl _decl = new CmdDecl(dcId, blockLvl, _input.LT(-1).getLine(), _input.LT(-1).getCharPositionInLine());
-                 stack.peek().add(_decl);
-                 }
+lista_var : ID
+            {
+                Identifier dcId = new Identifier(_input.LT(-1).getText(), currentType);
+                symbolTable.add(_input.LT(-1).getText(), dcId);
+                CmdDecl _decl = new CmdDecl(dcId, blockLvl, _input.LT(-1).getLine(), _input.LT(-1).getCharPositionInLine());
+                stack.peek().add(_decl);
+            }
            (VIRG
-           	ID {
-           	     Identifier dcId2 = new Identifier(_input.LT(-1).getText(), currentType);
-           	     symbolTable.add(_input.LT(-1).getText(), dcId2);
-           	     CmdDecl _decl2 = new CmdDecl(dcId2, blockLvl, _input.LT(-1).getLine(), _input.LT(-1).getCharPositionInLine());
-           	     stack.peek().add(_decl2);
-           	     }
+           	ID
+           	{
+           	    Identifier dcId2 = new Identifier(_input.LT(-1).getText(), currentType);
+           	    symbolTable.add(_input.LT(-1).getText(), dcId2);
+           	    CmdDecl _decl2 = new CmdDecl(dcId2, blockLvl, _input.LT(-1).getLine(), _input.LT(-1).getCharPositionInLine());
+           	    stack.peek().add(_decl2);
+           	}
            )*
    		  ;
    		  
 cmd		  : cmdAttr | cmdRead | cmdWrite | cmdIf | cmdWhile | cmdDoWhile
 		  ;
 
-cmdDoWhile : 'execute' {
-                curThread = new ArrayList<AbstractCommand>();
-                stack.push(curThread);
-                blockLvl += 1;
+cmdDoWhile : 'execute'
+              {
+                  curThread = new ArrayList<AbstractCommand>();
+                  stack.push(curThread);
+                  blockLvl += 1;
               }
               cmd+
               'enquanto'
-              AP bRelationalExpr FP {
-                blockLvl -= 1;
-                CmdDoWhile _cmdDoWhile = new CmdDoWhile(blockLvl, _bExpression, stack.pop());
-                stack.peek().add(_cmdDoWhile);
-                _bExpression = null;
+              AP bRelationalExpr FP
+              {
+                  blockLvl -= 1;
+                  CmdDoWhile _cmdDoWhile = new CmdDoWhile(blockLvl, _bExpression, stack.pop());
+                  stack.peek().add(_cmdDoWhile);
+                  _bExpression = null;
               }  PF
            ;
 
@@ -139,7 +144,8 @@ cmdWhile  : 'enquanto' AP bRelationalExpr FP 'execute'
             cmd+
             {
                 stackWhileCmds.peek().setListCommands(stack.pop());
-            }'fimenquanto' PF {
+            } 'fimenquanto' PF
+            {
                 stack.peek().add(stackWhileCmds.pop());
                 blockLvl -=1;
             }
@@ -153,49 +159,53 @@ cmdIf     : 'se' AP bRelationalExpr FP 'execute'
                 blockLvl += 1;
                 curThread = new ArrayList<AbstractCommand>();
                 stack.push(curThread);
-            }cmd+
+            } cmd+
             {
                stackIfCmds.peek().setListTrue(stack.pop());
-            }('senao'
+            } ('senao'
              {
-               curThread = new ArrayList<AbstractCommand>();
-               stack.push(curThread);
-             }cmd+
+                curThread = new ArrayList<AbstractCommand>();
+                stack.push(curThread);
+             } cmd+
              {
-               stackIfCmds.peek().setListFalse(stack.pop());
-             })? 'fimse' PF {
-                stack.peek().add(stackIfCmds.pop());
-                blockLvl -= 1;
+                 stackIfCmds.peek().setListFalse(stack.pop());
+             })? 'fimse' PF
+             {
+                  stack.peek().add(stackIfCmds.pop());
+                  blockLvl -= 1;
              }
 		  ; 
 		  
-cmdRead   : 'leia' AP ID {
-				Identifier id = symbolTable.get(_input.LT(-1).getText());
-				validateId(_input.LT(-1).getText(), id, true, _input.LT(-1).getLine(), _input.LT(-1).getCharPositionInLine());
-				CmdRead _read = new CmdRead(id, blockLvl);
-				stack.peek().add(_read);
+cmdRead   : 'leia' AP ID
+             {
+			     Identifier id = symbolTable.get(_input.LT(-1).getText());
+			     validateId(_input.LT(-1).getText(), id, true, _input.LT(-1).getLine(), _input.LT(-1).getCharPositionInLine());
+			     CmdRead _read = new CmdRead(id, blockLvl);
+			     stack.peek().add(_read);
 			 }
 			 FP PF
 		  ;		 
 		  
 cmdWrite  : 'escreva' AP (
-	         ID {
-	         	Identifier id = symbolTable.get(_input.LT(-1).getText());
-				validateId(_input.LT(-1).getText(), id, true, _input.LT(-1).getLine(), _input.LT(-1).getCharPositionInLine());
-	         	CmdWrite _write = new CmdWrite(id, blockLvl);
-	         	stack.peek().add(_write);
+	         ID
+	         {
+	             Identifier id = symbolTable.get(_input.LT(-1).getText());
+			     validateId(_input.LT(-1).getText(), id, true, _input.LT(-1).getLine(), _input.LT(-1).getCharPositionInLine());
+	             CmdWrite _write = new CmdWrite(id, blockLvl);
+	             stack.peek().add(_write);
 	         } 
 	         | 
-	         TEXT {
-	            String content = _input.LT(-1).getText();
-	         	CmdWrite _write = new CmdWrite(content.substring(1, content.length() -1), blockLvl);
-	         	stack.peek().add(_write);
-	         	
+	         TEXT
+	         {
+	             String content = _input.LT(-1).getText();
+	         	 CmdWrite _write = new CmdWrite(content.substring(1, content.length() -1), blockLvl);
+	         	 stack.peek().add(_write);
 	         }
              ) FP PF
           ;		      		  
    		  
-cmdAttr   : ID {
+cmdAttr   : ID
+            {
                 idAtribuido = _input.LT(-1).getText();
 				validateId(idAtribuido, symbolTable.get(idAtribuido), false,_input.LT(-1).getLine(), _input.LT(-1).getCharPositionInLine());
 				leftDT = symbolTable.get(_input.LT(-1).getText()).getType();
@@ -206,52 +216,54 @@ cmdAttr   : ID {
          	    expression = new ExpressionTree();
          	}
          	expr PF
-				{
-					// logica para atribuir o valor da expressao no identificador
-					AbstractCommand _attr;
-                    Identifier id = symbolTable.get(idAtribuido);
-					if (!DataType.TEXT.equals(id.getType())) {
-                        if (blockLvl == 0) {
-                            id.setValue(expression.eval());
-                            symbolTable.add(idAtribuido, id);
-                        }
-
-					    _attr = new CmdAttrib(id, expression, blockLvl);
-					} else {
-                        if (blockLvl == 0) {
-                            id.setValueText(textContent);
-                            symbolTable.add(idAtribuido, id);
-					    }
-					    _attr = new CmdAttrib(id, textContent, blockLvl);
+			{
+                AbstractCommand _attr;
+                Identifier id = symbolTable.get(idAtribuido);
+				if (!DataType.TEXT.equals(id.getType())) {
+                    if (blockLvl == 0) {
+                        id.setValue(expression.eval());
+                        symbolTable.add(idAtribuido, id);
+                    }
+					_attr = new CmdAttrib(id, expression, blockLvl);
+				} else {
+                    if (blockLvl == 0) {
+                        id.setValueText(textContent);
+                        symbolTable.add(idAtribuido, id);
 					}
-					stack.peek().add(_attr);
-					textContent = null;
-					expression = null;
-					leftDT = null;
-					rightDT = null;
+					_attr = new CmdAttrib(id, textContent, blockLvl);
 				}
+				stack.peek().add(_attr);
+				textContent = null;
+				expression = null;
+				leftDT = null;
+				rightDT = null;
+			}
 		  ;   		  
 		  
 expr	  : termo exprl*
           ;
 
 bRelationalExpr: {
-                                 expression = new ExpressionTree();
-                             }
-                             expr {
-                                 _leftExpression = expression;
-                                 expression = null;
-                             } OPREL {
-                                 _relOp = _input.LT(-1).getText();
-                                 expression = new ExpressionTree();
-                             } expr {
-                                 _rightExpression = expression;
-                                 expression = null;
-                                 _bExpression = new BinaryRelationalExpression(_leftExpression, _rightExpression,_relOp);
-                                 _leftExpression = null;
-                                 _rightExpression = null;
-                                 _relOp = null;
-                             }
+                     expression = new ExpressionTree();
+                 }
+                 expr
+                 {
+                     _leftExpression = expression;
+                     expression = null;
+                 } OPREL
+                 {
+                     _relOp = _input.LT(-1).getText();
+                     expression = new ExpressionTree();
+                 }
+                 expr
+                 {
+                     _rightExpression = expression;
+                     expression = null;
+                     _bExpression = new BinaryRelationalExpression(_leftExpression, _rightExpression,_relOp);
+                     _leftExpression = null;
+                     _rightExpression = null;
+                     _relOp = null;
+                 }
                ;
           
 termo     : (NUMBER | NUMBERDEC)
@@ -267,7 +279,8 @@ termo     : (NUMBER | NUMBERDEC)
 				expression.addOperand(new NumberExpression(Double.parseDouble(_input.LT(-1).getText()), rightDT));
 			}
 		   |
-		    TEXT {
+		    TEXT
+		    {
 		       rightDT = DataType.TEXT;
 		       validateBinaryOperation(_input.LT(-1).getLine(), _input.LT(-1).getCharPositionInLine());
 
@@ -275,7 +288,8 @@ termo     : (NUMBER | NUMBERDEC)
 		       textContent = textContent.substring(1, textContent.length() -1);
 		    }
 		   |
-			ID {
+			ID
+			{
 				if (!symbolTable.exists(_input.LT(-1).getText())){
 					throw new IsiUndeclaredVariableException(_input.LT(-1).getText(), _input.LT(-1).getLine(), _input.LT(-1).getCharPositionInLine());
 				}
@@ -298,9 +312,10 @@ termo     : (NUMBER | NUMBERDEC)
 				}
 			}
 			|
-			AP {
-                    expression.addOperator(new OperatorExpression('('));
-                }
+			AP
+			{
+                expression.addOperator(new OperatorExpression('('));
+            }
                 (expr
                 |
                 (NEG_NUMBER | NEG_NUMBER_DEC)
@@ -322,7 +337,8 @@ termo     : (NUMBER | NUMBERDEC)
             }
 		  ;
 		  
-exprl     : (SUM | SUB | MUL | DIV) {
+exprl     : (SUM | SUB | MUL | DIV)
+            {
 				operator = _input.LT(-1).getText().charAt(0);
 				if (leftDT == DataType.TEXT) {
 				    throw new IsiIllegalOperationException(operator, leftDT, _input.LT(-1).getLine(), _input.LT(-1).getCharPositionInLine());
