@@ -409,6 +409,10 @@ public class IsiLanguageParser extends Parser {
 			setState(59);
 			match(ID);
 
+			                Identifier idST1 = symbolTable.get(_input.LT(-1).getText());
+			                if (idST1 != null) {
+			                    throw new IsiAlreadyDeclaredException("Identifier '" + idST1.getText() + "' already declared at line " + idST1.getLine() + " at column " + idST1.getColumn() + ", error", _input.LT(-1).getLine(), _input.LT(-1).getCharPositionInLine());
+			                }
 			                Identifier dcId = new Identifier(_input.LT(-1).getText(), currentType);
 			                symbolTable.add(_input.LT(-1).getText(), dcId);
 			                CmdDecl _decl = new CmdDecl(dcId, blockLvl, _input.LT(-1).getLine(), _input.LT(-1).getCharPositionInLine());
@@ -425,6 +429,10 @@ public class IsiLanguageParser extends Parser {
 				setState(62);
 				match(ID);
 
+				                Identifier idST2 = symbolTable.get(_input.LT(-1).getText());
+				                if (idST2 != null) {
+				                    throw new IsiAlreadyDeclaredException("Identifier '" + idST1.getText() + "' already declared at line " + idST1.getLine() + " at column " + idST1.getColumn() +", error", _input.LT(-1).getLine(), _input.LT(-1).getCharPositionInLine());
+				                }
 				           	    Identifier dcId2 = new Identifier(_input.LT(-1).getText(), currentType);
 				           	    symbolTable.add(_input.LT(-1).getText(), dcId2);
 				           	    CmdDecl _decl2 = new CmdDecl(dcId2, blockLvl, _input.LT(-1).getLine(), _input.LT(-1).getCharPositionInLine());
