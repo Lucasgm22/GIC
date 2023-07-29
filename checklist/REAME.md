@@ -1,0 +1,19 @@
+# Features Obrigatórias
+- Tipos:
+    - `TEXTO`;
+    - `INTEIRO`;
+    - `REAL`;
+- Estrutura if;
+- Estruturas de controle:
+    - While;
+    - DoWhile.
+- Expressões aritméticas;
+- Atribuições:
+    - Só é possível atribuição entre dados do mesmo tipo.
+- IO:
+    - Entrada;
+    - Saida.
+- Números decimais;
+- Erro semântico ao tentar usar variável não declarada.
+- Aviso ao declarar variável e não utilizar.
+- Erro semântico ao usar variável que não recebeu um valor inicial.
