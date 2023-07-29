@@ -40,6 +40,14 @@ public class MainClass {
 			});
 			parser.init();
 			compile(parser, mode);
+			parser.getUnassignedIdentifiers().forEach(ui ->
+					System.out.println("WARNING - Identifier '" + ui.getText() +
+							"' declared but not assigned at line " + ui.getLine() + " at column " + ui.getColumn() + ".")
+			);
+			parser.getAssignedUnusedIdentifiers().forEach(ui ->
+					System.out.println("WARNING - Identifier '" + ui.getText() +
+							"' assigned but never used at line " + ui.getLine() + " at column " + ui.getColumn() + ".")
+			);
 
 			if (mode == ProgramMode.C) {
 				System.out.println("Compilation Successful! Good Job");
@@ -51,15 +59,6 @@ public class MainClass {
 				} else {
 					parser.generateObjectCode(inputName, target);
 				}
-				parser.getUnassignedIdentifiers().forEach(ui ->
-						System.out.println("WARNING - Identifier '" + ui.getText() +
-								"' declared but not assigned at line " + ui.getLine() + " at column " + ui.getColumn() + ".")
-				);
-				parser.getAssignedUnusedIdentifiers().forEach(ui ->
-						System.out.println("WARNING - Identifier '" + ui.getText() +
-								"' assigned but never used at line " + ui.getLine() + " at column " + ui.getColumn() + ".")
-				);
-
 			} else if (mode == ProgramMode.I) {
 				interpret(parser);
 			}
