@@ -3,3 +3,4 @@
 - [Avaliador de expressões aritmética (Arvore de expressão aritimética)](../../src/expressions/ExpressionTree.java);
 - Geração de código pretty printed;
 - Geração de código para diversos alvos: Use os argumentos '<ALL|C|JS|JAVA>' na linha de comando.
+- Mostra linha e coluna da posição onde ocorre Erros ou Warnigns.
