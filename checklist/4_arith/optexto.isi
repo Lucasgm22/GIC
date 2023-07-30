@@ -1,0 +1,9 @@
+programa
+    TEXTO b.
+
+    b := "no operation" + " in type TEXTO".
+
+    escreva("11").
+    escreva(b).
+
+fimprog.
