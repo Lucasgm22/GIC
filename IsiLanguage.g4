@@ -314,8 +314,13 @@ termo     : (NUMBER | NUMBERDEC)
 				if (!symbolTable.exists(_input.LT(-1).getText())){
 					throw new IsiUndeclaredVariableException(_input.LT(-1).getText(), _input.LT(-1).getLine(), _input.LT(-1).getCharPositionInLine());
 				}
-				rightDT = symbolTable.get(_input.LT(-1).getText()).getType();
-				validateBinaryOperation(_input.LT(-1).getLine(), _input.LT(-1).getCharPositionInLine());
+
+				if (leftDT != null) {
+                    rightDT = symbolTable.get(_input.LT(-1).getText()).getType();
+                    validateBinaryOperation(_input.LT(-1).getLine(), _input.LT(-1).getCharPositionInLine());
+				} else {
+				    leftDT = symbolTable.get(_input.LT(-1).getText()).getType();
+				}
 
 				Identifier id = symbolTable.get(_input.LT(-1).getText());
 				validateId(_input.LT(-1).getText(), id, true,_input.LT(-1).getLine(), _input.LT(-1).getCharPositionInLine());
@@ -349,7 +354,7 @@ termo     : (NUMBER | NUMBERDEC)
                             leftDT = _input.LT(-1).getType() == 17 ? DataType.REAL : DataType.INTEGER;
                         }
 
-                            expression.addOperand(new NumberExpression(Double.parseDouble(_input.LT(-1).getText()), rightDT));
+                        expression.addOperand(new NumberExpression(Double.parseDouble(_input.LT(-1).getText()), rightDT));
                     }
                 )
             FP
