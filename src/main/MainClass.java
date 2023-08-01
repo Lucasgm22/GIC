@@ -63,10 +63,11 @@ public class MainClass {
 			);
 		} catch (NoSuchFileException ex) {
 			System.err.println("ERROR - file " + ex.getFile() + " not found.");
-		} catch (ArrayIndexOutOfBoundsException | IllegalArgumentException ex) {
+		} catch (StringIndexOutOfBoundsException | ArrayIndexOutOfBoundsException | IllegalArgumentException ex) {
 			System.err.println(ex.getMessage());
 			System.err.println("Usage: pass the following arguments in command line.");
 			System.err.println("<PATH_INPUT> (<I> | (<C> (<C|JAVA|JS|ALL>)).");
+			System.err.println("Pass a .isi file in <PATH_INPUT>");
 		} catch (IsiSemanticException | IsiSyntacticException ex) {
 			System.err.println("Compilation Failed!");
 		} catch(Exception ex) {
