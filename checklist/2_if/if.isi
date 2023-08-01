@@ -1,7 +1,7 @@
 programa
     se (0 < 1) execute
         escreva("0 < 1").
-        se (2 < 3) execute
+        se (2.0 < 3.0) execute
             escreva("2 < 3").
         fimse.
     senao

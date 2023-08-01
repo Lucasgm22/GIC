@@ -18,7 +18,7 @@ grammar IsiLanguage;
 	private ExpressionTree _leftExpression;
 	private ExpressionTree _rightExpression;
 	private String _relOp;
-	private char operator;
+	private String operator;
 	private DataType leftDT;
 	private DataType rightDT;
 	private String   idAtribuido;
@@ -261,15 +261,23 @@ bRelationalExpr: {
                  } OPREL
                  {
                      _relOp = _input.LT(-1).getText();
+                     if (leftDT == DataType.TEXT) {
+                         throw new IsiIllegalOperationException(_relOp, leftDT, _input.LT(-1).getLine(), _input.LT(-1).getCharPositionInLine());
+                     }
                      expression = new ExpressionTree();
                  }
                  expr
                  {
+                     if (leftDT == DataType.TEXT) {
+                         throw new IsiIllegalOperationException(_relOp, leftDT, _input.LT(-1).getLine(), _input.LT(-1).getCharPositionInLine());
+                     }
                      _rightExpression = expression;
                      expression = null;
                      _bExpression = new BinaryRelationalExpression(_leftExpression, _rightExpression,_relOp);
                      _leftExpression = null;
                      _rightExpression = null;
+                     leftDT = null;
+                     rightDT = null;
                      _relOp = null;
                  }
                ;
@@ -284,13 +292,18 @@ termo     : (NUMBER | NUMBERDEC)
 				    leftDT = _input.LT(-1).getType() == 16 ? DataType.REAL : DataType.INTEGER;
 				}
 
-				expression.addOperand(new NumberExpression(Double.parseDouble(_input.LT(-1).getText()), rightDT));
+                DataType curType = rightDT != null ? rightDT : leftDT;
+				expression.addOperand(new NumberExpression(Double.parseDouble(_input.LT(-1).getText()), curType));
 			}
 		   |
 		    TEXT
 		    {
-		       rightDT = DataType.TEXT;
-		       validateBinaryOperation(_input.LT(-1).getLine(), _input.LT(-1).getCharPositionInLine());
+		       if (leftDT != null) {
+                   rightDT = DataType.TEXT;
+                   validateBinaryOperation(_input.LT(-1).getLine(), _input.LT(-1).getCharPositionInLine());
+		       } else {
+		           leftDT = DataType.TEXT;
+		       }
 
 		       textContent = _input.LT(-1).getText();
 		       textContent = textContent.substring(1, textContent.length() -1);
@@ -347,11 +360,11 @@ termo     : (NUMBER | NUMBERDEC)
 		  
 exprl     : (SUM | SUB | MUL | DIV)
             {
-				operator = _input.LT(-1).getText().charAt(0);
+				operator = _input.LT(-1).getText();
 				if (leftDT == DataType.TEXT) {
 				    throw new IsiIllegalOperationException(operator, leftDT, _input.LT(-1).getLine(), _input.LT(-1).getCharPositionInLine());
 				}
-				expression.addOperator(new OperatorExpression(operator));
+				expression.addOperator(new OperatorExpression(operator.charAt(0)));
 			} 
 			termo
 

@@ -5,7 +5,7 @@ public class Main {
         Scanner sc = new Scanner(System.in);
         if (0<1) {
             System.out.println("0 < 1");
-            if (2<3) {
+            if (2.0<3.0) {
                 System.out.println("2 < 3");
             }
         } else {

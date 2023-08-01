@@ -107,7 +107,7 @@ public class IsiLanguageLexer extends Lexer {
 		private ExpressionTree _leftExpression;
 		private ExpressionTree _rightExpression;
 		private String _relOp;
-		private char operator;
+		private String operator;
 		private DataType leftDT;
 		private DataType rightDT;
 		private String   idAtribuido;
