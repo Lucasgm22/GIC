@@ -29,7 +29,7 @@ int main() {
     if (0<1) {
         c = 0;
         printf("%s\n", "0 < 1");
-        if (2<3) {
+        if (2.0<3.0) {
             printf("%s\n", "2 < 3");
         }
     } else {

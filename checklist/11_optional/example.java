@@ -30,7 +30,7 @@ public class Main {
         if (0<1) {
             c = 0;
             System.out.println("0 < 1");
-            if (2<3) {
+            if (2.0<3.0) {
                 System.out.println("2 < 3");
             }
         } else {
