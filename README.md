@@ -1,3 +1,6 @@
+Lucas Guimarães Miranda, RA: 11070916
+https://youtu.be/6xh7HBke8YM
+
 # Glorious IsiLanguage Compiler (GIC)
 Projeto de compilador para a IsiLanguage, feito como projeto final na disciplina de Compiladores da UFABC ministrada pelo Prof. Dr. Francisco Isidro Massetto.
 
@@ -50,7 +53,7 @@ Os arquivos de checkilist da entrega estão na pasta `checklist` sepados em subp
 - [Avaliador de expressões aritmética (Arvore de expressão aritimética)](../../src/expressions/ExpressionTree.java);
 - Geração de código pretty printed;
 - Geração de código para diversos alvos: Use os argumentos `<C|JAVA|JS|ALL>` na linha de comando.
-- Mostra linha e coluna da posição onde ocorre Erros ou Warnigns.
+- Mostra linha e coluna da posição onde ocorre Erros ou Warnings.
 
 ## Especificações da linguagem
 - Números negativos devem sempre estar entre parênteses.
