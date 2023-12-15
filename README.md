@@ -1,6 +1,7 @@
 Lucas Guimarães Miranda, RA: 11070916
 
-https://youtu.be/6xh7HBke8YM
+## Vídeos
+- [Apresentação técnica](https://youtu.be/6xh7HBke8YM)
 
 # Glorious IsiLanguage Compiler (GIC)
 Projeto de compilador para a IsiLanguage, feito como projeto final na disciplina de Compiladores da UFABC ministrada pelo Prof. Dr. Francisco Isidro Massetto.
@@ -159,6 +160,3 @@ FP 		  : ')'
 BLANK     : (' '| '\t' | '\n' | '\r') -> skip
           ;
 ```
-
-## Vídeos
-- [Apresentação técnica](https://youtu.be/6xh7HBke8YM)
